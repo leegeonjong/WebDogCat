@@ -7,7 +7,6 @@ namespace dogcat.Models.Domain
     public class Write
     {
         public long Id { get; set; }  // PK
-        public long UserId { get; set; }  // 게시글 작성자 uid
         public string Title { get; set; }  // 게시글 제목
         public string Context { get; set; }  // 게시글 내용
         public DateTime Time { get; set; }  // 게시글 작성시간
@@ -16,8 +15,9 @@ namespace dogcat.Models.Domain
 
         public FreeBoard FreeBoard { get; set; } = null;  // 자유게시판 FK
         public AdminBoard AdminBoad { get; set; } = null;  // 공지사항 FK
+        public User User { get; set; } = null;  // 유저 FK
 
-        public ICollection<Image> Images { get; set; } = new HashSet<Image>();
+        public ICollection<WriteImage> Images { get; set; } = new HashSet<WriteImage>();
 
     }
 }

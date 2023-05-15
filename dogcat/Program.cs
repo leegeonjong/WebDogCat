@@ -1,3 +1,6 @@
+using dogcat.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace dogcat
 {
     public class Program
@@ -6,8 +9,14 @@ namespace dogcat
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddRazorPages().AddSessionStateTempDataProvider();
+
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
+
+            builder.Services.AddDbContext<DogcatDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DbName"))
+            );
 
             var app = builder.Build();
 

@@ -10,5 +10,9 @@ namespace dogcat.Models.Domain
         public string Title { get; set; }  // 메시지 제목
         public string Context { get; set; }  // 메시지 내용
         public DateTime Time { get; set; }  // 메시지 보낸시간
+
+        public User From_id { get; set; } = null;
+        public User To_id { get; set; } = null;
+
     }
 }
