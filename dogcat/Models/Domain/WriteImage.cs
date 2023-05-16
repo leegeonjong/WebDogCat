@@ -3,7 +3,7 @@
 namespace dogcat.Models.Domain
 {
     [Table("Image")]
-    public class Image
+    public class WriteImage
     {
         public long Id { get; set; }  // PK
         public string O_image { get; set; }  // 이미지 원본명
