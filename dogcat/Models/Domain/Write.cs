@@ -13,7 +13,8 @@ namespace dogcat.Models.Domain
         public string Category { get; set; }  // 게시글 카테고리
         public string? Image { get; set; }  // 게시글 이미지
 
-        public User User { get; set; } = null;  // 유저 FK
+        public User User { get; set; }   // 유저 FK
+        public long UserId { get; set; }
 
         public ICollection<WriteImage> Images { get; set; } = new HashSet<WriteImage>();
 

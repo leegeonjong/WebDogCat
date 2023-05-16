@@ -6,8 +6,10 @@ namespace dogcat.Models.Domain
     public class PetImage
     {
         public long Id { get; set; }
-        public Pet Pet { get; set; }  // Pet FK
         public string O_image { get; set; }  // 펫 이미지 원본명
         public string D_image { get; set; }  // 펫 이미지 저장명
+
+        public Pet Pet { get; set; }  // Pet FK
+        public long PetId { get; set; }
     }
 }
