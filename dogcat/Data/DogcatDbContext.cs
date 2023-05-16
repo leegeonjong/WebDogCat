@@ -10,7 +10,6 @@ namespace dogcat.Data
 
         }
 
-        public DbSet<AdminBoard> AdminBoards { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<FreeBoard> FreeBoards { get; set; }
         public DbSet<Message> Messages { get; set; }
