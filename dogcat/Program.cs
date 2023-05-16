@@ -18,6 +18,10 @@ namespace dogcat
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DbName"))
             );
 
+            //세션사용
+            builder.Services.AddSession();
+            
+            //빌드
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -30,6 +34,9 @@ namespace dogcat
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //세션 사용
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
