@@ -11,7 +11,6 @@ namespace dogcat.Data
         }
 
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<FreeBoard> FreeBoards { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Pet> Pets { get; set; }
         public DbSet<PetImage> PetImages { get; set; }

@@ -9,6 +9,6 @@ namespace dogcat.Models.Domain
         public string O_image { get; set; }  // 이미지 원본명
         public string D_image { get; set; }  // 이미지 저장명
 
-        public ICollection<Write> Writes { get; set; } = new HashSet<Write>();
+        //public ICollection<Write> Writes { get; set; } = new HashSet<Write>();
     }
 }

@@ -17,7 +17,7 @@ namespace dogcat.Models.Domain
         public bool Admin { get; set; }  // 관리자 권한
         public int Ban { get; set; }  // 유저 계정 정지
 
-        //이건종
+        
         
         
         
