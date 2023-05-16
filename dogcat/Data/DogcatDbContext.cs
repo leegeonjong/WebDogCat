@@ -17,5 +17,15 @@ namespace dogcat.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Write> Writes { get; set; }
         public DbSet<WriteImage> Images { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.User)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
+        }
     }
 }

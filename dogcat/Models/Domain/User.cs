@@ -17,10 +17,13 @@ namespace dogcat.Models.Domain
         public bool Admin { get; set; }  // 관리자 권한
         public int Ban { get; set; }  // 유저 계정 정지
 
-        
-        
-        
-        
+        public ICollection<Write> Writes { get; set; } = new HashSet<Write>();
+        public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
+        public ICollection<Pet> Pets { get; set; } = new HashSet<Pet>();
+
+
+
+
 
     }
 }
