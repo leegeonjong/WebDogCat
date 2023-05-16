@@ -16,7 +16,7 @@ namespace dogcat.Repositories
         {
            var list = await _dogcatDbContext.Pets.ToListAsync();
 
-            return list.where;
+            return list;
         }
 
         public async Task<Pet> GetAsync(long id)
