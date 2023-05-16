@@ -12,20 +12,6 @@ namespace dogcat.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Image",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    O_image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    D_image = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Image", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -46,25 +32,6 @@ namespace dogcat.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FreeBoard",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FreeBoard", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FreeBoard_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Message",
                 columns: table => new
                 {
@@ -75,7 +42,7 @@ namespace dogcat.Migrations
                     Context = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     From_idId = table.Column<long>(type: "bigint", nullable: false),
-                    To_idId = table.Column<long>(type: "bigint", nullable: false)
+                    To_idId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,8 +57,7 @@ namespace dogcat.Migrations
                         name: "FK_Message_User_To_idId",
                         column: x => x.To_idId,
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -129,18 +95,11 @@ namespace dogcat.Migrations
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FreeBoardId = table.Column<long>(type: "bigint", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Write", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Write_FreeBoard_FreeBoardId",
-                        column: x => x.FreeBoardId,
-                        principalTable: "FreeBoard",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Write_User_UserId",
                         column: x => x.UserId,
@@ -178,8 +137,9 @@ namespace dogcat.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    WritesId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    View = table.Column<int>(type: "int", nullable: false),
+                    WriteId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -191,35 +151,30 @@ namespace dogcat.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Comment_Write_WritesId",
-                        column: x => x.WritesId,
+                        name: "FK_Comment_Write_WriteId",
+                        column: x => x.WriteId,
                         principalTable: "Write",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "WriteWriteImage",
+                name: "Image",
                 columns: table => new
                 {
-                    ImagesId = table.Column<long>(type: "bigint", nullable: false),
-                    WritesId = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    O_image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    D_image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WriteId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WriteWriteImage", x => new { x.ImagesId, x.WritesId });
+                    table.PrimaryKey("PK_Image", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WriteWriteImage_Image_ImagesId",
-                        column: x => x.ImagesId,
-                        principalTable: "Image",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_WriteWriteImage_Write_WritesId",
-                        column: x => x.WritesId,
+                        name: "FK_Image_Write_WriteId",
+                        column: x => x.WriteId,
                         principalTable: "Write",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -228,14 +183,14 @@ namespace dogcat.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_WritesId",
+                name: "IX_Comment_WriteId",
                 table: "Comment",
-                column: "WritesId");
+                column: "WriteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FreeBoard_UserId",
-                table: "FreeBoard",
-                column: "UserId");
+                name: "IX_Image_WriteId",
+                table: "Image",
+                column: "WriteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Message_From_idId",
@@ -258,19 +213,9 @@ namespace dogcat.Migrations
                 column: "PetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Write_FreeBoardId",
-                table: "Write",
-                column: "FreeBoardId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Write_UserId",
                 table: "Write",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WriteWriteImage_WritesId",
-                table: "WriteWriteImage",
-                column: "WritesId");
         }
 
         /// <inheritdoc />
@@ -280,25 +225,19 @@ namespace dogcat.Migrations
                 name: "Comment");
 
             migrationBuilder.DropTable(
+                name: "Image");
+
+            migrationBuilder.DropTable(
                 name: "Message");
 
             migrationBuilder.DropTable(
                 name: "PetImage");
 
             migrationBuilder.DropTable(
-                name: "WriteWriteImage");
-
-            migrationBuilder.DropTable(
-                name: "Pet");
-
-            migrationBuilder.DropTable(
-                name: "Image");
-
-            migrationBuilder.DropTable(
                 name: "Write");
 
             migrationBuilder.DropTable(
-                name: "FreeBoard");
+                name: "Pet");
 
             migrationBuilder.DropTable(
                 name: "User");
