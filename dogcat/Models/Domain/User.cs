@@ -14,7 +14,7 @@ namespace dogcat.Models.Domain
         public string PhoneNum { get; set; }  // 유저 전화번호
         public string Mail { get; set; }  // 유저 이메일
         [DefaultValue(false)]
-        public bool Admin { get; set; }  // 관리자 권한
+        public int Admin { get; set; }  // 관리자 권한
         public int Ban { get; set; }  // 유저 계정 정지
 
         public ICollection<Write> Writes { get; set; } = new HashSet<Write>();
