@@ -13,5 +13,8 @@ namespace dogcat.Models.Domain
         public string? Image { get; set; }  // 펫 이미지
 
         public User User { get; set; }  // 유저 FK
+        public long UserId { get; set; }
+
+        public ICollection<PetImage> PetImages { get; set; } = new HashSet<PetImage>();
     }
 }
