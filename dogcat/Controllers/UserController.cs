@@ -16,8 +16,8 @@ namespace dogcat.Controllers
         [ActionName("Login")]
         public IActionResult IsUser()
         {
-            var userid = Request.Form["userid"];
-            var userpw = Request.Form["userpassword"];
+            var userid = Request.Form["userid"]; //form에서 id입력값
+            var userpw = Request.Form["userpassword"]; // form에서 비번 입력값
             return View();
         }
 
