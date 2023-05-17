@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace dogcat.Models.Domain
 {
     [Table("P_User")]
-    public class User
+    public class User // 사용자 정보 (회원가입, 로그인에 사용)
     {
         public long Id { get; set; }  // PK
         public string Userid { get; set; }  // 유저 id

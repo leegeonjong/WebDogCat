@@ -1,25 +1,47 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using dogcat.Data;
+using dogcat.Models.Domain;
+using dogcat.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace dogcat.Controllers
 {
     public class UserController : Controller
     {
-        //로그인 
+
+        private readonly DogcatDbContext _context;
+        public UserController(DogcatDbContext context) 
+        {
+            _context = context;
+        }
+
+        //로그인 폼
+        [HttpGet]
         public IActionResult Login()
         {
-            var userid = HttpContext.Session.GetString("userid");
-            return View((object)userid);
+            var username = HttpContext.Session.GetString("userid");
+            return View((object)username);
         }
-
-        //로그인 확인
         [HttpPost]
         [ActionName("Login")]
-        public IActionResult IsUser()
+        public IActionResult LoginOk()
         {
-            var userid = Request.Form["userid"]; //form에서 id입력값
-            var userpw = Request.Form["userpassword"]; // form에서 비번 입력값
-            return View();
+           string username = Request.Form["userid"];
+           string userpw = Request.Form["userpassword"];
+            var user = _context.Users.FirstOrDefault(u => u.Userid == username.Trim() && u.Pw == userpw);
+            if (user != null)
+            {
+                //로그인 성공 시 , 세션에 정보 저장
+                HttpContext.Session.SetString("userid", username);
+                return View("IsUser", true);
+            }
+            HttpContext.Session.Remove("userid");
+            return View("IsUser");
         }
 
+
+
+
     }
+
 }
+
