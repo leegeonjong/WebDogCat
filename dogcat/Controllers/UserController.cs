@@ -31,8 +31,10 @@ namespace dogcat.Controllers
             if (user != null)
             {
                 //로그인 성공 시 , 세션에 정보 저장
-                HttpContext.Session.SetInt32("userName", user.Id);
-                HttpContext.Session.SetInt32("userId", user.Ban);
+                HttpContext.Session.SetInt32("userName", (int)user.Id); //사용자 uid(고유번호)
+                HttpContext.Session.SetInt32("userId", user.Ban);  // 사용자 벤 여부 
+                HttpContext.Session.SetInt32("userAdmin", user.Admin); // 관리자 여부
+
                 return View("Index",user);
             }
             HttpContext.Session.Remove("userid");
