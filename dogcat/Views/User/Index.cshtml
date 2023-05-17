@@ -8,10 +8,15 @@
     <h1 class="display-4">Welcome</h1>
    
     <h1>어서와</h1>
-    <a href="/User/Login">로그인</a>
-    <a href="/User/Register">회원가입</a>
     @if(Model != null)
     {
         <p>@(Model.Name)님 안녕하세요~!</p>
+        <a href="/User/Logout">로그아웃</a>
+    }
+    else
+    {
+    <a href="/User/Login">로그인</a>
+    <a href="/User/Register">회원가입</a>
+        
     }
 </div>

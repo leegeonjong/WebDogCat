@@ -31,11 +31,18 @@ namespace dogcat.Controllers
             if (user != null)
             {
                 //로그인 성공 시 , 세션에 정보 저장
-                HttpContext.Session.SetString("userid", username);
-                return View("IsUser", true);
+                HttpContext.Session.SetInt32("userName", user.Id);
+                HttpContext.Session.SetInt32("userId", user.Ban);
+                return View("Index",user);
             }
             HttpContext.Session.Remove("userid");
             return View("IsUser");
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("userid");
+            return View("Index");
         }
 
 
