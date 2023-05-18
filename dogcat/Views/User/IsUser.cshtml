@@ -3,17 +3,12 @@
 *@
 @{
 }
-@if(Model != null)
+@if(Model == null)
 {
     <script>
-        alert("너 유저 맞아");
+        alert("존재하지 않는 회원 입니다.");
     </script>
 }
- else{
-     <script>
-         alert("너 유저아님");
-    </script>
- }
 <script>
     location.href = "@Url.Action("Login","User")";
 </script>

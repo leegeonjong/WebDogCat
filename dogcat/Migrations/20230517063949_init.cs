@@ -23,7 +23,7 @@ namespace dogcat.Migrations
                     NickName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Admin = table.Column<bool>(type: "bit", nullable: false),
+                    Admin = table.Column<int>(type: "int", nullable: false),
                     Ban = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -95,7 +95,8 @@ namespace dogcat.Migrations
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    ViewCnt = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

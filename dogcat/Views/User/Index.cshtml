@@ -1,19 +1,53 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-@*모델 지정 (이쪽이 맞냐?)*@
+﻿@*모델 지정 (이쪽이 맞냐?)*@
 @model dogcat.Models.Domain.User;
+
+@{
+    ViewData["Title"] = "Home Page";
+    //로그인 정보 
+    int ban, admin,uid;
+    if(Model == null)
+    {
+        ban = 0;
+        admin = 0;
+        uid = 0;
+    }
+    else
+    {
+        ban = Model.Ban;
+        admin = Model.Admin;
+        uid = (int)Model.Id;
+    }
+
+}
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-   
+
     <h1>어서와</h1>
-    @if(Model != null)
+    @if(Model != null) // 로그인 했을 때
     {
         <p>@(Model.Name)님 안녕하세요~!</p>
+        if(admin == 1) //관리자
+        {
+            <p>===관리자 모드입니다===</p>
+            <a href ="#">회원관리</a>
+            <a href="/User/Logout">로그아웃</a>
+        }
+        else if(ban == 1)
+        {
+            <script>
+                alert("회원님은 지금 벤 상태 입니다. 자세한 내용은 관리자에게 문의하세요");
+                "@Url.Action("Index","User")";
+            </script>
+        }
+        else // 유저
+        {
         <a href="/User/Logout">로그아웃</a>
+        }
+
+            
     }
-    else
+    else //로그인 x
     {
     <a href="/User/Login">로그인</a>
     <a href="/User/Register">회원가입</a>

@@ -12,7 +12,7 @@ using dogcat.Data;
 namespace dogcat.Migrations
 {
     [DbContext(typeof(DogcatDbContext))]
-    [Migration("20230516073220_init")]
+    [Migration("20230517063949_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -164,8 +164,8 @@ namespace dogcat.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<bool>("Admin")
-                        .HasColumnType("bit");
+                    b.Property<int>("Admin")
+                        .HasColumnType("int");
 
                     b.Property<int>("Ban")
                         .HasColumnType("int");
@@ -227,6 +227,9 @@ namespace dogcat.Migrations
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("ViewCnt")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

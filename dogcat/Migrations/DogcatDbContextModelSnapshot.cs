@@ -161,8 +161,8 @@ namespace dogcat.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<bool>("Admin")
-                        .HasColumnType("bit");
+                    b.Property<int>("Admin")
+                        .HasColumnType("int");
 
                     b.Property<int>("Ban")
                         .HasColumnType("int");
@@ -224,6 +224,9 @@ namespace dogcat.Migrations
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("ViewCnt")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

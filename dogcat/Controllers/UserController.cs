@@ -15,37 +15,50 @@ namespace dogcat.Controllers
         }
 
         //로그인 폼
-        [HttpGet]
         public IActionResult Login()
         {
-            var username = HttpContext.Session.GetString("userid");
-            return View((object)username);
+            var userid = HttpContext.Session.GetString("userid");
+            return View((object)userid);
+        }
+        //메인 
+        public IActionResult Index()
+        {
+            return View();
+        }
+        //회원가입
+        public IActionResult Register()
+        {
+            return View();
         }
         [HttpPost]
         [ActionName("Login")]
-        public IActionResult LoginOk()
+        public IActionResult IsUser()
         {
-           string username = Request.Form["userid"];
+           string userid = Request.Form["userid"];
            string userpw = Request.Form["userpassword"];
-            var user = _context.Users.FirstOrDefault(u => u.Userid == username.Trim() && u.Pw == userpw);
+            var user = _context.Users.FirstOrDefault(u => u.Userid.Equals(userid.Trim()) && u.Pw.Equals(userpw));
             if (user != null)
             {
-                //로그인 성공 시 , 세션에 정보 저장
+                //로그인 성공 시 , 세션에 정보 저장 (굳이 해야할까? 모르겠다)
                 HttpContext.Session.SetInt32("userName", (int)user.Id); //사용자 uid(고유번호)
                 HttpContext.Session.SetInt32("userId", user.Ban);  // 사용자 벤 여부 
                 HttpContext.Session.SetInt32("userAdmin", user.Admin); // 관리자 여부
-
-                return View("Index",user);
+                //벤 유저 확인
+                if (user.Ban == 1)
+                {
+                    HttpContext.Session.Remove("userid");
+                }
+                return View("Index",user);  
             }
-            HttpContext.Session.Remove("userid");
             return View("IsUser");
         }
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("userid");
-            return View("Index");
+            HttpContext.Session.Remove("userid"); 
+            return View("Logout");
         }
+
 
 
 
