@@ -12,7 +12,7 @@ using dogcat.Data;
 namespace dogcat.Migrations
 {
     [DbContext(typeof(DogcatDbContext))]
-    [Migration("20230516015747_init")]
+    [Migration("20230516073220_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -46,7 +46,7 @@ namespace dogcat.Migrations
                     b.Property<int>("View")
                         .HasColumnType("int");
 
-                    b.Property<long?>("WriteId")
+                    b.Property<long>("WriteId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -196,7 +196,7 @@ namespace dogcat.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("P_User");
                 });
 
             modelBuilder.Entity("dogcat.Models.Domain.Write", b =>
@@ -251,7 +251,7 @@ namespace dogcat.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("WriteId")
+                    b.Property<long>("WriteId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -266,14 +266,18 @@ namespace dogcat.Migrations
                     b.HasOne("dogcat.Models.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("dogcat.Models.Domain.Write", "Write")
+                        .WithMany("Comments")
+                        .HasForeignKey("WriteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("dogcat.Models.Domain.Write", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("WriteId");
-
                     b.Navigation("User");
+
+                    b.Navigation("Write");
                 });
 
             modelBuilder.Entity("dogcat.Models.Domain.Message", b =>
@@ -296,7 +300,7 @@ namespace dogcat.Migrations
             modelBuilder.Entity("dogcat.Models.Domain.Pet", b =>
                 {
                     b.HasOne("dogcat.Models.Domain.User", "User")
-                        .WithMany()
+                        .WithMany("Pets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -307,7 +311,7 @@ namespace dogcat.Migrations
             modelBuilder.Entity("dogcat.Models.Domain.PetImage", b =>
                 {
                     b.HasOne("dogcat.Models.Domain.Pet", "Pet")
-                        .WithMany()
+                        .WithMany("PetImages")
                         .HasForeignKey("PetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -318,7 +322,7 @@ namespace dogcat.Migrations
             modelBuilder.Entity("dogcat.Models.Domain.Write", b =>
                 {
                     b.HasOne("dogcat.Models.Domain.User", "User")
-                        .WithMany()
+                        .WithMany("Writes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -328,9 +332,25 @@ namespace dogcat.Migrations
 
             modelBuilder.Entity("dogcat.Models.Domain.WriteImage", b =>
                 {
-                    b.HasOne("dogcat.Models.Domain.Write", null)
+                    b.HasOne("dogcat.Models.Domain.Write", "Write")
                         .WithMany("Images")
-                        .HasForeignKey("WriteId");
+                        .HasForeignKey("WriteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Write");
+                });
+
+            modelBuilder.Entity("dogcat.Models.Domain.Pet", b =>
+                {
+                    b.Navigation("PetImages");
+                });
+
+            modelBuilder.Entity("dogcat.Models.Domain.User", b =>
+                {
+                    b.Navigation("Pets");
+
+                    b.Navigation("Writes");
                 });
 
             modelBuilder.Entity("dogcat.Models.Domain.Write", b =>

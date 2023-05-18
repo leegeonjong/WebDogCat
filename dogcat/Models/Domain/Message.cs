@@ -13,9 +13,9 @@ namespace dogcat.Models.Domain
         public DateTime Time { get; set; }  // 메시지 보낸시간
 
        
-        public User From_id { get; set; } = null;  // 보내는사람
+        public User From_id { get; set; }  // 보내는사람
 
-        public User? To_id { get; set; } = null;  // 받는사람
+        public User? To_id { get; set; } // 받는사람
 
     }
 }
