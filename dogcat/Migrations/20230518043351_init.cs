@@ -41,21 +41,27 @@ namespace dogcat.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Context = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    From_idId = table.Column<long>(type: "bigint", nullable: false),
-                    To_idId = table.Column<long>(type: "bigint", nullable: true)
+                    From_id = table.Column<long>(type: "bigint", nullable: false),
+                    To_id = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Message", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Message_P_User_From_idId",
-                        column: x => x.From_idId,
+                        name: "FK_Message_P_User_From_id",
+                        column: x => x.From_id,
+                        principalTable: "P_User",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Message_P_User_To_id",
+                        column: x => x.To_id,
                         principalTable: "P_User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Message_P_User_To_idId",
-                        column: x => x.To_idId,
+                        name: "FK_Message_P_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "P_User",
                         principalColumn: "Id");
                 });
@@ -67,7 +73,7 @@ namespace dogcat.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Species = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Old = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Old = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Weight = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -95,6 +101,7 @@ namespace dogcat.Migrations
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ViewCnt = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -137,7 +144,6 @@ namespace dogcat.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    View = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<long>(type: "bigint", nullable: false),
                     WriteId = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -194,14 +200,19 @@ namespace dogcat.Migrations
                 column: "WriteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Message_From_idId",
+                name: "IX_Message_From_id",
                 table: "Message",
-                column: "From_idId");
+                column: "From_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Message_To_idId",
+                name: "IX_Message_To_id",
                 table: "Message",
-                column: "To_idId");
+                column: "To_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Message_UserId",
+                table: "Message",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pet_UserId",

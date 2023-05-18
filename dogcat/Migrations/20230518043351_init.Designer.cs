@@ -12,7 +12,7 @@ using dogcat.Data;
 namespace dogcat.Migrations
 {
     [DbContext(typeof(DogcatDbContext))]
-    [Migration("20230516073220_init")]
+    [Migration("20230518043351_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -43,9 +43,6 @@ namespace dogcat.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("View")
-                        .HasColumnType("int");
-
                     b.Property<long>("WriteId")
                         .HasColumnType("bigint");
 
@@ -70,7 +67,7 @@ namespace dogcat.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("From_idId")
+                    b.Property<long>("From_id")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("Status")
@@ -83,14 +80,19 @@ namespace dogcat.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("To_idId")
+                    b.Property<long>("To_id")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("From_idId");
+                    b.HasIndex("From_id");
 
-                    b.HasIndex("To_idId");
+                    b.HasIndex("To_id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Message");
                 });
@@ -110,8 +112,8 @@ namespace dogcat.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Old")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Old")
+                        .HasColumnType("int");
 
                     b.Property<string>("Species")
                         .IsRequired()
@@ -228,6 +230,9 @@ namespace dogcat.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("ViewCnt")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
@@ -282,19 +287,25 @@ namespace dogcat.Migrations
 
             modelBuilder.Entity("dogcat.Models.Domain.Message", b =>
                 {
-                    b.HasOne("dogcat.Models.Domain.User", "From_id")
+                    b.HasOne("dogcat.Models.Domain.User", "User_from")
                         .WithMany()
-                        .HasForeignKey("From_idId")
+                        .HasForeignKey("From_id")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("dogcat.Models.Domain.User", "User_to")
+                        .WithMany()
+                        .HasForeignKey("To_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("dogcat.Models.Domain.User", "To_id")
-                        .WithMany()
-                        .HasForeignKey("To_idId");
+                    b.HasOne("dogcat.Models.Domain.User", null)
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("From_id");
+                    b.Navigation("User_from");
 
-                    b.Navigation("To_id");
+                    b.Navigation("User_to");
                 });
 
             modelBuilder.Entity("dogcat.Models.Domain.Pet", b =>
@@ -348,6 +359,8 @@ namespace dogcat.Migrations
 
             modelBuilder.Entity("dogcat.Models.Domain.User", b =>
                 {
+                    b.Navigation("Messages");
+
                     b.Navigation("Pets");
 
                     b.Navigation("Writes");

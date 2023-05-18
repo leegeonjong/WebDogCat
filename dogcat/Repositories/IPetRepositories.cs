@@ -1,4 +1,5 @@
 ﻿using dogcat.Models.Domain;
+using dogcat.Models.ViewModels;
 
 namespace dogcat.Repositories
 {
@@ -8,8 +9,10 @@ namespace dogcat.Repositories
 
         Task<Pet> GetAsync(long id);  // 펫 uid로 특정 펫의 정보 가져오기
 
-        Task<Pet?> Petupdate(Pet pet);  // 펫 정보 수정
+        Task<Pet?> PetupdateAsync(Pet pet);  // 펫 정보 수정
 
-        Task<Pet> Petdelete(long id);  // 펫 정보 삭제
+        Task<Pet?> PetdeleteAsync(long id);  // 펫 정보 삭제
+
+        Task<Pet> AddPetAsync(Pet pet);  // 펫 등록하기
     }
 }

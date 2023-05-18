@@ -1,0 +1,35 @@
+﻿@model dogcat.Models.Domain.User
+@{
+    ViewData["Title"] = "마이페이지";
+}
+<script src="~/js/User/drop.js"></script>
+<form method="post" name="userform">
+    <input type="hidden" asp-for="Id"/>
+</form>
+@if(Model != null)
+{
+<div class="mb-3">
+    <label for="name">이름:</label>
+    <span class="form-control">@Model.Name</span>
+</div>
+<div class="mb-3 mt-3">
+    <label for="userid">PhoneNum:</label>
+    <span class="form-control">@Model.PhoneNum</span>
+</div>
+<div class="mb-3 mt-3">
+    <label for="pw">Mail:</label>
+    <span class="form-control">@Model.Mail</span>
+</div>
+    <a class="btn btn-outline-dark"
+    asp-controller="MyPage"
+    asp-action="Detail"
+    asp-route-id ="@Model.Id">수정</a>
+    <buttn type="submit" class="btn btn-outline-dark" id="drop">탈퇴</buttn>
+}
+else
+{
+    <script>
+        alert("데이터가 없습니다");
+        history.back();
+    </script>
+}

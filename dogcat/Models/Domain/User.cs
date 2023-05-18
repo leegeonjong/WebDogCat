@@ -19,10 +19,7 @@ namespace dogcat.Models.Domain
 
         public ICollection<Write> Writes { get; set; } = new HashSet<Write>();
         public ICollection<Pet> Pets { get; set; } = new HashSet<Pet>();
-
-
-
-
+        public ICollection<Message> Messages { get; set; } = new HashSet<Message>();
 
     }
 }

@@ -1,0 +1,34 @@
+﻿@model List<dogcat.Models.Domain.Message>
+@{
+    ViewData["Title"] = "메시지함";
+}
+@if(Model != null)
+{
+<table class="table table-hover">
+    <thead class="table-success">
+        <tr>
+            <th>제목</th>
+            <th>보낸사람</th>
+            <th>수신 날짜</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var m in Model)
+        {
+        <tr>
+            <td><a asp-controller="Message" asp-action="Detail" asp-route-id="@m.Id">@m.Title</a> </td>
+            <td>@m.User_from.Name</td>
+            <td>@m.Time</td>
+        </tr>
+        }
+    </tbody>
+    <a class="btn btn-outline-dark" asp-controller="Message" asp-action="Add" asp-route-id="@Model[0].To_id">보내기</a>
+</table>
+}
+else
+{
+    <script>
+        alert("받은 쪽지가 없습니다");
+        history.back();
+    </script>
+}

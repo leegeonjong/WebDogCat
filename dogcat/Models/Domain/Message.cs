@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 
 namespace dogcat.Models.Domain
@@ -12,10 +13,15 @@ namespace dogcat.Models.Domain
         public string Context { get; set; }  // 메시지 내용
         public DateTime Time { get; set; }  // 메시지 보낸시간
 
-       
-        public User From_id { get; set; }  // 보내는사람
 
-        public User? To_id { get; set; } // 받는사람
+        public User User_from { get; set; }
+        public long From_id { get; set; } // 보내는사람
+        public User User_to { get; set; }
+        public long To_id { get; set; } // 받는사람
+
+        
+
+
 
     }
 }
