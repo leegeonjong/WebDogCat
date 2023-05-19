@@ -14,5 +14,7 @@ namespace dogcat.Repositories
         Task<Pet?> PetdeleteAsync(long id);  // 펫 정보 삭제
 
         Task<Pet> AddPetAsync(Pet pet);  // 펫 등록하기
+
+        Task<PetImage?> AddimageAsync(PetImage pet);
     }
 }

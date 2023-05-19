@@ -54,5 +54,12 @@ namespace dogcat.Repositories
             await _dogcatDbContext.SaveChangesAsync();
             return pets;
         }
+
+        public async Task<PetImage?> AddimageAsync(PetImage pet) 
+        {
+            await _dogcatDbContext.PetImages.AddAsync(pet);
+            await _dogcatDbContext.SaveChangesAsync();
+            return pet;
+        }
     }
 }
