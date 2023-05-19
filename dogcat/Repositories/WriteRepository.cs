@@ -12,7 +12,7 @@ namespace dogcat.Repositories
         {
             Console.WriteLine("WriteRepoitory() 생성");
             this.writeDbContext = writeDbContext;
-        }
+                   }
         public async Task<Write> AddAsync(Write write)
         {
             await writeDbContext.Writes.AddAsync(write);

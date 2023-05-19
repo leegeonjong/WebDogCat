@@ -24,24 +24,45 @@ namespace dogcat.Controllers
         // Get: /Board/IsUser
         [HttpGet]
         [ActionName("IsUser")]
-        public IActionResult IsUser()
+        public IActionResult IsUser(string buttonName)
         {
             //Session 에 저장된 회원 정보를 가져온다
             int? userId = HttpContext.Session.GetInt32("userId");
-            int? userBan = HttpContext.Session.GetInt32("userBan");
-
             //가져온 회원정보로 글쓰기에 접근하는 사람이 회원인지 확인한다.
+
+            //유저라면
             if (userId != null)
             {
-                //유저라면 벤여부를 확인한다.
-                if (userBan == 0)
+                if (buttonName == "Write")
                 {
-                    //벤이 아니라면
                     return View("IsUser", 1);  // View(string, object) => viewname, model
+                                               // 작성 버튼인 경우의 동작 수행
+                                               // 필요한 처리를 수행
                 }
-                else return View("IsUser", 0);
+                else if (buttonName == "Detail")
+                {
+                    return View("IsUser", 2);
+                    // 상세보기 버튼인 경우의 동작 수행
+                    // 필요한 처리를 수행
+                    // writeId를 사용하여 추가 작업 수행 가능
+                }
             }
-            else return View("IsUser", 0);
+            //비회원이라면 
+            else
+            {
+                //글쓰기 버튼 누르면 
+                if (buttonName == "Write")
+                {
+                    return View("IsUser", 0);
+                }
+                //디테일 버튼 누르면 
+                else if (buttonName == "Detail")
+                {
+                    return View("IsUser", 3);
+                   
+                }
+            }
+            return View("IsUser", 0);
         }
 
         // GET: /Board/Write
@@ -52,6 +73,7 @@ namespace dogcat.Controllers
             addWriteRequest addWriteRequest = new()
             {
                 NickName = HttpContext.Session.GetString("userNickName")
+
             };
             return View(addWriteRequest);
         }
@@ -88,7 +110,7 @@ namespace dogcat.Controllers
 
             write = await writeRepository.AddAsync(write);
 
-            return RedirectToAction("Detail", new { id = write.Id , NickName  = write.NickName });
+            return RedirectToAction("Detail", new { id = write.Id, NickName = write.NickName });
         }
         //댓글작성
         [HttpPost]
@@ -99,6 +121,7 @@ namespace dogcat.Controllers
                 UserId = addCommentRequest.UserId,
                 Content = addCommentRequest.Content,
                 WriteId = addCommentRequest.WriteId,
+                NickName = addCommentRequest.NickName,
                 Time = DateTime.Now,
             };
 
@@ -157,12 +180,10 @@ namespace dogcat.Controllers
             ViewData["writePages"] = writePages; // [페이징] 에 표시할 숫자 개수
             ViewData["startPage"] = startPage; // [페이징] 에 표시할 시작 페이지
             ViewData["endPage"] = endPage; // [페이징] 에 표시할 마지막 페이지
-            ViewData["category"] = category; //가져온 카테고리 종류
-            // 글 목록 읽어오기 
-            // 해당 페이지의 글 목록 읽어오기
-          
-             var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows, category);
-             return View(writes);
+            
+
+            var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows, category);
+            return View(writes);
         }
 
         // GET: /Board/Detail/{id}
@@ -173,6 +194,8 @@ namespace dogcat.Controllers
             // 조회수 증가
             var write = await writeRepository.IncViewCntAsync(id);
             var comment = await commentRepository.CommentGetAsync(id);
+            string nickname = HttpContext.Session.GetString("userNickName");
+            int userId = HttpContext.Session.GetInt32("userId") ?? 0;
             // 페이징
             ViewData["page"] = HttpContext.Session.GetInt32("page") ?? 1;
 
@@ -185,9 +208,11 @@ namespace dogcat.Controllers
             {
                 comment = new();
             }
-            
+
             ViewData["Write"] = write;
+            ViewData["UserId"] = userId;
             ViewData["Comment"] = comment;
+            ViewData["Nickname"] = nickname;
 
             return View();
         }

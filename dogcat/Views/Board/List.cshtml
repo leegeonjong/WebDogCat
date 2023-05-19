@@ -60,8 +60,9 @@
             <tr>
                 <td>@write.Id</td>
                 <td>
-                    <a asp-controller="Board" asp-action="Detail"
-                   asp-route-id="@write.Id">@write.Title</a>
+                    <a asp-controller="Board" asp-action="Detail" asp-route-id="@write.Id" name="buttonName" value="Detail">@write.Title</a>
+                    @*<a class="btn btn-outline-dark" asp-controller="Board" asp-action="IsUser" asp-route-id="@write.Id" onclick="sendButtonValue('Detail')">@write.Title</a>*@
+
                 </td>
                 <td>@write.Category</td>
                 <td>@write.NickName</td>
@@ -73,7 +74,9 @@
 </table>
 <div class="row">
     <div class="col-12">
-        <a class="btn btn-outline-dark" asp-controller="Board" asp-action="IsUser">작성</a>
+        <a class="btn btn-outline-dark" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">작성</a>
+        @*<a class="btn btn-outline-dark" onclick="sendButtonValue('Write')">작성</a>*@
     </div>
+
 </div>
 <partial name="Pagination" />

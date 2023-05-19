@@ -8,7 +8,11 @@
     string Category = write.Category;
     int ViewCnt = write.ViewCnt;
     string Context = write.Context;
-    string Nickname = write.NickName;
+    string WriterNickName = write.NickName;
+}
+@{
+    string Nickname = (string)ViewData["Nickname"];
+    int userId = (int)ViewData["UserId"];
 }
 @{
     var comment = ViewData["Comment"] as List<dogcat.Models.Domain.Comment>;
@@ -36,7 +40,7 @@
         </form>
         <div class="mb-3">
             <label for="name" readonly>작성자:</label>
-            <span class="form-control">@Nickname</span>
+            <span class="form-control">@WriterNickName</span>
         </div>
         <div class="mb-3 mt-3">
             <label for="title">제목:</label>
@@ -52,18 +56,19 @@
         </div>
        @* 글 작성 수정 삭제 목록*@
          <div class="d-flex">
-            <a class="btn btn-outline-dark" asp-controller="Board" asp-action="Update" asp-route-id="@WriteId">수정</a>
             <a class="btn btn-outline-dark ms-2" asp-controller="Board" asp-action="List" asp-route-page="@(page)">목록</a>
+            <a class="btn btn-outline-dark" asp-controller="Board" asp-action="Update" asp-route-id="@WriteId">수정</a>
             <button type="submit" class="btn btn-outline-danger ms-2" id="btnDel" asp-controller="Board" asp-action="Delete" asp-route-id="@WriteId">삭제</button>
-            <a class="btn btn-outline-dark ms-2" asp-controller="Board" asp-action="Write">작성</a>
         </div>
         @*댓글 작성*@
         <h3>댓글 작성</h3>
         <form method="post" asp-controller="Board" asp-action="AddComment">
             <input type="hidden" name="WriteId" value="@WriteId" />
+            <input type="hidden" name="UserId" value="@userId" />
+            <input type="hidden" name="NickName" value="@Nickname" />
             <div class="mb-3">
-                <label for="userId">작성자:</label>
-                <input type="text" class="form-control" name="UserId" required />
+                <label for="Nickname">작성자:</label>
+                @*<input type="text" class="form-control" name="NickName" asp-for="@Nickname" readonly />*@
             </div>
             <div class="mb-3">
                 <label for="content">댓글 내용:</label>
@@ -77,7 +82,7 @@
                 @foreach (var cmt in comment)
                 {
                     <tr id="comment-@cmt.Id">
-                        <td>@cmt.UserId</td>
+                        <td>@cmt.NickName</td>
                         <td>@cmt.Content</td>
                         <td>@cmt.Time</td>
                         <td>
