@@ -1,6 +1,5 @@
 ﻿$(function () {
     $("[name='pageRows']").change(function () {
-        alert($(this).val());  // 확인용
         const frm = $("[name='frmPageRows']");
         frm.attr("method", "POST");
         frm.attr("action", "PageRows");
@@ -8,3 +7,11 @@
     });
 });
 
+$(function () {
+    $("[name='category']").change(function () {
+        const frm = $("[name='frmCategory']");
+        frm.attr("method", "GET"); 
+        frm.attr("action", "/Board/List");
+        frm.submit();
+    });
+});

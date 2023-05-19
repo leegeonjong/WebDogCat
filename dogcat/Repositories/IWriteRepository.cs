@@ -29,9 +29,9 @@ namespace dogcat.Repositories
         //페이징
 
         Task<long> CountAsync(); //전체 글 개수
-        Task<IEnumerable<Write>> GetFromRowAsync(int fromRow, int pageRows); //페이지의 목록 읽어오기
+        Task<IEnumerable<Write>> GetFromRowAsync(int fromRow, int pageRows, string category); //페이지의 목록 읽어오기
         //--------------카테고리로 분류하기
-        Task<IEnumerable<Write>> GetByCategoryAsync(string category, int fromRow, int pageRows); //페이지의 목록 읽어오기
+    
     }
 }
 
