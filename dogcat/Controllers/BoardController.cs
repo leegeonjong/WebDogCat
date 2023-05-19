@@ -111,7 +111,7 @@ namespace dogcat.Controllers
         // GET: /Board/List
         [HttpGet]
         public async Task<IActionResult> List(
-            [FromQuery(Name = "page")] int? page,   // int? 타입.  만약 page parameter 가 없거나, 변환 안되는 값이면 null 값
+            [FromQuery(Name = "page")] int? page, // int? 타입.  만약 page parameter 가 없거나, 변환 안되는 값이면 null 값
             [FromForm(Name = "category")] string category
             )
         {
@@ -156,21 +156,13 @@ namespace dogcat.Controllers
             ViewData["writePages"] = writePages; // [페이징] 에 표시할 숫자 개수
             ViewData["startPage"] = startPage; // [페이징] 에 표시할 시작 페이지
             ViewData["endPage"] = endPage; // [페이징] 에 표시할 마지막 페이지
-
+            ViewData["category"] = category; //가져온 카테고리 종류
             // 글 목록 읽어오기 
             // 해당 페이지의 글 목록 읽어오기
-            if (!string.IsNullOrEmpty(category))
-            {
-                // 카테고리가 선택된 경우 해당 카테고리의 글 목록을 조회합니다.
-                var writes = await writeRepository.GetByCategoryAsync(category, fromRow, pageRows);
-                return View(writes);
-            }
-            else
-            {
-                // 카테고리가 선택되지 않은 경우 전체 글 목록을 조회합니다.
-                var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows);
-                return View(writes);
-            }
+          
+             var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows, category);
+             return View(writes);
+            
 
         }
 

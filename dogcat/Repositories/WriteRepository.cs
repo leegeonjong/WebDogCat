@@ -25,6 +25,7 @@ namespace dogcat.Repositories
             return await writeDbContext.Writes.CountAsync();
         }
 
+
         public async Task<Write?> DeleteAsync(long id)
         {
             var existingWrite = await writeDbContext.Writes.FindAsync(id);
@@ -48,22 +49,26 @@ namespace dogcat.Repositories
             return await writeDbContext.Writes.FirstOrDefaultAsync(x => x.Id == id);
         }
         //카테고리
-        public async Task<IEnumerable<Write>> GetByCategoryAsync(string category, int fromRow, int pageRows)
-        {
-            return await writeDbContext.Writes
-                .Where(x => x.Category == category)  // 카테고리가 일치하는 것만 선택
-                .OrderByDescending(x => x.Id)  // 최신순으로
-                .Take(pageRows)   // pageRows 개를 SELECT
-                .ToListAsync();
-        }
+    
 
-        public async Task<IEnumerable<Write>> GetFromRowAsync(int fromRow, int pageRows)
+        public async Task<IEnumerable<Write>> GetFromRowAsync(int fromRow, int pageRows, string category)
         {
-            return await writeDbContext.Writes
-                .OrderByDescending(x => x.Id)  // 최신순으로
-                .Skip(fromRow)    // fromRow 번째 부터
-                .Take(pageRows)   // pageRows 개를 SELECT
-                .ToListAsync();
+            if (category == "전체" || category == null)
+            {
+                return await writeDbContext.Writes
+                    .OrderByDescending(x => x.Id)  // 최신순으로
+                    .Skip(fromRow)    // fromRow 번째 부터
+                    .Take(pageRows)   // pageRows 개를 SELECT
+                    .ToListAsync();
+            }
+            else
+            {
+                return await writeDbContext.Writes
+               .Where(x => x.Category == category)  // 카테고리가 일치하는 것만 선택
+               .OrderByDescending(x => x.Id)  // 최신순으로
+               .Take(pageRows)   // pageRows 개를 SELECT
+               .ToListAsync();
+            }
         }
 
         public async Task<Write?> IncViewCntAsync(long id)

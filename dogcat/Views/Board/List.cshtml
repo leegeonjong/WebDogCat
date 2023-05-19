@@ -1,6 +1,5 @@
 ﻿@model List<dogcat.Models.Domain.Write>
 
-
 @{
     ViewData["Title"] = "목록";
 
@@ -8,8 +7,9 @@
     int page = (int)ViewData["page"];  // 현재 페이지
     int totalPage = (int)ViewData["totalPage"];  // 총 '페이지' 수
     int pageRows = (int)ViewData["pageRows"];  // 한 '페이지' 에 표시할 글 개수
-
+    string category = (string)ViewData["category"];
 }
+
 <script src="~/js/Board/List.js"></script>
 
 <h2>목록</h2>
@@ -25,19 +25,20 @@
                 <option value="10" selected="@(pageRows == 10)">10</option>
                 <option value="15" selected="@(pageRows == 15)">15</option>
                 <option value="20" selected="@(pageRows == 20)">20</option>
-                <option value="50" selected="@(pageRows == 50)">50</option>
+                <option value="50" selected="@(pageRows == 30)">30</option>
             </select>
         </form>
     </span>
 </div>
 <div class="mb-3">
-    <form name="frmCategory">
+    <form name="frmCategory" action="/Board/List" method="get">
         <select class="form-select" name="category">
-            <option value="" selected>전체</option>
-            <option value="카테고리1">카테고리1</option>
-            <option value="카테고리2">카테고리2</option>
-            <option value="카테고리3">카테고리3</option>
+            <option value="전체" selected="@(category == "전체")">전체</option>
+            <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
+            <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
+            <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
         </select>
+        <button type="submit">검색</button>
     </form>
 </div>
 
