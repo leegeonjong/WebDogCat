@@ -25,6 +25,7 @@ namespace dogcat.Repositories
             return await writeDbContext.Writes.CountAsync();
         }
 
+
         public async Task<Write?> DeleteAsync(long id)
         {
             var existingWrite = await writeDbContext.Writes.FindAsync(id);
