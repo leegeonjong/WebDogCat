@@ -1,0 +1,24 @@
+﻿@model dogcat.Models.Domain.Pet
+@{
+}
+<form method="post" name="frmpet">
+    <input type="hidden" asp-for="Id">
+
+    <div class="mb-3">
+        <label for="name">이름:</label>
+        <input type="text" class="form-control" asp-for="Name"/>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="species">종류:</label>
+        <input type="text" class="form-control" asp-for="Species" />
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="old">나이(세):</label>
+        <input type="text" class="form-control" asp-for="Old" />
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="weight">무게(kg):</label>
+        <input type="text" class="form-control" asp-for="Weight" />
+    </div>
+    <button type="submit" class="btn btn-outline-dark">수정완료</button>
+</form>

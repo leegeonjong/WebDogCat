@@ -1,5 +1,6 @@
 ﻿using dogcat.Data;
 using dogcat.Models.Domain;
+using dogcat.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace dogcat.Repositories
@@ -14,8 +15,8 @@ namespace dogcat.Repositories
 
         public async Task<IEnumerable<Pet>> GetAllAsync(long id)
         {
-           var list = await _dogcatDbContext.Pets.ToListAsync();
-
+           var list = await _dogcatDbContext.Pets.Where(s => s.UserId == id).ToListAsync();
+            if (list.Count == 0) return null;
             return list;
         }
 
@@ -24,15 +25,34 @@ namespace dogcat.Repositories
             var pet = await _dogcatDbContext.Pets.FirstOrDefaultAsync(s => s.Id == id);
             return pet;
         }
-
-        public Task<Pet> Petdelete(long id)
+        
+        public async Task<Pet> AddPetAsync(Pet pet)
         {
-            throw new NotImplementedException();
+            await _dogcatDbContext.Pets.AddAsync(pet);
+            await _dogcatDbContext.SaveChangesAsync();
+            return pet;
+        }
+        public async Task<Pet?> PetdeleteAsync(long id)
+        {
+            var pet = await _dogcatDbContext.Pets.FirstOrDefaultAsync(s => s.Id == id);
+            _dogcatDbContext.Pets.Remove(pet);
+            await _dogcatDbContext.SaveChangesAsync();
+            return pet;
         }
 
-        public Task<Pet?> Petupdate(Pet pet)
+        public async Task<Pet?> PetupdateAsync(Pet pet)
         {
-            throw new NotImplementedException();
+            var pets = await _dogcatDbContext.Pets.FindAsync(pet.Id);
+            if (pets == null) return null;
+            else
+            {
+                pets.Name = pet.Name;
+                pets.Species = pet.Species;
+                pets.Old = pet.Old;
+                pets.Weight = pet.Weight;
+            }
+            await _dogcatDbContext.SaveChangesAsync();
+            return pets;
         }
     }
 }

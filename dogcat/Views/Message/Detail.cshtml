@@ -1,0 +1,22 @@
+﻿@model dogcat.Models.Domain.Message
+@{
+    ViewData["TItle"] = "쪽지보기";
+}
+
+<div class="mb-3">
+    <label for="from_id">보낸사람:</label>
+    <span class="form-control">@Model.User_from.Name</span>
+</div>
+<div class="mb-3 mt-3">
+    <label for="title">제목:</label>
+    <span class="form-control">@Model.Title</span>
+</div>
+<div class="mb-3 mt-3">
+    <label for="time">수신날짜:</label>
+    <span class="form-control">@Model.Time</span>
+</div>
+<div class="mb-3 mt-3">
+    <label for="context">내용:</label>
+    <span class="form-control">@Model.Context</span>
+</div>
+

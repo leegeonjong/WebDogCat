@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.RegularExpressions;
 
 namespace dogcat.Models.Domain
 {
@@ -7,7 +9,7 @@ namespace dogcat.Models.Domain
     {
         public long Id { get; set; }  // PK
         public string Species { get; set; }  // 펫 종
-        public DateTime Old { get; set; }  // 펫 생년월일
+        public int Old { get; set; }  // 펫 나이
         public string Name { get; set; }  // 펫 이름
         public int Weight { get; set; }  // 펫 무게
         public string? Image { get; set; }  // 펫 이미지
@@ -16,5 +18,7 @@ namespace dogcat.Models.Domain
         public long UserId { get; set; }
 
         public ICollection<PetImage> PetImages { get; set; } = new HashSet<PetImage>();
+
+        
     }
 }

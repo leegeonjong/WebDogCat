@@ -1,5 +1,6 @@
 ﻿@model List<dogcat.Models.Domain.Write>
 
+
 @{
     ViewData["Title"] = "목록";
 
@@ -29,33 +30,45 @@
         </form>
     </span>
 </div>
-s
+<div class="mb-3">
+    <form name="frmCategory">
+        <select class="form-select" name="category">
+            <option value="" selected>전체</option>
+            <option value="카테고리1">카테고리1</option>
+            <option value="카테고리2">카테고리2</option>
+            <option value="카테고리3">카테고리3</option>
+        </select>
+    </form>
+</div>
+
 
 <table class="table table-hover">
     <thead class="table-success">
         <tr>
             <th>#</th>
             <th>제목</th>
+            <th>카테고리</th>
             <th>작성자</th>
             <th>조회수</th>
             <th>작성일</th>
         </tr>
     </thead>
-@*    <tbody>
+    <tbody>
         @foreach (var write in Model)
         {
             <tr>
                 <td>@write.Id</td>
                 <td>
                     <a asp-controller="Board" asp-action="Detail"
-                       asp-route-id="@write.Id">@write.Subject</a>
+                   asp-route-id="@write.Id">@write.Title</a>
                 </td>
-                <td>@write.Name</td>
+                <td>@write.Category</td>
+                <td>@write.UserId</td>
                 <td>@write.ViewCnt</td>
-                <td>@write.RegDate</td>
+                <td>@write.Time</td>
             </tr>
         }
-    </tbody>*@
+    </tbody>
 </table>
 <div class="row">
     <div class="col-12">

@@ -1,11 +1,11 @@
 ﻿using dogcat.Models.Domain;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace dogcat.Repositories
 {
- 
     public interface IWriteRepository
     {
-        //작성 페이지 모두 읽어오기
         Task<IEnumerable<Write>> GetAllAsync();
 
         //작성페이지 이름 종류 일련번호
@@ -23,8 +23,15 @@ namespace dogcat.Repositories
         // 특정 Id 의 글 조회수 +1 증가
         Task<Write?> IncViewCntAsync(long id);
 
-        Task<long> CountAsync(); //전체 글 개수
-        Task<IEnumerable<Write>> GetFromRowAsync(int formRow, int pageRows); //페이지의 목록 읽어오기
+        
 
-    } // end repository
+        //------------------------------------
+        //페이징
+
+        Task<long> CountAsync(); //전체 글 개수
+        Task<IEnumerable<Write>> GetFromRowAsync(int fromRow, int pageRows); //페이지의 목록 읽어오기
+        //--------------카테고리로 분류하기
+        Task<IEnumerable<Write>> GetByCategoryAsync(string category, int fromRow, int pageRows); //페이지의 목록 읽어오기
+    }
 }
+

@@ -26,6 +26,21 @@ namespace dogcat.Data
                 .HasOne(c => c.User)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Message>()
+                    .HasOne(m => m.User_from)
+                    .WithMany()
+                    .HasForeignKey(m => m.From_id);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.User_to)
+                .WithMany()
+                .HasForeignKey(m => m.To_id);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.User_from)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
