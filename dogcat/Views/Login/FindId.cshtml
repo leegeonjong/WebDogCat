@@ -4,7 +4,7 @@
 @{
 }
 <h1>아이디 찾기</h1>
-<form method="post">
+<form method="POST" asp-controller="Login" asp-action="FindId">
     <label for="name">이름</label>
     <input type="text" name="inputname"><br />
 
@@ -12,8 +12,9 @@
     <input type="text" name="inputmail"> <button type="button">이메일 인증</button> <br />
 
     <label for="name">인증번호</label>
-    <input type="text" name="inputverify"><br />
+    <input type="text" id="inputverify"><br />
     <button>찾기</button><br />
     <a href="#">비밀번호 찾기</a> | <a href="#">회원가입</a>
 
 </form>
+

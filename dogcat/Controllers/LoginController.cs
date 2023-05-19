@@ -1,5 +1,7 @@
 ﻿using dogcat.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace dogcat.Controllers
 {
@@ -23,6 +25,11 @@ namespace dogcat.Controllers
         {
             return View();
         }
+
+
+
+
+
 
         [HttpPost]
         [ActionName("Login")]
@@ -57,5 +64,46 @@ namespace dogcat.Controllers
             HttpContext.Session.Remove("userid");
             return View("Logout");
         }
-    }
+        //ID찾기
+        public IActionResult FindId() //View
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("FindId")]
+        public IActionResult Find_Id()
+        {
+            string name = Request.Form["inputname"];
+            string mail = Request.Form["inputmail"];
+            var user = _context.Users.FirstOrDefault(x => x.Name.Equals(name.Trim()) && x.Mail.Equals(mail.Trim()));
+                
+            return View("ResultId", user);
+        }
+        
+        public IActionResult ResultId()
+        {
+            return View();
+        }
+
+        public IActionResult Findpw()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("FindPw")]
+        public IActionResult Find_Pw()
+        {
+            string userid = Request.Form["inputid"];
+            string mail = Request.Form["inputmail"];
+            var user = _context.Users.FirstOrDefault(x => x.Userid.Equals(userid.Trim()) && x.Mail.Equals(mail.Trim()));
+            return View("ResultPw", user);
+        }
+        public IActionResult ResultPw()
+        {
+            return View();
+        }
+
+    } // end controller
 }

@@ -4,6 +4,7 @@
 @{
 }
 <h1>비밀번호 찾기</h1>
+<form method="POST" asp-controller="Login" asp-action="FindPw">
 <label for="id">ID</label>
 <input type="text" name="inputid" />
 <br />
@@ -13,9 +14,10 @@
 <br />
 
 <label for="verify">인증번호 입력</label>
-<input type="text" name="inputverify" />
+<input type="text" id="inputverify" />
 <br />
 <button>비밀번호 찾기</button><br />
 <a href="#">아이디 찾기</a> | <a href="#">회원가입</a>
+</form>
 
 

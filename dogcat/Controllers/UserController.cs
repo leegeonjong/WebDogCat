@@ -9,7 +9,6 @@ namespace dogcat.Controllers
 {
     public class UserController : Controller
     {
-      
 
         //user repository
         private readonly IUserRepositories _userRepository;
@@ -25,34 +24,14 @@ namespace dogcat.Controllers
             return View();
         }
         //회원가입 View
-        [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
-        //ID찾기 View
-        public IActionResult FindId()
-        {
-            return View();
-        }
-        //ID찾기 결과 View
-        public IActionResult ResultId()
-        {
-            return View();
-        }
-        //PW찾기 결과 View
-        public IActionResult ResultPw()
-        {
-            return View();
-        }
-       //PW찾기 View
-       public IActionResult FindPw()
-        {
-            return View();
-        }
 
 
-      
+
+
 
         //회원가입 
         [HttpPost]
@@ -74,13 +53,7 @@ namespace dogcat.Controllers
 
         }
 
-        //ID찾기
-        //[HttpPost]
-        //[ActionName("FindId")]
-        //public async Task<IActionResult> FindId()
-        //{
-        //    string name = Request.Form[""]
-        //}
+
 
 
 
