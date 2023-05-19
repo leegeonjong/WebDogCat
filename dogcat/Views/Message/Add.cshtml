@@ -6,17 +6,17 @@
     <input type="hidden" asp-for="From_id" />
     <div class="mb-3 mt-3">
         <label for="image">받는사람:</label>
-        <input type="text" class="form-control"placeholder="내용을 입력하세요" asp-for="Mail">
+        <input type="text" class="form-control"placeholder="메일을 입력하세요" asp-for="Mail">
         <div><span class="text-danger">@TempData["MailError"]</span></div>
     </div>
     <div class="mb-3">
         <label for="name">제목:</label>
-        <input type="text" class="form-control" placeholder="이름를 입력하세요" asp-for="Title">
+        <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title">
         <div><span class="text-danger">@TempData["TitleError"]</span></div>
     </div>
     <div class="mb-3 mt-3">
         <label for="species">내용:</label>
-        <input type="textarea" class="form-control" placeholder="종류를 입력하세요" asp-for="Context">
+        <input type="textarea" class="form-control" placeholder="내용을 입력하세요" asp-for="Context">
         <div><span class="text-danger">@TempData["ContextError"]</span></div>
     </div>
 
