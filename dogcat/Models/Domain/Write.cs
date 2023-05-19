@@ -6,7 +6,6 @@ namespace dogcat.Models.Domain
     [Table("Write")]
     public class Write
     {
-        
         public long Id { get; set; }  // PK
         public string NickName { get; set; }  // NickName
         public string Title { get; set; }  // 게시글 제목

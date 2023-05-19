@@ -54,16 +54,6 @@ namespace dogcat.Controllers
                 NickName = HttpContext.Session.GetString("userNickName")
             };
             return View(addWriteRequest);
-            //addWriteRequest addWriteRequest = new()
-            //{
-            //    // TempData 에 담아둔 내용 꺼내가기  (꺼내가면 자동 소멸됨)
-            //    UserId = TempData["UserId"] != null ? (long)TempData["UserId"] : 0,
-            //    NickName = TempData["NickName"] as string ?? string.Empty,
-            //    Title = TempData["Title"] as string ?? string.Empty,
-            //    Context = TempData["Context"] as string ?? string.Empty,
-            //};
-
-            //return View();
         }
 
         // POST: /Board/Write
@@ -85,9 +75,10 @@ namespace dogcat.Controllers
 
             //    return RedirectToAction("Write");
             //}
-
+            int userId = HttpContext.Session.GetInt32("userId") ?? 0;
             var write = new Write
             {
+                UserId = userId,
                 NickName = addWriteRequest.NickName,
                 Category = addWriteRequest.Category,
                 Title = addWriteRequest.Title,
@@ -97,7 +88,7 @@ namespace dogcat.Controllers
 
             write = await writeRepository.AddAsync(write);
 
-            return RedirectToAction("Detail", new { id = write.Id });
+            return RedirectToAction("Detail", new { id = write.Id , NickName  = write.NickName });
         }
         //댓글작성
         [HttpPost]
@@ -172,8 +163,6 @@ namespace dogcat.Controllers
           
              var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows, category);
              return View(writes);
-            
-
         }
 
         // GET: /Board/Detail/{id}
@@ -196,7 +185,7 @@ namespace dogcat.Controllers
             {
                 comment = new();
             }
-
+            
             ViewData["Write"] = write;
             ViewData["Comment"] = comment;
 
