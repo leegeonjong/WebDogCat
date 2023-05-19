@@ -54,16 +54,6 @@ namespace dogcat.Controllers
                 NickName = HttpContext.Session.GetString("userNickName")
             };
             return View(addWriteRequest);
-            //addWriteRequest addWriteRequest = new()
-            //{
-            //    // TempData 에 담아둔 내용 꺼내가기  (꺼내가면 자동 소멸됨)
-            //    UserId = TempData["UserId"] != null ? (long)TempData["UserId"] : 0,
-            //    NickName = TempData["NickName"] as string ?? string.Empty,
-            //    Title = TempData["Title"] as string ?? string.Empty,
-            //    Context = TempData["Context"] as string ?? string.Empty,
-            //};
-
-            //return View();
         }
 
         // POST: /Board/Write
