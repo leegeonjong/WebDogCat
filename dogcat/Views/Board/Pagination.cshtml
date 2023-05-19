@@ -1,0 +1,59 @@
+﻿@{
+    long cnt = (long)ViewData["cnt"];  // 전체글개수
+    int page = (int)ViewData["page"];  // 현재 페이지
+    int totalPage = (int)ViewData["totalPage"];  // 총 '페이지' 수
+    int pageRows = (int)ViewData["pageRows"];  // 한 '페이지' 에 표시할 글 개수
+
+    // [페이징]
+    string url = (string)ViewData["url"];  // 목록 url
+    int writePages = (int)ViewData["writePages"]; // [페이징] 에 표시할 숫자 개수
+    int startPage = (int)ViewData["startPage"]; // [페이징] 에 표시할 시작 페이지
+    int endPage = (int)ViewData["endPage"]; // [페이징] 에 표시할 마지막 페이지
+
+}
+
+<!-- pagination -->
+<div class="container mt-1">
+    <ul class="pagination justify-content-center">
+        @* << 표시 여부 *@
+        @if (page > 1)
+        {
+            <li class="page-item"><a class="page-link" href="@url"><i class="fas fa-angle-double-left"></i></a></li>
+        }
+
+
+        @* < 표시 여부 *@
+        @if (startPage > 1)
+        {
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (startPage - 1))"><i class="fas fa-angle-left"></i></a></li>
+        }
+
+        @* [페이징] 안의 '숫자' 표시 *@
+        @if (totalPage > 1)
+        {
+            @for (int k = startPage; k <= endPage; k++)
+            {
+                @if (k != page)
+                {
+                    <li class="page-item"><a class="page-link" href="@(url + "?page=" + k)">@k</a></li>
+                }
+                else
+                {
+                    <li class="page-item active"><a class="page-link" href="javascript:void(0);">@k</a></li>
+                }
+            }
+        }
+
+        @* > 표시 여부 *@
+        @if (totalPage > endPage)
+        {
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (endPage + 1))"><i class="fas fa-angle-right"></i></a></li>
+        }
+        @* >> 표시 여부 *@
+        @if (page < totalPage)
+        {
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + totalPage)"><i class="fas fa-angle-double-right"></i></a></li>
+        }
+    </ul>
+</div>
+<!-- pagination -->

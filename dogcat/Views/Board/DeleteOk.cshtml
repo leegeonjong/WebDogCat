@@ -1,0 +1,18 @@
+﻿@*@model System.Int32*@
+@{
+
+}
+@if (Model <= 0)
+{
+    <script>
+        alert("삭제실패")
+        history.back();
+    </script>
+}
+else
+{
+    <script>
+        alert("삭제 성공!")
+        location.href = "/Board/List";
+    </script>
+}

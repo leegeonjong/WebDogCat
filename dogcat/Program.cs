@@ -20,8 +20,14 @@ namespace dogcat
             builder.Services.AddDbContext<DogcatDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DbName"))
             );
+            builder.Services.AddDbContext<DogcatDbContext>(options => options.UseSqlServer(
+            builder.Configuration.GetConnectionString("BoardDbConnectionString")
+        ));
 
             builder.Services.AddScoped<IPetRepositories, PetRepositories>();
+            builder.Services.AddScoped<IWriteRepository, WriteRepository>();
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+
 
             var app = builder.Build();
 

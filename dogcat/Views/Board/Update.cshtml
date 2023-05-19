@@ -1,0 +1,56 @@
+﻿@model dogcat.Models.ViewModels.EditWriteRequest
+
+@{
+    ViewData["Title"] = "수정";
+    int page = (int)ViewData["page"];
+}
+
+<h2>수정</h2>
+<hr>
+
+@if (Model != null)
+{
+    <div class="mb-3 mt-3 clearfix">
+        <span class="float-start me-2">id: @Model.Id</span>
+        <span class="float-end ms-4">작성일: @Model.Time</span>
+        <span class="float-end">조회수: @Model.ViewCnt</span>
+    </div>
+
+    <form method="POST">
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-3">
+            <label for="UserId">작성자:</label>
+            <span class="form-control" readonly>@Model.UserId</span>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="subject">제목:</label>
+            @* <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" value="@Model.Subject" required> *@
+            <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title" required>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="subject">카테고리:</label>
+            <input type="text" class="form-control" placeholder="z=카태고리를 입력하세요" asp-for="Category" required>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="content">내용:</label>
+            <textarea class="form-control" rows="5" placeholder="내용을 입력하세요" asp-for="Context"></textarea>
+        </div>
+
+        <!-- 하단 링크 -->
+        <div class="d-flex">
+            <button type="submit" class="btn btn-outline-dark">수정완료</button>
+            <button type="button" class="btn btn-outline-dark ms-1" onclick="history.back()">이전으로</button>
+            <a class="btn btn-outline-dark ms-1" asp-controller="Board" asp-action="List" asp-route-page="@(page)">목록</a>
+        </div>
+        <!-- 하단 링크 -->
+
+    </form>
+}
+else
+{
+    <script>
+        alert("데이터가 없습니다!");
+        history.back();
+    </script>
+}
+

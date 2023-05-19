@@ -14,7 +14,7 @@ namespace dogcat.Models.Domain
         public string? Image { get; set; }  // 게시글 이미지
 
         
-        public long UserId { get; set; }
+        public long UserId { get; set; } //작성자 Id
         public int ViewCnt { get; set; } //게시글 조회수
         public User User { get; set; } = null;  // 유저 FK
 

@@ -12,7 +12,7 @@ using dogcat.Data;
 namespace dogcat.Migrations
 {
     [DbContext(typeof(DogcatDbContext))]
-    [Migration("20230516073220_init")]
+    [Migration("20230517003014_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -227,6 +227,9 @@ namespace dogcat.Migrations
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("ViewCnt")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

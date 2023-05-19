@@ -4,17 +4,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace dogcat.Repositories
 {
-    public class writeRepository : IWriteRepository
+    public class WriteRepository : IWriteRepository
     {
         private readonly DogcatDbContext writeDbContext;
-        
-        public writeRepository(DogcatDbContext writeDbContext) //writeRepository 초기화
+
+        public WriteRepository(DogcatDbContext writeDbContext)
         {
             Console.WriteLine("WriteRepoitory() 생성");
             this.writeDbContext = writeDbContext;
         }
-
-        public async Task<Write> AddAsync(Write write) //새로운 글 추가
+        public async Task<Write> AddAsync(Write write)
         {
             await writeDbContext.Writes.AddAsync(write);
             await writeDbContext.SaveChangesAsync();
@@ -26,7 +25,7 @@ namespace dogcat.Repositories
             return await writeDbContext.Writes.CountAsync();
         }
 
-        public async Task<Write?> DeleteAsync(long id) //새로운 글 삭제
+        public async Task<Write?> DeleteAsync(long id)
         {
             var existingWrite = await writeDbContext.Writes.FindAsync(id);
             if (existingWrite != null)
@@ -48,6 +47,15 @@ namespace dogcat.Repositories
         {
             return await writeDbContext.Writes.FirstOrDefaultAsync(x => x.Id == id);
         }
+        //카테고리
+        public async Task<IEnumerable<Write>> GetByCategoryAsync(string category, int fromRow, int pageRows)
+        {
+            return await writeDbContext.Writes
+                .Where(x => x.Category == category)  // 카테고리가 일치하는 것만 선택
+                .OrderByDescending(x => x.Id)  // 최신순으로
+                .Take(pageRows)   // pageRows 개를 SELECT
+                .ToListAsync();
+        }
 
         public async Task<IEnumerable<Write>> GetFromRowAsync(int fromRow, int pageRows)
         {
@@ -62,8 +70,8 @@ namespace dogcat.Repositories
         {
             var existingWrite = await writeDbContext.Writes.FindAsync(id);
             if (existingWrite == null) return null;
-
-  
+            //
+            existingWrite.ViewCnt++;
             await writeDbContext.SaveChangesAsync();
             return existingWrite;
         }
@@ -74,8 +82,8 @@ namespace dogcat.Repositories
             if (existingWrite == null) return null;
 
             existingWrite.Title = write.Title;
-            existingWrite.Context = write.Context;
             existingWrite.Category = write.Category;
+            existingWrite.Context = write.Context;
 
             await writeDbContext.SaveChangesAsync();  // UPDATE
             return existingWrite;

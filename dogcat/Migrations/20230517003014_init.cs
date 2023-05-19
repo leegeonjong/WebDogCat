@@ -95,7 +95,8 @@ namespace dogcat.Migrations
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    ViewCnt = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

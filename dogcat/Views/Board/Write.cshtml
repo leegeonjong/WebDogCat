@@ -1,5 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model dogcat.Models.ViewModels.addWriteRequest
+
 @{
+    ViewData["Title"] = "글 작성";
+    int page = (int)ViewData["page"];
 }
+<h2>작성</h2>
+<hr>
+<form method="post">
+    <div class="mb-3">
+        <label for="name">작성자:</label>
+        <input type="text" class="form-control" placeholder="작성자를 입력하세요" asp-for="UserId">
+        <div><span class="text-danger">@TempData["NameError"]</span></div>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="subject">제목:</label>
+        <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title">
+        <div><span class="text-danger">@TempData["SubjectError"]</span></div>
+    </div>
+
+    <div class="mb-3 mt-3">
+        <label for="category">카테고리</label>
+        <textarea class="form-control" rows="5" placeholder="카테고리를 입력하세요" asp-for="Category"></textarea>
+    </div>
+
+    <div class="mb-3 mt-3">
+        <label for="content">내용:</label>
+        <textarea class="form-control" rows="5" placeholder="내용을 입력하세요" asp-for="Context"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-outline-dark">작성완료</button>
+    <a class="btn btn-outline-dark"
+       asp-controller="Board"
+       asp-action="List"
+       asp-route-page="@(page)">목록</a>
+</form>
