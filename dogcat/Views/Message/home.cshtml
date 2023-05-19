@@ -2,8 +2,7 @@
 @{
     ViewData["Title"] = "메시지함";
 }
-@if(Model != null)
-{
+
 <table class="table table-hover">
     <thead class="table-success">
         <tr>
@@ -12,7 +11,10 @@
             <th>수신 날짜</th>
         </tr>
     </thead>
+    @if (Model != null)
+    {
     <tbody>
+        
         @foreach(var m in Model)
         {
         <tr>
@@ -21,14 +23,11 @@
             <td>@m.Time</td>
         </tr>
         }
+        
     </tbody>
     <a class="btn btn-outline-dark" asp-controller="Message" asp-action="Add" asp-route-id="@Model[0].To_id">보내기</a>
+    }
+    
+    
 </table>
-}
-else
-{
-    <script>
-        alert("받은 쪽지가 없습니다");
-        history.back();
-    </script>
-}
+
