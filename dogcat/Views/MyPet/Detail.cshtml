@@ -1,0 +1,45 @@
+﻿@model dogcat.Models.Domain.Pet
+@{
+    ViewData["Title"] = "펫 상세보기";
+}
+<script src="~/js/Pet/delete.js"></script>
+@if (Model != null)
+{
+    <div class="mb-3 mt-3 clearfix">
+        <span class="float-start me-2">이름: @Model.Name</span>
+        <span class="float-end ms-4">관리자: @Model.Species</span>
+        <span class="float-end">Ban: @Model.Weight</span>
+    </div>
+    <form method="post" name="frmpet">
+        <input type="hidden" asp-for="Id">
+    </form>
+        <div class="mb-3">
+            <label for="name">이름:</label>
+            <span class="form-control">@Model.Name</span>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="species">종류:</label>
+            <span class="form-control">@Model.Species</span>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="old">나이(세):</label>
+            <span class="form-control">@Model.Old</span>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="weight">무게(kg):</label>
+            <span class="form-control">@Model.Weight</span>
+        </div>
+        
+     <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="Edit" asp-route-id="@Model.Id">수정</a>
+     <button type="submit" class="btn btn-outline-dark" id="delete">삭제</button>
+        
+    
+}
+else
+{
+    <script>
+        alert("없는 데이터입니다.");
+        history.back();
+    </script>
+}
+

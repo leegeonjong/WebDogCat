@@ -1,0 +1,33 @@
+﻿@model dogcat.Models.Domain.User
+@{
+    ViewData["Title"] = "수정";
+}
+
+<form method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label for="name">이름:</label>
+        <input type="text" asp-for="Name"/>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="userid">Id:</label>
+        <input type="text" asp-for="Userid"/>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="userid">Pw:</label>
+        <input type="text" asp-for="Pw"/>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="userid">NickName:</label>
+        <input type="text" asp-for="NickName" />
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="userid">PhoneNum:</label>
+        <input type="text" asp-for="PhoneNum" />
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="pw">Mail:</label>
+        <input type="text" asp-for="Mail" />
+    </div>
+    <button type="submit" class="btn btn-outline-dark">수정완료</button>
+</form>

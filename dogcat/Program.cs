@@ -25,6 +25,10 @@ namespace dogcat
         ));
 
             builder.Services.AddScoped<IPetRepositories, PetRepositories>();
+            builder.Services.AddScoped<IAdminRepositories, AdminRepositories>();
+            builder.Services.AddScoped<IUserRepositories, UserRepositories>();
+            builder.Services.AddScoped<IMessageRepositories, MessageRepositories>();
+            
             builder.Services.AddScoped<IWriteRepository, WriteRepository>();
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 

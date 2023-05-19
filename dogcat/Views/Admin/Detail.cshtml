@@ -1,0 +1,63 @@
+﻿@model dogcat.Models.Domain.User
+@{
+    ViewData["Title"] = "상세보기";
+}
+<script src= "~/js/Admin/Ban.js"></script>
+@if(Model != null)
+{
+    <div class="mb-3 mt-3 clearfix">
+        <span class="float-start me-2">이름: @Model.Name</span>
+        <span class="float-end ms-4">관리자: @Model.Admin</span>
+        <span class="float-end">Ban: @Model.Ban</span>
+    </div>
+    <form method="post" name="frmban">
+        <input type="hidden" asp-for="Id">
+    
+    <div class="mb-3">
+        <label for="name">이름:</label>
+        <span class="form-control">@Model.Name</span>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="userid">Id:</label>
+        <span class="form-control">@Model.Id</span>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="pw">Pw:</label>
+        <span class="form-control">@Model.Pw</span>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="nickname">닉네임:</label>
+        <span class="form-control">@Model.NickName</span>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="phonenum">전화번호:</label>
+        <span class="form-control">@Model.PhoneNum</span>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="mail">Mail:</label>
+        <span class="form-control">@Model.Mail</span>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="admin">관리자:</label>
+        <span class="form-control">@Model.Admin</span>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="ban">Ban:</label>
+        <span class="form-control">@Model.Ban</span>
+    </div>
+
+
+        <button type="button" class="btn btn-outline-dark" id="userban">밴</button>
+        <button type="button" class="btn btn-outline-dark" id="noban">해제</button>
+        <button type="button" class="btn btn-outline-dark ms-1" onclick="history.back()">이전으로</button>
+    </form>
+}
+else
+{
+    <script>
+        alert("없는 데이터입니다.");
+        history.back();
+    </script>
+}
+
+
