@@ -44,5 +44,13 @@ namespace dogcat.Repositories
             await _dogcatDbContext.SaveChangesAsync();
             return users;
         }
+        public async Task<User> AddUserAsync(User user) //가입
+        {
+            await _dogcatDbContext.Users.AddAsync(user);
+            await _dogcatDbContext.SaveChangesAsync();
+            return user;
+        }
+       
+      
     }
 }

@@ -23,7 +23,7 @@ namespace dogcat.Migrations
                     NickName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNum = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Admin = table.Column<bool>(type: "bit", nullable: false),
+                    Admin = table.Column<int>(type: "int", nullable: false),
                     Ban = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

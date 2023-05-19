@@ -16,7 +16,7 @@ namespace dogcat.Repositories
             var admin = await _dogcatDbContext.Users.FindAsync(id);
             if (admin != null)
             {
-                if (admin.Admin != true)
+                if (admin.Admin == 1)
                 {
                     var user = await _dogcatDbContext.Users.ToListAsync();
                     return user;
