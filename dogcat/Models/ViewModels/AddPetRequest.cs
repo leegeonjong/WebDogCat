@@ -15,7 +15,7 @@ namespace dogcat.Models.ViewModels
         public string? Image { get; set; }  // 펫 이미지
         public long Userid { get; set; }  // 유저 uid
 
-
+       
 
         public bool HasError { get; set; } = false;
         public string? ErrorName { get; set; }

@@ -1,6 +1,7 @@
 using dogcat.Data;
 using dogcat.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace dogcat
 {
@@ -41,6 +42,14 @@ namespace dogcat
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(builder.Environment.ContentRootPath, "MyFiles"))
+                ,
+                RequestPath = "/appfiles"
+            });
 
             app.UseRouting();
 

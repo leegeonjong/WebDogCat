@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "애완동물 등록";
 }
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Userid" />
     <div class="mb-3 mt-3">
         <label for="image">이미지:</label>
-        <input type="file" class="form-control" asp-for="Image">
+        <input type="file" class="form-control" name="uploadedFile">
     </div>
     <div class="mb-3">
         <label for="name">이름:</label>

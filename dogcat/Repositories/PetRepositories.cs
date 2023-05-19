@@ -17,12 +17,16 @@ namespace dogcat.Repositories
         {
            var list = await _dogcatDbContext.Pets.Where(s => s.UserId == id).ToListAsync();
             if (list.Count == 0) return null;
+            
             return list;
         }
 
         public async Task<Pet> GetAsync(long id)
         {
-            var pet = await _dogcatDbContext.Pets.FirstOrDefaultAsync(s => s.Id == id);
+            var pet = await _dogcatDbContext.Pets
+                                .Where(s => s.Id == id)
+                                .Include(u => u.PetImages)
+                                .FirstOrDefaultAsync();
             return pet;
         }
         
