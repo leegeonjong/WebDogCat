@@ -22,7 +22,7 @@ namespace dogcat
             );
 
             builder.Services.AddScoped<IPetRepositories, PetRepositories>();
-
+            builder.Services.AddScoped<IUserRepositories, UserRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

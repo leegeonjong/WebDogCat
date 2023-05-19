@@ -1,63 +1,87 @@
 ﻿using dogcat.Data;
 using dogcat.Models.Domain;
 using dogcat.Models.ViewModels;
+using dogcat.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 
 namespace dogcat.Controllers
 {
     public class UserController : Controller
     {
+      
 
-        private readonly DogcatDbContext _context;
-        public UserController(DogcatDbContext context) 
+        //user repository
+        private readonly IUserRepositories _userRepository;
+        //회원가입 시 사용할 controller
+        public UserController(IUserRepositories userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
         }
 
-        //로그인 폼
-        public IActionResult Login()
-        {
-            var userid = HttpContext.Session.GetString("userid");
-            return View((object)userid);
-        }
-        //메인 
+        //메인 View
         public IActionResult Index()
         {
             return View();
         }
-        //회원가입
+        //회원가입 View
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
-        [HttpPost]
-        [ActionName("Login")]
-        public IActionResult IsUser()
+        //ID찾기 View
+        public IActionResult FindId()
         {
-           string userid = Request.Form["userid"];
-           string userpw = Request.Form["userpassword"];
-            var user = _context.Users.FirstOrDefault(u => u.Userid.Equals(userid.Trim()) && u.Pw.Equals(userpw));
-            if (user != null)
-            {
-                //로그인 성공 시 , 세션에 정보 저장 (굳이 해야할까? 모르겠다)
-                HttpContext.Session.SetInt32("userName", (int)user.Id); //사용자 uid(고유번호)
-                HttpContext.Session.SetInt32("userId", user.Ban);  // 사용자 벤 여부 
-                HttpContext.Session.SetInt32("userAdmin", user.Admin); // 관리자 여부
-                //벤 유저 확인
-                if (user.Ban == 1)
-                {
-                    HttpContext.Session.Remove("userid");
-                }
-                return View("Index",user);  
-            }
-            return View("IsUser");
+            return View();
+        }
+        //ID찾기 결과 View
+        public IActionResult ResultId()
+        {
+            return View();
+        }
+        //PW찾기 결과 View
+        public IActionResult ResultPw()
+        {
+            return View();
+        }
+       //PW찾기 View
+       public IActionResult FindPw()
+        {
+            return View();
         }
 
-        public IActionResult Logout()
+
+      
+
+        //회원가입 
+        [HttpPost]
+        [ActionName("Register")]
+        public async  Task<IActionResult> Register(AddUserRequest addWriteRequest)
         {
-            HttpContext.Session.Remove("userid"); 
-            return View("Logout");
+            var user = new User()
+            {
+                Userid = addWriteRequest.Userid,
+                Pw = addWriteRequest.Pw,
+                Name = addWriteRequest.Name,
+                NickName = addWriteRequest.NickName,
+                PhoneNum = addWriteRequest.PhoneNum,
+                Mail = addWriteRequest.Mail,
+            };
+
+            user = await _userRepository.AddUserAsync(user);
+            return RedirectToAction("Index");
+
         }
+
+        //ID찾기
+        //[HttpPost]
+        //[ActionName("FindId")]
+        //public async Task<IActionResult> FindId()
+        //{
+        //    string name = Request.Form[""]
+        //}
+
 
 
 

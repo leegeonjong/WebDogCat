@@ -1,52 +1,45 @@
 ﻿@*
     회원가입    
 *@
+@model dogcat.Models.ViewModels.AddUserRequest
 @{
+    int phone_check = 0; // SMS인증 여부 인증 됐을 시 1
 }
 <h1>어서왕</h1>
-<form>
+<form method ="post" >
 @*ID입력*@
 <label for="Id">아이디</label>
-<input type="text" id="inputid" /> <br />
+<input type="text" asp-for="Userid" /> <br />
+    <div><span class="text-danger">@TempData["IdError"]</span></div>
 @*비밀번호*@
 <label for="Password">비밀번호</label>
-<input type="password" id="inputpassword" /><br />
+<input type="password" asp-for="Pw" /><br />
+    <div><span class="text-danger">@TempData["passwordError"]</span></div>
 @*비밀번호 확인*@
 <label for="Password2">비밀번호 확인</label>
 <input type="password" id="inputpassword2" /><br />
+    <div><span class="text-danger">@TempData["password2Error"]</span></div>
 @*닉네임*@
 <label for="Nick">NickName</label>
-<input type="text" id="inputnickname" /><br />
+<input type="text" asp-for="NickName" /><br />
+    <div><span class="text-danger">@TempData["NickNameError"]</span></div>
 @*이름*@
 <label for="Name">이름</label>
-<input type="text" id="inputname" /> <br />
-@*생년월일*@
-<label for="birth">생년월일</label>
-    <input type="text" id="yy" />
--<select id="mm" aria-label="월">
-    <option value="01">01</option>
-    <option value="02">02</option>
-    <option value="03">03</option>
-    <option value="04">04</option>
-    <option value="05">05</option>
-    <option value="06">06</option>
-    <option value="07">07</option>
-    <option value="08">08</option>
-    <option value="09">09</option>
-    <option value="10">10</option>
-    <option value="11">11</option>
-    <option value="12">12</option>
-</select>
--<input type="text" id="dd" /><br />
+<input type="text" asp-for="Name" /> <br />
+    <div><span class="text-danger">@TempData["NameError"]</span></div>
+@*메일*@
+<label for="mail">메일</label>
+<input type="text" asp-for="Mail" /> <br />
 @*연락처*@
+<input type="hidden" name="phone_check" value="@(phone_check)" />
 <label for="Tel">연락처</label>
-<input type="text" id="inputtel" /> <button type="button" id="verify_tel">인증번호 받기</button>
+<input type="text" asp-for="PhoneNum" /> <button type="button" name="verify_tel">인증번호 받기</button>
 <br />
 @*인증번호 입력
 <label for="verify">인증번호 입력</label>
 <input type="text" id="inputcode" />
 <br />*@
-<button type="button">가입하기</button>
+<button type="submit">가입하기</button>
 </form>
 
 

@@ -1,11 +1,11 @@
-﻿@*@*모델 지정 (이쪽이 맞냐?)*@
+﻿@*모델 지정 (이쪽이 맞냐?)*@
 @model dogcat.Models.Domain.User;
 
 @{
     ViewData["Title"] = "Home Page";
-    //로그인 정보 
-    int ban, admin,uid;
-    if(Model == null)
+    //로그인 정보
+    int ban, admin, uid;
+    if (Model == null)
     {
         ban = 0;
         admin = 0;
@@ -24,33 +24,33 @@
     <h1 class="display-4">Welcome</h1>
 
     <h1>어서와</h1>
-    @if(Model != null) // 로그인 했을 때
+    @if (Model != null) // 로그인 했을 때
     {
         <p>@(Model.Name)님 안녕하세요~!</p>
-        if(admin == 1) //관리자
+        if (admin == 1) //관리자
         {
             <p>===관리자 모드입니다===</p>
-            <a href ="#">회원관리</a>
-            <a href="/User/Logout">로그아웃</a>
+            <a href="#">회원관리</a>
+            <a href="/Login/Logout">로그아웃</a>
         }
-        else if(ban == 1) // 벤
+        else if (ban == 1) // 벤
         {
             <script>
                 alert("회원님은 지금 벤 상태 입니다. 자세한 내용은 관리자에게 문의하세요");
-                history.back();
+                location.href = "/Login/index";
             </script>
         }
         else // 유저
         {
-        <a href="/Login/Logout">로그아웃</a>
+            <a href="/Login/Logout">로그아웃</a>
         }
+    }// end if
 
-            
-    }
+
     else //로그인 x
     {
-    <a href="/Login/Login">로그인</a>
-    <a href="/User/Register">회원가입</a>
-        
+        <a href="/Login/Login">로그인</a>
+        <a asp-controller="User" asp-action="Register">회원가입</a>
+
     }
 </div>

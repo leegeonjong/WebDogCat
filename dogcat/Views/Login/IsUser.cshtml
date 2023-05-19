@@ -3,12 +3,12 @@
 *@
 @{
 }
-@if(Model == null)
+@if (Model == null)
 {
     <script>
         alert("존재하지 않는 회원 입니다.");
     </script>
 }
 <script>
-    location.href = "@Url.Action("Login","User")";
+    location.href = "@Url.Action("Login","Login")"; // method,controller
 </script>

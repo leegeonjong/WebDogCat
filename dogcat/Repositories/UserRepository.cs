@@ -5,26 +5,29 @@ namespace dogcat.Repositories
 {
     public class UserRepository : IUserRepositories
     {
-        private readonly DogcatDbContext dc_context;
-        public UserRepository(DogcatDbContext dc_context)
+        //여기서 sql동작 수행
+        private readonly DogcatDbContext db_context;
+        public UserRepository(DogcatDbContext db_context)
         {
             Console.WriteLine("유저Repo생성");
-            this.dc_context = dc_context;
+            this.db_context = db_context;
         }
-        public Task<User> AddUser(User user) //가입
+        public async Task<User> AddUserAsync(User user) //가입
+        {
+           await db_context.Users.AddAsync(user);
+            await db_context.SaveChangesAsync();
+            return user;
+        }
+        public async Task<User?> GetInfoAsync(long id) //수정,삭제시 필요 : 유저id 가져오기
         {
             throw new NotImplementedException();
         }
-        public async Task<User?> GetInfo(long id) //수정,삭제시 필요 : 유저id 가져오기
-        {
-            throw new NotImplementedException();
-        }
-        public Task<User> UpdateUser(long id)
+        public Task<User> UpdateUserAsync(long id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User?> DeleteUser(long id)
+        public Task<User?> DeleteUserAsync(long id)
         {
             throw new NotImplementedException();
         }
