@@ -73,6 +73,7 @@ namespace dogcat.Repositories
                 return await writeDbContext.Writes
                .Where(x => x.Category == category)  // 카테고리가 일치하는 것만 선택
                .OrderByDescending(x => x.Id)  // 최신순으로
+               .Skip(fromRow)    // fromRow 번째 부터
                .Take(pageRows)   // pageRows 개를 SELECT
                .ToListAsync();
             }

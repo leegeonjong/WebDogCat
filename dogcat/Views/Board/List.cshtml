@@ -28,36 +28,22 @@
     <span class="float-start me-2">총 @(cnt)개</span>
     <span class="float-start">page @(page)/@(totalPage)</span>
     <span class="float-end">
-        <form name="frmPageRows" id="frmPageRows" method="get">
-            <select class="form-select" name="pageRows" onchange="submitForm('frmPageRows')">
+        <form name="frmCombined" id="frmCombined" method="get" action="/Board/List">
+            <select class="form-select" name="pageRows">
                 <option value="10" selected="@(pageRows == 10)">10</option>
                 <option value="15" selected="@(pageRows == 15)">15</option>
                 <option value="20" selected="@(pageRows == 20)">20</option>
                 <option value="30" selected="@(pageRows == 30)">30</option>
             </select>
-            <select class="form-select" name="category" onchange="submitForm('frmPageRows')">
+            <select class="form-select" name="category">
                 <option value="전체" selected="@(category == "전체")">전체</option>
                 <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
                 <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
                 <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
             </select>
             <input type="hidden" name="page" value="@(page)">
-            <input type="hidden" name="category" value="@(category)">
         </form>
     </span>
-</div>
-
-
-<div class="mb-3">
-    <form name="frmCategory" id="frmCategory" method="get" action="/Board/List">
-        <select class="form-select" name="category" onchange="submitForm('frmCategory')">
-            <option value="전체" selected="@(category == "전체")">전체</option>
-            <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
-            <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
-            <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
-        </select>
-        <input type="hidden" name="page" value="@(page)">
-    </form>
 </div>
 
 
