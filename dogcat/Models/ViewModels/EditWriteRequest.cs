@@ -8,6 +8,7 @@
         public string? Context { get; set; }
         public int ViewCnt { get; set; }
         public string Category { get; set; }
-        public DateTime Time {get; set; }
+        public string? Image { get; set; }
+        public DateTime Time { get; set; }
     }
 }

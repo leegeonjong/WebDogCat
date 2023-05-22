@@ -16,8 +16,12 @@
         <span class="float-end">조회수: @Model.ViewCnt</span>
     </div>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
+        <div class="mb-3 mt-3">
+            <label for="image">이미지:</label>
+            <input type="file" class="form-control" name="uploadedFile">
+        </div>
         <div class="mb-3">
             <label for="UserId">작성자:</label>
             <span class="form-control" readonly>@Model.UserId</span>
