@@ -1,0 +1,43 @@
+﻿@model dogcat.Models.Domain.Pet
+@{
+    ViewData["Title"] = "권장 칼로리 알아보기";
+}
+
+
+<form method="post" action="/MyPet/CarculateCalorie">
+    <div class="mb-3">
+        <label for="Weight">몸무게:</label>
+        <input type="text" class="form-control" placeholder="몸무게를 입력하세요" name="Weight">
+        <div><span class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label for="ActiveLevel">활동수치 :</label>
+        <select class="form-select" name="ActiveLevel">
+            <option value="3.0" >4개월 미만</option>
+            <option value="2.5" >4~6개월</option>
+            <option value="2.0" >7~12개월</option>
+            <option value="1.2" >중성화를 했으며 보통 활동량</option>
+            <option value="1.4" >중성화를 하지 않았으면 보통 활동량</option>
+            <option value="1.0" >비만 경향</option>
+            <option value="0.8" >체중 감량</option>
+            <option value="1.6" >많은 활동량/임신중</option>
+        </select>
+        <div><span class="text-danger"></span></div>
+    </div>
+
+    <button type="submit" class="btn btn-outline-dark">권장 칼로리 계산</button>
+</form>
+
+
+<form method="post" action="/MyPet/CarculateCalorie">
+    <div class="mb-3">
+        <label for="Calorie">권장 칼로리:</label>
+        <input type="text" class="form-control" name="Calorie" readonly value="@ViewData["Calrorie"]">
+        <div><span class="text-danger"></span></div>
+    </div>
+</form>
+
+@if (ViewData["WarningMessage"] != null)
+{
+    <div class="alert alert-warning">@ViewData["WarningMessage"]</div>
+}

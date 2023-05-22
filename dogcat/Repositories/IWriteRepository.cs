@@ -23,6 +23,9 @@ namespace dogcat.Repositories
         // 특정 Id 의 글 조회수 +1 증가
         Task<Write?> IncViewCntAsync(long id);
 
+        Task<WriteImage?> AddimageAsync(WriteImage write);
+
+        Task<WriteImage?> UpdateimageAsync(string fileFullPath, string savedFileName, long id);
         Task<long> CountCategory(string Category);
 
    
@@ -32,8 +35,8 @@ namespace dogcat.Repositories
 
         Task<long> CountAsync(); //전체 글 개수
         Task<IEnumerable<Write>> GetFromRowAsync(int fromRow, int pageRows, string category); //페이지의 목록 읽어오기
-        //--------------카테고리로 분류하기
-    
+                                                                                              //--------------카테고리로 분류하기
+
     }
 }
 

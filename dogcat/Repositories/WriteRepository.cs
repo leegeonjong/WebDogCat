@@ -1,4 +1,5 @@
-﻿using dogcat.Data;
+﻿using Azure.Core;
+using dogcat.Data;
 using dogcat.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ namespace dogcat.Repositories
         {
             Console.WriteLine("WriteRepoitory() 생성");
             this.writeDbContext = writeDbContext;
-                   }
+        }
         public async Task<Write> AddAsync(Write write)
         {
             await writeDbContext.Writes.AddAsync(write);
@@ -52,8 +53,10 @@ namespace dogcat.Repositories
         {
             return await writeDbContext.Writes.FirstOrDefaultAsync(x => x.Id == id);
         }
+
+
         //카테고리
-    
+
 
         public async Task<IEnumerable<Write>> GetFromRowAsync(int fromRow, int pageRows, string category)
         {
@@ -93,9 +96,25 @@ namespace dogcat.Repositories
             existingWrite.Title = write.Title;
             existingWrite.Category = write.Category;
             existingWrite.Context = write.Context;
+            existingWrite.Image = write.Image;
 
             await writeDbContext.SaveChangesAsync();  // UPDATE
             return existingWrite;
+        }
+
+        public async Task<WriteImage?> AddimageAsync(WriteImage write)
+        {
+            await writeDbContext.Images.AddAsync(write);
+            await writeDbContext.SaveChangesAsync();
+            return write;
+        }
+        public async Task<WriteImage?> UpdateimageAsync(string fileFullPath, string savedFileName, long id)
+        {
+            var write = await writeDbContext.Images.FirstOrDefaultAsync(x => x.WriteId == id);
+            if (write == null) return null;
+            write.O_image = fileFullPath;
+            write.D_image = savedFileName;
+            return write;
         }
     }
 }
