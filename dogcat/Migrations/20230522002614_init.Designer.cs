@@ -12,7 +12,7 @@ using dogcat.Data;
 namespace dogcat.Migrations
 {
     [DbContext(typeof(DogcatDbContext))]
-    [Migration("20230519083050_init")]
+    [Migration("20230522002614_init")]
     partial class init
     {
         /// <inheritdoc />
