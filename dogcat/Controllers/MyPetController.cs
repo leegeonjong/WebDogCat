@@ -38,11 +38,52 @@ namespace dogcat.Controllers
         }
         [HttpPost]
         [ActionName("Edit")]
-        public async Task<IActionResult> Edit(Pet pet)
+        public async Task<IActionResult> Edit(Pet pet, IList<IFormFile> uploadedFile)
         {
-            var pets = await _petRepositories.PetupdateAsync(pet);
-            pets.RequestPath = UploadDir + pet.Image;
-            return RedirectToAction("Detail", new {id = pet.Id});
+            if(uploadedFile == null)
+            {
+                await _petRepositories.PetupdateAsync(pet);
+                return RedirectToAction("Detail", new {id = pet.Id});
+            }
+            else
+            {
+                pet.Image = uploadedFile[0].FileName;
+                pet.RequestPath = $"/appfiles/{pet.Image}";
+                await _petRepositories.PetupdateAsync(pet);
+                foreach (var formFile in uploadedFile)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        string savedFileName = formFile.FileName;  // 저장할 파일명
+                        var fileFullPath = Path.Combine(UploadDir, savedFileName);
+
+
+                        // 파일명이 이미 존재하는 경우 파일명 변경
+                        // face01.png => face01(1).png => face01(2).png => ...
+                        int filecnt = 1;
+                        while (new FileInfo(fileFullPath).Exists)
+                        {
+                            var idx = formFile.FileName.LastIndexOf(".");
+                            if (idx > -1)
+                            {
+                                var left = formFile.FileName.Substring(0, idx);
+                                savedFileName = left + string.Format("({0})", filecnt++) + formFile.FileName.Substring(idx);
+                            }
+                            else
+                            {
+                                savedFileName = formFile.FileName + string.Format("({0})", filecnt++);
+                            }
+
+                            fileFullPath = Path.Combine(UploadDir, savedFileName);
+                        }
+                        using FileStream stream = new(fileFullPath, FileMode.Create);
+                        await formFile.CopyToAsync(stream);
+                        
+                        await _petRepositories.UpdateimageAsync(fileFullPath, savedFileName, pet.Id);
+                    }
+                }
+                return RedirectToAction("Detail", new { id = pet.Id });
+            }
         }
         [HttpPost]
         [ActionName("Detail")]

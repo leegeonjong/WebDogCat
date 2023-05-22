@@ -23,5 +23,8 @@ namespace dogcat.Models.Domain
 
         public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
 
+        [NotMapped]
+        public string? RequestPath { get; set; }  // 저장된 파일에 대한 요청 경로 (url)
+
     }
 }

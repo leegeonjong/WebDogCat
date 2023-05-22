@@ -23,7 +23,9 @@ namespace dogcat.Repositories
         // 특정 Id 의 글 조회수 +1 증가
         Task<Write?> IncViewCntAsync(long id);
 
-        
+        Task<WriteImage?> AddimageAsync(WriteImage write);
+
+        Task<WriteImage?> UpdateimageAsync(string fileFullPath, string savedFileName, long id);
 
         //------------------------------------
         //페이징

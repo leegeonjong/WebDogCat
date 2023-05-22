@@ -54,6 +54,7 @@ namespace dogcat.Repositories
                 pets.Species = pet.Species;
                 pets.Old = pet.Old;
                 pets.Weight = pet.Weight;
+                pets.Image = pet.Image;
             }
             await _dogcatDbContext.SaveChangesAsync();
             return pets;
@@ -62,6 +63,18 @@ namespace dogcat.Repositories
         public async Task<PetImage?> AddimageAsync(PetImage pet) 
         {
             await _dogcatDbContext.PetImages.AddAsync(pet);
+            await _dogcatDbContext.SaveChangesAsync();
+            return pet;
+        }
+        public async Task<PetImage?> UpdateimageAsync(string fileFullPath, string savedFileName, long pets)
+        {
+            var pet = await _dogcatDbContext.PetImages.FirstOrDefaultAsync(x => x.PetId == pets);
+            if (pets == null) return null;
+            else
+            {
+                pet.O_image = fileFullPath;
+                pet.D_image = savedFileName;
+            }
             await _dogcatDbContext.SaveChangesAsync();
             return pet;
         }
