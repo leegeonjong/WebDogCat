@@ -6,34 +6,40 @@
     int phone_check = 0; // SMS인증 여부 인증 됐을 시 1
 }
 <h1>어서왕</h1>
-<form method ="post" >
+
+<form method ="post">
+ @*인증여부 체크 0:false 1:true*@
+    <input type="hidden" id="check" name="checkmail" value="0" style="display:none"   />
 @*ID입력*@
 <label for="Id">아이디</label>
 <input type="text" asp-for="Userid" /> <br />
-    <div><span class="text-danger">@TempData["IdError"]</span></div>
+    <p id="userId">Valid</p>
 @*비밀번호*@
 <label for="Password">비밀번호</label>
 <input type="password" asp-for="Pw" /><br />
-    <div><span class="text-danger">@TempData["passwordError"]</span></div>
+    <p id="userPassword">Valid</p>
 @*비밀번호 확인*@
 <label for="Password2">비밀번호 확인</label>
 <input type="password" id="inputpassword2" /><br />
-    <div><span class="text-danger">@TempData["password2Error"]</span></div>
+    <p id="userPassword2">Valid</p>
 @*닉네임*@
 <label for="Nick">NickName</label>
 <input type="text" asp-for="NickName" /><br />
-    <div><span class="text-danger">@TempData["NickNameError"]</span></div>
+    <p id="userNickName">Valid</p>
 @*이름*@
 <label for="Name">이름</label>
 <input type="text" asp-for="Name" /> <br />
-    <div><span class="text-danger">@TempData["NameError"]</span></div>
+    <p id="Name">Valid</p>
 @*메일*@
 <label for="mail">메일</label>
 <input type="text" asp-for="Mail" /> <br />
+    <p id="userMail">Valid</p>
+<br />
 @*연락처*@
 <input type="hidden" name="phone_check" value="@(phone_check)" />
 <label for="Tel">연락처</label>
-<input type="text" asp-for="PhoneNum" /> <button type="button" name="verify_tel">인증번호 받기</button>
+<input type="text" asp-for="PhoneNum" /> <button type="button" name="verify_tel">인증번호 받기</button> <br />
+    <p id="userTel">Valid</p>
 <br />
 @*인증번호 입력
 <label for="verify">인증번호 입력</label>

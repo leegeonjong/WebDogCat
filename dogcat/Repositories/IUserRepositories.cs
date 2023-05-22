@@ -11,7 +11,7 @@ namespace dogcat.Repositories
        
         //회원가입
         Task<User> AddUserAsync(User user);
-
+        Task<User> FindUser(string id, string mail,string pw); // 비밀번호 찾기
         Task<User?> DeleteAsync(long id);  // 유저 탈퇴
     }
 }

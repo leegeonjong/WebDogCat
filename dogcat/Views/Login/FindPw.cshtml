@@ -1,8 +1,10 @@
-﻿@*
+﻿@model dogcat.Controllers.LoginController
+@*
     비밀번호 찾기
 *@
 @{
 }
+<script src="~/js/User/manage_user.js"></script>
 <h1>비밀번호 찾기</h1>
 <form method="POST" asp-controller="Login" asp-action="FindPw">
 <label for="id">ID</label>
@@ -10,14 +12,17 @@
 <br />
 
 <label for="mail">이메일</label>
-<input type="text" name="inputmail" /> <button type="button">이메일 인증</button>
+    <input type="text" name="inputmail" id="input_mail" />
+    <button type="button" id="SendMail">이메일 인증</button>
 <br />
 
 <label for="verify">인증번호 입력</label>
 <input type="text" id="inputverify" />
 <br />
-<button>비밀번호 찾기</button><br />
+<button id="SendPw">비밀번호 찾기</button><br />
 <a href="#">아이디 찾기</a> | <a href="#">회원가입</a>
 </form>
+
+
 
 

@@ -1,12 +1,23 @@
-﻿using dogcat.Data;
+﻿using Azure.Core;
+using dogcat.Data;
+using dogcat.Models.Domain;
+using dogcat.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Net.Mail;
 using System.Runtime.InteropServices;
 
 namespace dogcat.Controllers
 {
     public class LoginController : Controller
     {
+        //이메일 인증 
+        public string Result { get; set; }
+        public string RealPassword { get; set; }
+        //이메일인증에 사용할 것들
+        EmailVerify mail = new();
+        //public static Random _vcode = new Random(); // 인증번호 
         //DbContext
         private readonly DogcatDbContext _context;
         //controller 생성자
@@ -32,7 +43,7 @@ namespace dogcat.Controllers
 
 
         [HttpPost]
-        [ActionName("Login")]
+        [ActionName("FindId")]
         public IActionResult IsUser()
         {
             string userid = Request.Form["userid"];
@@ -59,6 +70,50 @@ namespace dogcat.Controllers
             return View("IsUser");
 
         }
+
+        //fetch API 처리하는 액션 메소드 작성
+        
+        //메일 발송(인증번호)
+        [HttpPost]
+        [ActionName("Send")]
+        public string SendMail(string input_mail) 
+        {
+            // 이메일 보내는 사람의 구글 이메일 주소
+            string fromEmail = "lateaksoo@gmail.com";
+            // 이메일 보내는 사람의 구글 앱 비밀번호 
+            string fromPassword = "hikhvuxhscwwacew";
+            // 이메일 받는 사람의 이메일 주소
+            string toEmail = input_mail; //Request.Form["inputmail"];
+            // 이메일 제목
+            string subject = "이메일 인증번호 안내 입니다.";
+            //인증번호 (랜덤숫자 6자리)
+            RealPassword = ((int)Math.Floor(new Random().NextDouble() * 10000000)).ToString();
+            // 이메일 내용
+            string body = $"인증번호 안내 : {RealPassword}";
+            // 이메일 메시지 객체 생성
+            MailMessage message = new MailMessage();
+            
+            message.To.Add(toEmail);
+            message.From = new MailAddress(fromEmail);
+            message.Subject = subject;
+            message.Body = body;
+            // 이메일 메시지 보내기
+            using (var client = new SmtpClient())
+            {
+                client.EnableSsl = true;
+                client.Host = "smtp.gmail.com";
+                client.Port = 587;
+                client.Credentials = new NetworkCredential(fromEmail, fromPassword);
+                client.Send(message);
+            }
+          
+
+            Result = "ok";
+            
+            return Result;
+        }
+
+
 
         public IActionResult Logout()
         {
@@ -94,16 +149,30 @@ namespace dogcat.Controllers
 
         [HttpPost]
         [ActionName("FindPw")]
-        public IActionResult Find_Pw()
+        public async Task<IActionResult> Find_Pw()
         {
             string userid = Request.Form["inputid"];
             string mail = Request.Form["inputmail"];
-            var user = _context.Users.FirstOrDefault(x => x.Userid.Equals(userid.Trim()) && x.Mail.Equals(mail.Trim()));
-            return View("ResultPw", user);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Userid== userid.Trim() && x.Mail== (mail.Trim()));
+            return RedirectToAction("ResultPw", user);
+
         }
-        public IActionResult ResultPw()
+        
+        public IActionResult ResultPw(User user)
         {
             return View();
+        }
+
+        [HttpPost]
+        [ActionName("ResultPw")]
+        public IActionResult ResultPw2(User user)
+        {
+            string new_pw = Request.Form["pw"];
+            var _user= _context.Users.FirstOrDefault(x => x.Id == user.Id);
+            _user.Pw = new_pw;
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+            
         }
 
     } // end controller

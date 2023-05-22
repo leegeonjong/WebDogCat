@@ -7,7 +7,7 @@ namespace dogcat.Models.Domain
     {
         public string Email { get; set; } // 이메일 
         public string InputPassword { get; set; } // 인증번호
-        public string RealPassword { get; set; }
-    
+        public string RealPassword { get; set; } //사용자 비밀번호
+        
 }
 }

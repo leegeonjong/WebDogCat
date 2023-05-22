@@ -1,5 +1,6 @@
 ﻿using dogcat.Data;
 using dogcat.Models.Domain;
+using dogcat.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace dogcat.Repositories
@@ -50,7 +51,18 @@ namespace dogcat.Repositories
             await _dogcatDbContext.SaveChangesAsync();
             return user;
         }
-       
-      
+
+
+
+        public async Task<User> FindUser(string id, string mail) //비밀번호 찾기 1/2
+        {
+           User target = await _dogcatDbContext.Users.FirstOrDefaultAsync(x=>x.Userid == id && x.Mail == mail);
+            return target;
+        }
+
+        public Task<User> FindUser(string id, string mail, string pw)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,15 +1,23 @@
-﻿@*
+﻿@model dogcat.Controllers.LoginController
+@*
     ID찾기
 *@
 @{
+   
 }
+
 <h1>아이디 찾기</h1>
+<script src="~/js/User/manage_user.js"></script>
+
 <form method="POST" asp-controller="Login" asp-action="FindId">
     <label for="name">이름</label>
-    <input type="text" name="inputname"><br />
-
+    <input type="text" name="inputname" id="input_name"><br />
+        
     <label for="mail">이메일</label>
-    <input type="text" name="inputmail"> <button type="button">이메일 인증</button> <br />
+    <input type="text" name="inputmail" id="input_mail">
+    <input type="hidden" name="ischecked" id="check" value="0" style="display:none" />
+    <button type="button" id="SendMail">이메일 인증</button> <br />
+   
 
     <label for="name">인증번호</label>
     <input type="text" id="inputverify"><br />
@@ -18,3 +26,10 @@
 
 </form>
 
+@*<script>
+    function check(){
+        if(document.getElementById('inputverify').value != @pw){
+            alert("인증번호 불일치");
+        }
+    }
+</script>*@

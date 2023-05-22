@@ -12,11 +12,12 @@ namespace dogcat.Controllers
 
         //user repository
         private readonly IUserRepositories _userRepository;
-        //회원가입 시 사용할 controller
+        //controller
         public UserController(IUserRepositories userRepository)
         {
             _userRepository = userRepository;
         }
+
 
         //메인 View
         public IActionResult Index()
@@ -36,7 +37,7 @@ namespace dogcat.Controllers
         //회원가입 
         [HttpPost]
         [ActionName("Register")]
-        public async  Task<IActionResult> Register(AddUserRequest addWriteRequest)
+        public async Task<IActionResult> Register(AddUserRequest addWriteRequest)
         {
             var user = new User()
             {
@@ -50,6 +51,21 @@ namespace dogcat.Controllers
 
             user = await _userRepository.AddUserAsync(user);
             return RedirectToAction("Index");
+
+        }
+
+        //비밀번호 찾기 (수정)
+        [HttpPost]
+        [ActionName("UpdatePw")]
+        public async Task<IActionResult> UpdatePw(EditPwRequest request)
+        {
+            var user = new User()
+            {
+                Pw = request.NewPassword
+            };
+            
+            return RedirectToAction("Index");
+
 
         }
 
