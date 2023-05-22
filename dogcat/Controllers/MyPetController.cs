@@ -213,5 +213,39 @@ namespace dogcat.Controllers
                 return RedirectToAction("Detail", new { id = pets.Id });
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> CarculateCalorie()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CarculateCalorie(double weight, double ActiveLevel)
+        {
+            if (weight != 0 && ActiveLevel != 0)
+            {
+                //RER : 기초대사량
+                var RER = 0.0;
+                //기초대사량 구하기
+                if (weight > 2.0)
+                {
+                    RER = 70 * (weight * 0.75);
+                }
+                else
+                {
+                    RER = 30 * weight + 70;
+                }
+
+                //칼로리 구하기
+                var Calrorie = RER * ActiveLevel;
+                ViewData["Calrorie"] = Calrorie + " kcal";
+            }
+            else
+            {
+                ViewData["WarningMessage"] = "몸무게와 활동 수치를 모두 입력해주세요.";
+            }
+            return View();
+        }
     }
 }
