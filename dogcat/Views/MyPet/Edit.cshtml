@@ -1,12 +1,9 @@
 ﻿@model dogcat.Models.Domain.Pet
 @{
 }
-<form method="post" name="frmpet" enctype="multipart/form-data">
+<form method="post" name="frmpet">
     <input type="hidden" asp-for="Id">
-    <div class="mb-3 mt-3">
-        <label for="image">이미지:</label>
-        <input type="file" class="form-control" name="uploadedFile">
-    </div>
+
     <div class="mb-3">
         <label for="name">이름:</label>
         <input type="text" class="form-control" asp-for="Name"/>

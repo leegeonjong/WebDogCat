@@ -11,16 +11,13 @@ namespace dogcat.Controllers
     {
         private readonly IWriteRepository writeRepository;
         private readonly ICommentRepository commentRepository;
-        public string UploadDir { get; set; }
-        public BoardController(IWriteRepository writeRepository, ICommentRepository commentRepository, IWebHostEnvironment env)
+
+        public BoardController(IWriteRepository writeRepository, ICommentRepository commentRepository)
         {
             Console.WriteLine("BoardController() 생성");
             this.writeRepository = writeRepository;
             Console.WriteLine("BoardController() 생성");
             this.commentRepository = commentRepository;
-            UploadDir = Path.Combine(env.ContentRootPath, "MyFiles");
-            Console.WriteLine("aaa" + UploadDir);
-
         }
 
         //User 여부 판별 
@@ -84,7 +81,7 @@ namespace dogcat.Controllers
         // POST: /Board/Write
         [HttpPost]
         [ActionName("Write")]
-        public async Task<IActionResult> Add(addWriteRequest addWriteRequest, IList<IFormFile> uploadedFile)
+        public async Task<IActionResult> Add(addWriteRequest addWriteRequest)
         {
             //// Validation
             //addWriteRequest.Validate();
@@ -100,83 +97,20 @@ namespace dogcat.Controllers
 
             //    return RedirectToAction("Write");
             //}
-            if (uploadedFile.Count != 0)
+            int userId = HttpContext.Session.GetInt32("userId") ?? 0;
+            var write = new Write
             {
-                int userId = HttpContext.Session.GetInt32("userId") ?? 0;
-                var write = new Write
-                {
-                    UserId = userId,
-                    NickName = addWriteRequest.NickName,
-                    Category = addWriteRequest.Category,
-                    Title = addWriteRequest.Title,
-                    Context = addWriteRequest.Context,
-                    Image = uploadedFile[0].FileName,
-                    Time = DateTime.Now,
-                };
+                UserId = userId,
+                NickName = addWriteRequest.NickName,
+                Category = addWriteRequest.Category,
+                Title = addWriteRequest.Title,
+                Context = addWriteRequest.Context,
+                Time = DateTime.Now,
+            };
 
-                write = await writeRepository.AddAsync(write);
-                DirectoryInfo di = new(UploadDir);
-                // 없는 경우 디렉토리 생성
-                if (di.Exists == false) di.Create();
+            write = await writeRepository.AddAsync(write);
 
-                foreach (var formFile in uploadedFile)
-                {
-                    if (formFile.Length > 0)
-                    {
-                        string savedFileName = formFile.FileName;  // 저장할 파일명
-                        var fileFullPath = Path.Combine(UploadDir, savedFileName);
-
-
-                        // 파일명이 이미 존재하는 경우 파일명 변경
-                        // face01.png => face01(1).png => face01(2).png => ...
-                        int filecnt = 1;
-                        while (new FileInfo(fileFullPath).Exists)
-                        {
-                            var idx = formFile.FileName.LastIndexOf(".");
-                            if (idx > -1)
-                            {
-                                var left = formFile.FileName.Substring(0, idx);
-                                savedFileName = left + string.Format("({0})", filecnt++) + formFile.FileName.Substring(idx);
-                            }
-                            else
-                            {
-                                savedFileName = formFile.FileName + string.Format("({0})", filecnt++);
-                            }
-
-                            fileFullPath = Path.Combine(UploadDir, savedFileName);
-                        }
-                        using FileStream stream = new(fileFullPath, FileMode.Create);
-                        await formFile.CopyToAsync(stream);
-
-                        await writeRepository.AddimageAsync(new()
-                        {
-                            O_image = fileFullPath,
-                            D_image = savedFileName,
-                            WriteId = write.Id,
-                        });
-                    }
-                }
-                return RedirectToAction("Detail", new { id = write.Id, NickName = write.NickName });
-            }
-
-            
-            else
-            {
-                int userId = HttpContext.Session.GetInt32("userId") ?? 0;
-                var write = new Write
-                {
-                    UserId = userId,
-                    NickName = addWriteRequest.NickName,
-                    Category = addWriteRequest.Category,
-                    Title = addWriteRequest.Title,
-                    Context = addWriteRequest.Context,
-                    Time = DateTime.Now,
-                };
-
-                write = await writeRepository.AddAsync(write);
-
-                return RedirectToAction("Detail", new { id = write.Id, NickName = write.NickName });
-            }
+            return RedirectToAction("Detail", new { id = write.Id, NickName = write.NickName });
         }
         //댓글작성
         [HttpPost]
@@ -260,7 +194,6 @@ namespace dogcat.Controllers
             // 조회수 증가
             var write = await writeRepository.IncViewCntAsync(id);
             var comment = await commentRepository.CommentGetAsync(id);
-            var Request = await writeRepository.GetAsync(id);
             string nickname = HttpContext.Session.GetString("userNickName");
             int userId = HttpContext.Session.GetInt32("userId") ?? 0;
             // 페이징
@@ -280,9 +213,6 @@ namespace dogcat.Controllers
             ViewData["UserId"] = userId;
             ViewData["Comment"] = comment;
             ViewData["Nickname"] = nickname;
-            
-            string path = Request.RequestPath = $"/appfiles/{Request.Image}";
-            ViewData["RequestPath"] = path;
 
             return View();
         }
@@ -303,7 +233,6 @@ namespace dogcat.Controllers
                 Category = write.Category,
                 Context = write.Context,
                 Time = write.Time,
-                Image = write.Image,
                 ViewCnt = write.ViewCnt,
             };
 
@@ -314,7 +243,7 @@ namespace dogcat.Controllers
 
         // POST: /Board/Update
         [HttpPost]
-        public async Task<IActionResult> Update(EditWriteRequest request , IList<IFormFile> uploadedFile)
+        public async Task<IActionResult> Update(EditWriteRequest request)
         {
             var write = new Write
             {
@@ -322,7 +251,6 @@ namespace dogcat.Controllers
                 Title = request.Title,
                 Category = request.Category, // 카테고리 값을 업데이트합니다.   
                 Context = request.Context,
-                Image = uploadedFile[0].FileName,
             };
             var updateWrite = await writeRepository.UpdateAsync(write);
 
@@ -331,39 +259,7 @@ namespace dogcat.Controllers
                 // 수정 실패하면 List 로
                 return RedirectToAction("List");
             }
-            foreach (var formFile in uploadedFile)
-            {
-                if (formFile.Length > 0)
-                {
-                    string savedFileName = formFile.FileName;  // 저장할 파일명
-                    var fileFullPath = Path.Combine(UploadDir, savedFileName);
 
-
-                    // 파일명이 이미 존재하는 경우 파일명 변경
-                    // face01.png => face01(1).png => face01(2).png => ...
-                    int filecnt = 1;
-                    while (new FileInfo(fileFullPath).Exists)
-                    {
-                        var idx = formFile.FileName.LastIndexOf(".");
-                        if (idx > -1)
-                        {
-                            var left = formFile.FileName.Substring(0, idx);
-                            savedFileName = left + string.Format("({0})", filecnt++) + formFile.FileName.Substring(idx);
-                        }
-                        else
-                        {
-                            savedFileName = formFile.FileName + string.Format("({0})", filecnt++);
-                        }
-
-                        fileFullPath = Path.Combine(UploadDir, savedFileName);
-                    }
-                    using FileStream stream = new(fileFullPath, FileMode.Create);
-                    await formFile.CopyToAsync(stream);
-
-                    await writeRepository.UpdateimageAsync(fileFullPath, savedFileName, request.Id);
-                    
-                }
-            }
             return RedirectToAction("Detail", new { id = request.Id });
 
         }

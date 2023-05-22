@@ -9,7 +9,6 @@ namespace dogcat.Models.ViewModels
         public string NickName { get; set; }
         public string Category { get; set; }
         public string? Context { get; set; }
-        public string? Image { get; set; }
 
         // Validation
         public bool HasError { get; set; } = false;  // 검증오류존재여부

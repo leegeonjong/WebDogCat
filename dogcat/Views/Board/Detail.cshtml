@@ -9,7 +9,6 @@
     int ViewCnt = write.ViewCnt;
     string Context = write.Context;
     string WriterNickName = write.NickName;
-    string Path = write.RequestPath;
 }
 @{
     string Nickname = (string)ViewData["Nickname"];
@@ -39,12 +38,6 @@
         <form method="POST" name="frmDelete" asp-controller="Board" asp-action="Delete">
             <input type="hidden" asp-for="@WriteId">
         </form>
-        @if (Path != null)
-        {
-            <div class="mb-3">
-                <img src="@Path" class="img-thumbnail">
-            </div>
-        }
         <div class="mb-3">
             <label for="name" readonly>작성자:</label>
             <span class="form-control">@WriterNickName</span>

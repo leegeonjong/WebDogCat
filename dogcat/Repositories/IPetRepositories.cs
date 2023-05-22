@@ -16,7 +16,5 @@ namespace dogcat.Repositories
         Task<Pet> AddPetAsync(Pet pet);  // 펫 등록하기
 
         Task<PetImage?> AddimageAsync(PetImage pet);
-
-        Task<PetImage?> UpdateimageAsync(string fileFullPath, string savedFileName, long pets);
     }
 }
