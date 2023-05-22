@@ -21,11 +21,15 @@
         <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title">
         <div><span class="text-danger">@TempData["SubjectError"]</span></div>
     </div>
-
-    <div class="mb-3 mt-3">
-        <label for="category">카테고리</label>
-        <textarea class="form-control" rows="5" placeholder="카테고리를 입력하세요" asp-for="Category"></textarea>
-    </div>
+<div class="mb-3 mt-3">
+    <label for="category">카테고리</label>
+    <select class="form-select" asp-for="Category">
+        <option value="전체" selected>전체</option>
+        <option value="카테고리1">카테고리1</option>
+        <option value="카테고리2">카테고리2</option>
+        <option value="카테고리3">카테고리3</option>
+    </select>
+</div>
 
     <div class="mb-3 mt-3">
         <label for="content">내용:</label>

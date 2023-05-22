@@ -97,7 +97,7 @@
         @* < 표시 여부 *@
         @if (startPage > 1)
         {
-            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (startPage - 1)+"&category="+category)"><i class="fas fa-angle-left"></i></a></li>
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (startPage - 1)+"&category="+category + "&pageRows="+pageRows)"><i class="fas fa-angle-left"></i></a></li>
         }
 
         @* [페이징] 안의 '숫자' 표시 *@
@@ -107,7 +107,7 @@
             {
                 @if (k != page)
                 {
-                    <li class="page-item"><a class="page-link" href="@(url + "?page=" + k + "&category=" + category)">@k</a></li>
+                    <li class="page-item"><a class="page-link" href="@(url + "?page=" + k + "&category="+category + "&pageRows="+pageRows)">@k</a></li>
                 }
                 else
                 {
@@ -119,12 +119,12 @@
         @* > 표시 여부 *@
         @if (totalPage > endPage)
         {
-            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (endPage + 1))"><i class="fas fa-angle-right"></i></a></li>
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (endPage + 1) + "&category="+category + "&pageRows="+pageRows)"><i class="fas fa-angle-right"></i></a></li>
         }
         @* >> 표시 여부 *@
         @if (page < totalPage)
         {
-            <li class="page-item"><a class="page-link" href="@(url + "?page=" + totalPage)"><i class="fas fa-angle-double-right"></i></a></li>
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + totalPage + "&category="+category + "&pageRows="+pageRows)"><i class="fas fa-angle-double-right"></i></a></li>
         }
     </ul>
 </div>
