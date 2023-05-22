@@ -6,7 +6,7 @@ namespace dogcat.Models.ViewModels
     {
         public long UserId { get; set; }
         public string Title { get; set; }
-
+        public string NickName { get; set; }
         public string Category { get; set; }
         public string? Context { get; set; }
 

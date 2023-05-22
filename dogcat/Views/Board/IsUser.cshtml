@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@if (Model <= 0)
+{
+    <script>
+        alert("누구냐 넌")
+        history.back();
+    </script>
+}
+else
+{
+    <script>
+        alert("유저 인증!")
+        location.href = "/Board/Write";
+    </script>
+}

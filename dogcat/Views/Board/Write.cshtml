@@ -9,7 +9,7 @@
 <form method="post">
     <div class="mb-3">
         <label for="name">작성자:</label>
-        <input type="text" class="form-control" placeholder="작성자를 입력하세요" asp-for="UserId">
+        <input type="text" class="form-control" placeholder="작성자를 입력하세요" asp-for="NickName" readonly>
         <div><span class="text-danger">@TempData["NameError"]</span></div>
     </div>
     <div class="mb-3 mt-3">

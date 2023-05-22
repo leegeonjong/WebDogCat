@@ -20,20 +20,50 @@ namespace dogcat.Controllers
             this.commentRepository = commentRepository;
         }
 
+        //User 여부 판별 
+        // Get: /Board/IsUser
+        [HttpGet]
+        [ActionName("IsUser")]
+        public IActionResult IsUser()
+        {
+            //Session 에 저장된 회원 정보를 가져온다
+            int? userId = HttpContext.Session.GetInt32("userId");
+            int? userBan = HttpContext.Session.GetInt32("userBan");
+
+            //가져온 회원정보로 글쓰기에 접근하는 사람이 회원인지 확인한다.
+            if (userId != null)
+            {
+                //유저라면 벤여부를 확인한다.
+                if (userBan == 0)
+                {
+                    //벤이 아니라면
+                    return View("IsUser", 1);  // View(string, object) => viewname, model
+                }
+                else return View("IsUser", 0);
+            }
+            else return View("IsUser", 0);
+        }
+
         // GET: /Board/Write
         [HttpGet]
         public IActionResult Write()
         {
-            
+            ViewData["page"] = HttpContext.Session.GetInt32("page") ?? 1;
             addWriteRequest addWriteRequest = new()
             {
-                // TempData 에 담아둔 내용 꺼내가기  (꺼내가면 자동 소멸됨)
-                UserId = TempData["UserId"] != null ? (long)TempData["UserId"] : 0,
-                Title = TempData["Title"] as string ?? string.Empty,
-                Context = TempData["Context"] as string ?? string.Empty,
-        };
-            ViewData["page"] = HttpContext.Session.GetInt32("page") ?? 1;
+                NickName = HttpContext.Session.GetString("userNickName")
+            };
             return View(addWriteRequest);
+            //addWriteRequest addWriteRequest = new()
+            //{
+            //    // TempData 에 담아둔 내용 꺼내가기  (꺼내가면 자동 소멸됨)
+            //    UserId = TempData["UserId"] != null ? (long)TempData["UserId"] : 0,
+            //    NickName = TempData["NickName"] as string ?? string.Empty,
+            //    Title = TempData["Title"] as string ?? string.Empty,
+            //    Context = TempData["Context"] as string ?? string.Empty,
+            //};
+
+            //return View();
         }
 
         // POST: /Board/Write
@@ -58,7 +88,7 @@ namespace dogcat.Controllers
 
             var write = new Write
             {
-                UserId = addWriteRequest.UserId,
+                NickName = addWriteRequest.NickName,
                 Category = addWriteRequest.Category,
                 Title = addWriteRequest.Title,
                 Context = addWriteRequest.Context,
@@ -94,7 +124,7 @@ namespace dogcat.Controllers
             [FromQuery(Name = "page")] int? page,   // int? 타입.  만약 page parameter 가 없거나, 변환 안되는 값이면 null 값
             [FromForm(Name = "category")] string category
             )
-           {
+        {
             // 현재 페이지 parameter
             page ??= 1;   // 디폴트는 1 page
             if (page < 1) page = 1;
@@ -115,7 +145,7 @@ namespace dogcat.Controllers
 
             // page 값 보정
             if (page > totalPage) page = totalPage;
-            if(page<=0) page = 1;
+            if (page <= 0) page = 1;
             // 몇번째 데이터부터?
             int fromRow = ((int)page - 1) * pageRows;
 
@@ -170,7 +200,7 @@ namespace dogcat.Controllers
                 // ※ 에러 메세지 처리 필요
                 return RedirectToAction("List");
             }
-            if (comment == null) 
+            if (comment == null)
             {
                 comment = new();
             }
