@@ -57,8 +57,11 @@
        @* 글 작성 수정 삭제 목록*@
          <div class="d-flex">
             <a class="btn btn-outline-dark ms-2" asp-controller="Board" asp-action="List" asp-route-page="@(page)">목록</a>
-            <a class="btn btn-outline-dark" asp-controller="Board" asp-action="Update" asp-route-id="@WriteId">수정</a>
-            <button type="submit" class="btn btn-outline-danger ms-2" id="btnDel" asp-controller="Board" asp-action="Delete" asp-route-id="@WriteId">삭제</button>
+            @if (@UserId==userId)
+            {
+                <a class="btn btn-outline-dark" asp-controller="Board" asp-action="Update" asp-route-id="@WriteId">수정</a>
+                <button type="submit" class="btn btn-outline-danger ms-2" id="btnDel" asp-controller="Board" asp-action="Delete" asp-route-id="@WriteId">삭제</button>
+            }
         </div>
         @*댓글 작성*@
         <h3>댓글 작성</h3>
@@ -87,11 +90,11 @@
                         <td>
                             <form method="POST" name="CommentDelete" asp-controller="Board" asp-action="CommentDelete">
                                 <input type="hidden" name="id" value="@cmt.Id" />
-                                <button type="submit" class="btn btn-outline-danger ms-2" id="btnDeleteComment" data-comment-id="@cmt.Id">삭제</button>
+                                @if (@userId == @cmt.UserId)
+                                {
+                                <button type="button" class="btn btn-outline-danger ms-2" id="btnDeleteComment" data-comment-id="@cmt.Id">삭제</button>
+                                }
                             </form>
-                        </td>
-                        <td>
-                           <a class="btn btn-outline-dark" asp-controller="Board" asp-action="Update" asp-route-id="@WriteId">수정</a>
                         </td>
                     </tr>
                 }

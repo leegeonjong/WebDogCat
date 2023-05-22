@@ -25,6 +25,10 @@ namespace dogcat.Repositories
             return await writeDbContext.Writes.CountAsync();
         }
 
+        public async Task<long> CountCategory(string Category)
+        {
+            return await writeDbContext.Writes.Where(x => x.Category == Category).CountAsync();
+        }
 
         public async Task<Write?> DeleteAsync(long id)
         {

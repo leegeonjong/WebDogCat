@@ -23,7 +23,9 @@ namespace dogcat.Repositories
         // 특정 Id 의 글 조회수 +1 증가
         Task<Write?> IncViewCntAsync(long id);
 
-        
+        Task<long> CountCategory(string Category);
+
+   
 
         //------------------------------------
         //페이징

@@ -8,7 +8,16 @@
     int totalPage = (int)ViewData["totalPage"];  // 총 '페이지' 수
     int pageRows = (int)ViewData["pageRows"];  // 한 '페이지' 에 표시할 글 개수
     string category = (string)ViewData["category"];
+   
 }
+@{
+    // [페이징]
+    string url = (string)ViewData["url"];  // 목록 url
+    int writePages = (int)ViewData["writePages"]; // [페이징] 에 표시할 숫자 개수
+    int startPage = (int)ViewData["startPage"]; // [페이징] 에 표시할 시작 페이지
+    int endPage = (int)ViewData["endPage"]; // [페이징] 에 표시할 마지막 페이지
+}
+
 
 <script src="~/js/Board/List.js"></script>
 
@@ -19,43 +28,38 @@
     <span class="float-start me-2">총 @(cnt)개</span>
     <span class="float-start">page @(page)/@(totalPage)</span>
     <span class="float-end">
-        <form name="frmPageRows">
-            <input type="hidden" name="page" value="@(page)">
-            <select class="form-select" name="pageRows">
+        <form name="frmPageRows" id="frmPageRows" method="get">
+            <select class="form-select" name="pageRows" onchange="submitForm('frmPageRows')">
                 <option value="10" selected="@(pageRows == 10)">10</option>
                 <option value="15" selected="@(pageRows == 15)">15</option>
                 <option value="20" selected="@(pageRows == 20)">20</option>
                 <option value="30" selected="@(pageRows == 30)">30</option>
             </select>
+            <select class="form-select" name="category" onchange="submitForm('frmPageRows')">
+                <option value="전체" selected="@(category == "전체")">전체</option>
+                <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
+                <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
+                <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
+            </select>
+            <input type="hidden" name="page" value="@(page)">
+            <input type="hidden" name="category" value="@(category)">
         </form>
     </span>
 </div>
 
-<div class="mb-3 mt-3 clearfix">
-
-    <form name="frmPageRows">
-        <input type="hidden" name="page" value="@(page)">
-        <select class="form-select" name="pageRows">
-            <option value="전체" selected="@(category == "전체")">전체</option>
-            <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
-            <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
-            <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
-        </select>
-    </form>
-
-</div>
 
 <div class="mb-3">
-    <form name="frmCategory" action="/Board/List" method="get" onsubmit="event.preventDefault();">
-        <select class="form-select" name="category">
+    <form name="frmCategory" id="frmCategory" method="get" action="/Board/List">
+        <select class="form-select" name="category" onchange="submitForm('frmCategory')">
             <option value="전체" selected="@(category == "전체")">전체</option>
             <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
             <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
             <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
         </select>
-        <button type="submit">검색</button>
+        <input type="hidden" name="page" value="@(page)">
     </form>
 </div>
+
 
 
 
@@ -95,4 +99,46 @@
     </div>
 
 </div>
-<partial name="Pagination" />
+<div class="container mt-1">
+    <ul class="pagination justify-content-center">
+        @* << 표시 여부 *@
+        @if (page > 1)
+        {
+            <li class="page-item"><a class="page-link" href="@url"><i class="fas fa-angle-double-left"></i></a></li>
+        }
+
+
+        @* < 표시 여부 *@
+        @if (startPage > 1)
+        {
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (startPage - 1)+"&category="+category)"><i class="fas fa-angle-left"></i></a></li>
+        }
+
+        @* [페이징] 안의 '숫자' 표시 *@
+        @if (totalPage > 1)
+        {
+            @for (int k = startPage; k <= endPage; k++)
+            {
+                @if (k != page)
+                {
+                    <li class="page-item"><a class="page-link" href="@(url + "?page=" + k + "&category=" + category)">@k</a></li>
+                }
+                else
+                {
+                    <li class="page-item active"><a class="page-link" href="javascript:void(0);">@k</a></li>
+                }
+            }
+        }
+
+        @* > 표시 여부 *@
+        @if (totalPage > endPage)
+        {
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (endPage + 1))"><i class="fas fa-angle-right"></i></a></li>
+        }
+        @* >> 표시 여부 *@
+        @if (page < totalPage)
+        {
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + totalPage)"><i class="fas fa-angle-double-right"></i></a></li>
+        }
+    </ul>
+</div>

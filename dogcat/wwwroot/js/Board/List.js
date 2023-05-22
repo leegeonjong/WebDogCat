@@ -2,8 +2,10 @@
     $("[name='pageRows']").change(function () {
         const frm = $("[name='frmPageRows']");
         frm.attr("method", "POST");
-        frm.attr("action", "PageRows");
+        frm.attr("action", "pageRows");
+        frm.attr("action", "category");
         frm.submit();
+
     });
 });
 

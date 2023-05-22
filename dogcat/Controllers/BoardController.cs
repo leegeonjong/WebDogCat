@@ -136,11 +136,12 @@ namespace dogcat.Controllers
         [HttpGet]
         public async Task<IActionResult> List(
             [FromQuery(Name = "page")] int? page, // int? 타입.  만약 page parameter 가 없거나, 변환 안되는 값이면 null 값
-            [FromForm(Name = "category")] string category
+            string category
             )
         {
             // 현재 페이지 parameter
             page ??= 1;   // 디폴트는 1 page
+            long cnt;
             if (page < 1) page = 1;
             //await Console.Out.WriteLineAsync($"page = {page}");  // 확인용
 
@@ -153,7 +154,14 @@ namespace dogcat.Controllers
             HttpContext.Session.SetInt32("page", (int)page);
 
             // 글 목록 전체의 개수
-            long cnt = await writeRepository.CountAsync();
+            if (category == null || category == "전체")
+            {
+               cnt = await writeRepository.CountAsync();
+            }
+            else
+            {
+                cnt = await writeRepository.CountCategory(category);
+            }
             // 총 몇 '페이지' 분량?
             int totalPage = (int)Math.Ceiling(cnt / (double)pageRows);
 
@@ -180,7 +188,8 @@ namespace dogcat.Controllers
             ViewData["writePages"] = writePages; // [페이징] 에 표시할 숫자 개수
             ViewData["startPage"] = startPage; // [페이징] 에 표시할 시작 페이지
             ViewData["endPage"] = endPage; // [페이징] 에 표시할 마지막 페이지
-            
+
+            ViewData["category"] = category;
 
             var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows, category);
             return View(writes);
