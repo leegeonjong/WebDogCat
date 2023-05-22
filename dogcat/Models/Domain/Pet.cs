@@ -14,6 +14,13 @@ namespace dogcat.Models.Domain
         public int Weight { get; set; }  // 펫 무게
         public string? Image { get; set; }  // 펫 이미지
 
+
+        [NotMapped]
+        public string? ContentType { get; set; }  // 파일종류 (MIME Type)
+
+        [NotMapped]
+        public string? RequestPath { get; set; }  // 저장된 파일에 대한 요청 경로 (url)
+
         public User User { get; set; }  // 유저 FK
         public long UserId { get; set; }
 

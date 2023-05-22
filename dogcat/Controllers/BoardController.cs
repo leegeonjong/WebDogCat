@@ -11,37 +11,61 @@ namespace dogcat.Controllers
     {
         private readonly IWriteRepository writeRepository;
         private readonly ICommentRepository commentRepository;
-
-        public BoardController(IWriteRepository writeRepository, ICommentRepository commentRepository)
+        public string UploadDir { get; set; }
+        public BoardController(IWriteRepository writeRepository, ICommentRepository commentRepository, IWebHostEnvironment env)
         {
             Console.WriteLine("BoardController() 생성");
             this.writeRepository = writeRepository;
             Console.WriteLine("BoardController() 생성");
             this.commentRepository = commentRepository;
+            UploadDir = Path.Combine(env.ContentRootPath, "MyFiles");
+            Console.WriteLine("aaa" + UploadDir);
+
         }
 
         //User 여부 판별 
         // Get: /Board/IsUser
         [HttpGet]
         [ActionName("IsUser")]
-        public IActionResult IsUser()
+        public IActionResult IsUser(string buttonName)
         {
             //Session 에 저장된 회원 정보를 가져온다
             int? userId = HttpContext.Session.GetInt32("userId");
-            int? userBan = HttpContext.Session.GetInt32("userBan");
-
             //가져온 회원정보로 글쓰기에 접근하는 사람이 회원인지 확인한다.
+
+            //유저라면
             if (userId != null)
             {
-                //유저라면 벤여부를 확인한다.
-                if (userBan == 0)
+                if (buttonName == "Write")
                 {
-                    //벤이 아니라면
                     return View("IsUser", 1);  // View(string, object) => viewname, model
+                                               // 작성 버튼인 경우의 동작 수행
+                                               // 필요한 처리를 수행
                 }
-                else return View("IsUser", 0);
+                else if (buttonName == "Detail")
+                {
+                    return View("IsUser", 2);
+                    // 상세보기 버튼인 경우의 동작 수행
+                    // 필요한 처리를 수행
+                    // writeId를 사용하여 추가 작업 수행 가능
+                }
             }
-            else return View("IsUser", 0);
+            //비회원이라면 
+            else
+            {
+                //글쓰기 버튼 누르면 
+                if (buttonName == "Write")
+                {
+                    return View("IsUser", 0);
+                }
+                //디테일 버튼 누르면 
+                else if (buttonName == "Detail")
+                {
+                    return View("IsUser", 3);
+
+                }
+            }
+            return View("IsUser", 0);
         }
 
         // GET: /Board/Write
@@ -52,24 +76,15 @@ namespace dogcat.Controllers
             addWriteRequest addWriteRequest = new()
             {
                 NickName = HttpContext.Session.GetString("userNickName")
+
             };
             return View(addWriteRequest);
-            //addWriteRequest addWriteRequest = new()
-            //{
-            //    // TempData 에 담아둔 내용 꺼내가기  (꺼내가면 자동 소멸됨)
-            //    UserId = TempData["UserId"] != null ? (long)TempData["UserId"] : 0,
-            //    NickName = TempData["NickName"] as string ?? string.Empty,
-            //    Title = TempData["Title"] as string ?? string.Empty,
-            //    Context = TempData["Context"] as string ?? string.Empty,
-            //};
-
-            //return View();
         }
 
         // POST: /Board/Write
         [HttpPost]
         [ActionName("Write")]
-        public async Task<IActionResult> Add(addWriteRequest addWriteRequest)
+        public async Task<IActionResult> Add(addWriteRequest addWriteRequest, IList<IFormFile> uploadedFile)
         {
             //// Validation
             //addWriteRequest.Validate();
@@ -85,19 +100,83 @@ namespace dogcat.Controllers
 
             //    return RedirectToAction("Write");
             //}
-
-            var write = new Write
+            if (uploadedFile.Count != 0)
             {
-                NickName = addWriteRequest.NickName,
-                Category = addWriteRequest.Category,
-                Title = addWriteRequest.Title,
-                Context = addWriteRequest.Context,
-                Time = DateTime.Now,
-            };
+                int userId = HttpContext.Session.GetInt32("userId") ?? 0;
+                var write = new Write
+                {
+                    UserId = userId,
+                    NickName = addWriteRequest.NickName,
+                    Category = addWriteRequest.Category,
+                    Title = addWriteRequest.Title,
+                    Context = addWriteRequest.Context,
+                    Image = uploadedFile[0].FileName,
+                    Time = DateTime.Now,
+                };
 
-            write = await writeRepository.AddAsync(write);
+                write = await writeRepository.AddAsync(write);
+                DirectoryInfo di = new(UploadDir);
+                // 없는 경우 디렉토리 생성
+                if (di.Exists == false) di.Create();
 
-            return RedirectToAction("Detail", new { id = write.Id });
+                foreach (var formFile in uploadedFile)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        string savedFileName = formFile.FileName;  // 저장할 파일명
+                        var fileFullPath = Path.Combine(UploadDir, savedFileName);
+
+
+                        // 파일명이 이미 존재하는 경우 파일명 변경
+                        // face01.png => face01(1).png => face01(2).png => ...
+                        int filecnt = 1;
+                        while (new FileInfo(fileFullPath).Exists)
+                        {
+                            var idx = formFile.FileName.LastIndexOf(".");
+                            if (idx > -1)
+                            {
+                                var left = formFile.FileName.Substring(0, idx);
+                                savedFileName = left + string.Format("({0})", filecnt++) + formFile.FileName.Substring(idx);
+                            }
+                            else
+                            {
+                                savedFileName = formFile.FileName + string.Format("({0})", filecnt++);
+                            }
+
+                            fileFullPath = Path.Combine(UploadDir, savedFileName);
+                        }
+                        using FileStream stream = new(fileFullPath, FileMode.Create);
+                        await formFile.CopyToAsync(stream);
+
+                        await writeRepository.AddimageAsync(new()
+                        {
+                            O_image = fileFullPath,
+                            D_image = savedFileName,
+                            WriteId = write.Id,
+                        });
+                    }
+                }
+                return RedirectToAction("Detail", new { id = write.Id, NickName = write.NickName });
+            }
+
+
+            else
+            {
+                int userId = HttpContext.Session.GetInt32("userId") ?? 0;
+                var write = new Write
+                {
+                    UserId = userId,
+                    NickName = addWriteRequest.NickName,
+                    Category = addWriteRequest.Category,
+                    Title = addWriteRequest.Title,
+                    Context = addWriteRequest.Context,
+                    Time = DateTime.Now,
+                };
+
+                write = await writeRepository.AddAsync(write);
+
+                return RedirectToAction("Detail", new { id = write.Id, NickName = write.NickName });
+            }
         }
         //댓글작성
         [HttpPost]
@@ -108,6 +187,7 @@ namespace dogcat.Controllers
                 UserId = addCommentRequest.UserId,
                 Content = addCommentRequest.Content,
                 WriteId = addCommentRequest.WriteId,
+                NickName = addCommentRequest.NickName,
                 Time = DateTime.Now,
             };
 
@@ -121,12 +201,13 @@ namespace dogcat.Controllers
         // GET: /Board/List
         [HttpGet]
         public async Task<IActionResult> List(
-            [FromQuery(Name = "page")] int? page,   // int? 타입.  만약 page parameter 가 없거나, 변환 안되는 값이면 null 값
-            [FromForm(Name = "category")] string category
+            [FromQuery(Name = "page")] int? page, // int? 타입.  만약 page parameter 가 없거나, 변환 안되는 값이면 null 값
+            string category
             )
         {
             // 현재 페이지 parameter
             page ??= 1;   // 디폴트는 1 page
+            long cnt;
             if (page < 1) page = 1;
             //await Console.Out.WriteLineAsync($"page = {page}");  // 확인용
 
@@ -139,7 +220,14 @@ namespace dogcat.Controllers
             HttpContext.Session.SetInt32("page", (int)page);
 
             // 글 목록 전체의 개수
-            long cnt = await writeRepository.CountAsync();
+            if (category == null || category == "전체")
+            {
+               cnt = await writeRepository.CountAsync();
+            }
+            else
+            {
+                cnt = await writeRepository.CountCategory(category);
+            }
             // 총 몇 '페이지' 분량?
             int totalPage = (int)Math.Ceiling(cnt / (double)pageRows);
 
@@ -167,21 +255,10 @@ namespace dogcat.Controllers
             ViewData["startPage"] = startPage; // [페이징] 에 표시할 시작 페이지
             ViewData["endPage"] = endPage; // [페이징] 에 표시할 마지막 페이지
 
-            // 글 목록 읽어오기 
-            // 해당 페이지의 글 목록 읽어오기
-            if (!string.IsNullOrEmpty(category))
-            {
-                // 카테고리가 선택된 경우 해당 카테고리의 글 목록을 조회합니다.
-                var writes = await writeRepository.GetByCategoryAsync(category, fromRow, pageRows);
-                return View(writes);
-            }
-            else
-            {
-                // 카테고리가 선택되지 않은 경우 전체 글 목록을 조회합니다.
-                var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows);
-                return View(writes);
-            }
+            ViewData["category"] = category;
 
+            var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows, category);
+            return View(writes);
         }
 
         // GET: /Board/Detail/{id}
@@ -192,6 +269,9 @@ namespace dogcat.Controllers
             // 조회수 증가
             var write = await writeRepository.IncViewCntAsync(id);
             var comment = await commentRepository.CommentGetAsync(id);
+            var Request = await writeRepository.GetAsync(id);
+            string nickname = HttpContext.Session.GetString("userNickName");
+            int userId = HttpContext.Session.GetInt32("userId") ?? 0;
             // 페이징
             ViewData["page"] = HttpContext.Session.GetInt32("page") ?? 1;
 
@@ -206,7 +286,12 @@ namespace dogcat.Controllers
             }
 
             ViewData["Write"] = write;
+            ViewData["UserId"] = userId;
             ViewData["Comment"] = comment;
+            ViewData["Nickname"] = nickname;
+
+            string path = Request.RequestPath = $"/appfiles/{Request.Image}";
+            ViewData["RequestPath"] = path;
 
             return View();
         }
@@ -227,6 +312,7 @@ namespace dogcat.Controllers
                 Category = write.Category,
                 Context = write.Context,
                 Time = write.Time,
+                Image = write.Image,
                 ViewCnt = write.ViewCnt,
             };
 
@@ -237,7 +323,7 @@ namespace dogcat.Controllers
 
         // POST: /Board/Update
         [HttpPost]
-        public async Task<IActionResult> Update(EditWriteRequest request)
+        public async Task<IActionResult> Update(EditWriteRequest request, IList<IFormFile> uploadedFile)
         {
             var write = new Write
             {
@@ -245,6 +331,7 @@ namespace dogcat.Controllers
                 Title = request.Title,
                 Category = request.Category, // 카테고리 값을 업데이트합니다.   
                 Context = request.Context,
+                Image = uploadedFile[0].FileName,
             };
             var updateWrite = await writeRepository.UpdateAsync(write);
 
@@ -253,7 +340,39 @@ namespace dogcat.Controllers
                 // 수정 실패하면 List 로
                 return RedirectToAction("List");
             }
+            foreach (var formFile in uploadedFile)
+            {
+                if (formFile.Length > 0)
+                {
+                    string savedFileName = formFile.FileName;  // 저장할 파일명
+                    var fileFullPath = Path.Combine(UploadDir, savedFileName);
 
+
+                    // 파일명이 이미 존재하는 경우 파일명 변경
+                    // face01.png => face01(1).png => face01(2).png => ...
+                    int filecnt = 1;
+                    while (new FileInfo(fileFullPath).Exists)
+                    {
+                        var idx = formFile.FileName.LastIndexOf(".");
+                        if (idx > -1)
+                        {
+                            var left = formFile.FileName.Substring(0, idx);
+                            savedFileName = left + string.Format("({0})", filecnt++) + formFile.FileName.Substring(idx);
+                        }
+                        else
+                        {
+                            savedFileName = formFile.FileName + string.Format("({0})", filecnt++);
+                        }
+
+                        fileFullPath = Path.Combine(UploadDir, savedFileName);
+                    }
+                    using FileStream stream = new(fileFullPath, FileMode.Create);
+                    await formFile.CopyToAsync(stream);
+
+                    await writeRepository.UpdateimageAsync(fileFullPath, savedFileName, request.Id);
+
+                }
+            }
             return RedirectToAction("Detail", new { id = request.Id });
 
         }

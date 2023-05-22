@@ -6,7 +6,11 @@
 }
 <h2>작성</h2>
 <hr>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3 mt-3">
+        <label for="image">이미지:</label>
+        <input type="file" class="form-control" name="uploadedFile">
+    </div>
     <div class="mb-3">
         <label for="name">작성자:</label>
         <input type="text" class="form-control" placeholder="작성자를 입력하세요" asp-for="NickName" readonly>

@@ -29,7 +29,12 @@
             <label for="weight">무게(kg):</label>
             <span class="form-control">@Model.Weight</span>
         </div>
-        
+    @if(Model.Image != null)
+    {
+        <img src="@Model.RequestPath" class="img-thumbnail">
+    }
+   
+    <br>
      <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="Edit" asp-route-id="@Model.Id">수정</a>
      <button type="submit" class="btn btn-outline-dark" id="delete">삭제</button>
         

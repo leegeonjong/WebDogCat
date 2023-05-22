@@ -1,0 +1,45 @@
+﻿@model dogcat.Models.Domain.Pet
+@{
+    ViewData["Title"] = "권장 칼로리 알아보기";
+}
+<script src="~/js/Pet/Calorie.js"></script>
+
+<form method="post" action="/MyPet/CarculateCalorie">
+    <div class="mb-3">
+        <img src="https://tools.mypetlife.co.kr/static/media/dog_select.d0cd964d4185a9bebf06.png" onclick="handleButtonClick('dog')" />
+        <img src="https://tools.mypetlife.co.kr/static/media/cat_select.14d59481a42b358448be.png" onclick="handleButtonClick('cat')" />
+    </div>
+</form>
+
+
+
+<form method="post" action="/MyPet/CarculateCalorie">
+    <div class="mb-3">
+        <label for="Weight">몸무게:</label>
+        <input type="text" class="form-control" placeholder="몸무게를 입력하세요" name="Weight">
+        <div><span class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label for="ActiveLevel">활동수치 :</label>
+        <select class="form-select" id="activeLevelSelect" name="ActiveLevel">
+            <!-- Options will be dynamically updated based on 'result' -->
+        </select>
+        <div><span class="text-danger"></span></div>
+    </div>
+
+    <button type="submit" class="btn btn-outline-dark">권장 칼로리 계산</button>
+</form>
+
+
+<form method="post" action="/MyPet/CarculateCalorie">
+    <div class="mb-3">
+        <label for="Calorie">권장 칼로리:</label>
+        <input type="text" class="form-control" name="Calorie" readonly value="@ViewData["Calrorie"]">
+        <div><span class="text-danger"></span></div>
+    </div>
+</form>
+
+@if (ViewData["WarningMessage"] != null)
+{
+    <div class="alert alert-warning">@ViewData["WarningMessage"]</div>
+}
