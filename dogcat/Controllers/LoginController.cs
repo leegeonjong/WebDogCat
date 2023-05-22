@@ -43,7 +43,7 @@ namespace dogcat.Controllers
 
 
         [HttpPost]
-        [ActionName("FindId")]
+        [ActionName("Login")]
         public IActionResult IsUser()
         {
             string userid = Request.Form["userid"];
@@ -106,7 +106,6 @@ namespace dogcat.Controllers
                 client.Credentials = new NetworkCredential(fromEmail, fromPassword);
                 client.Send(message);
             }
-          
 
             Result = "ok";
             
