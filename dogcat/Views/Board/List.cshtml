@@ -20,13 +20,25 @@
 
 
 <script src="~/js/Board/List.js"></script>
+<haeder>
 
-<h2>목록</h2>
+
+</haeder>
+@if (category == "카테고리1")
+{
+    <h2>강아지</h2>
+}
+else if (category == "카테고리2")
+{
+    <h2>고양이</h2>
+}
+else{
+<h2>전체글보기</h2>
+}
 
 <hr>
 <div class="mb-3 mt-3 clearfix">
-    <span class="float-start me-2">총 @(cnt)개</span>
-    <span class="float-start">page @(page)/@(totalPage)</span>
+    <span class="float-start me-2">총 @(cnt)개의 글</span>
     <span class="float-end">
         <form name="frmCombined" id="frmCombined" method="get" action="/Board/List">
             <select class="form-select" name="pageRows">
@@ -81,6 +93,7 @@
 <div class="row">
     <div class="col-12">
         <a class="btn btn-outline-dark" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">작성</a>
+            <span class="float-end">page @(page)/@(totalPage)</span>
         @*<a class="btn btn-outline-dark" onclick="sendButtonValue('Write')">작성</a>*@
     </div>
 
