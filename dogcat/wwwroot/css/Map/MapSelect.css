@@ -1,0 +1,61 @@
+﻿/*container 2 설정*/
+.container2 {
+    border: 1px solid black;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/*제목 설정*/
+.title {
+    text-align: center;
+    
+}
+
+    .title h1 {
+        font-size: 30px;
+        height : 40px;
+    }
+
+/*텍스트박스 설정*/
+.address {
+    text-align: center;
+}
+
+    .address input {
+        border: 2px solid black;
+        display: inline-block;
+        padding: 5px;
+        text-align: center;
+        width: 100%;
+        height : 5%;
+    }
+
+/*그림 버튼 설정*/
+.MapButton {
+    position: relative;
+    justify-content: space-between;
+    display: flex;
+}
+
+    .MapButton button {
+        flex: 1;
+        margin: 5% 5% 5% 5%; /* 여백 값을 수정하세요 */
+    }
+
+        .MapButton button img {
+            width: 400px;
+            height: 400px;
+        }
+
+
+/*버튼 설정*/
+.btn {
+    background-color: red; /*색상 */
+    
+}
+    .btn:hover {
+        /* hover 시 적용될 스타일 */
+        background-color: yellow;
+    }
+
+

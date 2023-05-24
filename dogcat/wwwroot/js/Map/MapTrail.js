@@ -1,16 +1,19 @@
-﻿var userLat = parseFloat(document.currentScript.getAttribute("data-userlat"));
-var userLong = parseFloat(document.currentScript.getAttribute("data-userlong"));
-
-var mapOptions = { //mapOption 값 지정
+﻿var mapOptions = {
     center: new naver.maps.LatLng(userLat, userLong),
     zoom: 14,
     mapTypeControl: true,
     mapTypeControlOptions: {
         style: naver.maps.MapTypeControlStyle.DROPDOWN
-    }
+    },
+    scaleControl: false,
+    logoControl: false,
+    mapDataControl: false,
+    zoomControl: true,
+    minZoom: 6,
+
 };
 
-var map = new naver.maps.Map('map', mapOptions); //맵 옵션 적용해서 생성
+var map = new naver.maps.Map('map', mapOptions);
 
 var bicycleLayer = new naver.maps.BicycleLayer();
 

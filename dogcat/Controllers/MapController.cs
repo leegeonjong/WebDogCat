@@ -16,6 +16,7 @@ namespace dogcat.Controllers
         public double Latitude { get; set; } //위도
         public double Longitude { get; set; } //경도
         public double Distance { get; set; } //거리
+        public string Sitetel { get; set; } //전화번호
         public string OpenClose { get; set; } //영업상태
     }
 
@@ -25,7 +26,6 @@ namespace dogcat.Controllers
         private const string filePath = "JsonData/AnimalHospital.Json"; //Json 파일 경로
         public double distance; //거리
         double UserLat, UserLong; //사용자가 입력한 위치 위도경도
-        double latitude, longitude; // 위도 경도 
 
         List<AnimalHospital> animalHospitals = new List<AnimalHospital>(); //동물병원 정보 클래스의 목록을 담을 리스트
         public IActionResult MapSelectView() // 지도 선택하기
@@ -89,7 +89,8 @@ namespace dogcat.Controllers
                 string hospitalName = (string)hospital["bplcnm"];//동물병원이름
                 string hospitalAddress = (string)hospital["sitewhladdr"];//지번주소
                 string hospitalOpenClose = (string)hospital["trdstatenm"];//영업 여부
-                double hospitalLatitude = (double)hospital["lat"];
+                string sitetel = (string)hospital["sitetel"]; //전화번호
+                double hospitalLatitude = (double)hospital["lat"]; 
                 double hospitalLongitude = (double)hospital["long"];
 
                 //거리 추출 함수 실행 -- 사용자의 현위치와 병원의 좌표를 계산해서 구하기
@@ -100,6 +101,7 @@ namespace dogcat.Controllers
                     Address = hospitalAddress,
                     Latitude = hospitalLatitude,
                     Longitude = hospitalLongitude,
+                    Sitetel = sitetel,
                     OpenClose = hospitalOpenClose,
                     Distance = distance,
                 });
