@@ -10,13 +10,13 @@
 <form method ="post" id="register">
  @*인증여부 체크 0:false 1:true*@
 @*아이디 중복검사 여부*@
-<input type="hidden" value="unable" name="valid_id" id="idcheck" /> 
-@*문자인증 여부(본인 확인)*@
+    <input type="hidden" value="unable" id="idcheck" name="valid_id" />
+    @*문자인증 여부(본인 확인)*@
  <input type="hidden" name="phone_check" value="unable" id="phonecheck" />
 @*ID입력*@
-<label for="Id">아이디</label>
+<label for="Userid">아이디</label>
 <input type="text" asp-for="Userid" /> 
-<button type="button" id="go_idcheck">중복검사</button> <br />
+<button type="button" id="Go_idcheck">중복검사</button> <br />
     <p id="valid_userId"></p>
 @*비밀번호*@
 <label for="Pw">비밀번호</label>

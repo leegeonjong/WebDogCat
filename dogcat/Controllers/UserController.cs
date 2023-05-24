@@ -3,6 +3,7 @@ using dogcat.Models.Domain;
 using dogcat.Models.ViewModels;
 using dogcat.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
 namespace dogcat.Controllers
@@ -53,6 +54,7 @@ namespace dogcat.Controllers
             return RedirectToAction("Index");
 
         }
+
 
         //비밀번호 찾기 (수정)
         [HttpPost]

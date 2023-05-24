@@ -71,18 +71,21 @@ namespace dogcat.Controllers
 
         }
 
+
         //아이디 중복 검사
-        [HttpPost]
-        [ActionName("Idcheck")]
-        public IActionResult Idcheck(string valid_id)
+        //[HttpPost]
+        public IActionResult Idcheck(string Userid)
         {
-            string id = valid_id;
-            var user = _context.Users.FirstOrDefault(x => x.Userid.Trim().Equals(id));
-            if (user != null) return Json("unable");
-            return Json("able");
+            string input_id = Userid;
+            var user = _context.Users.FirstOrDefault(x => x.Userid.Trim().Equals(input_id)); //비교 (중복검사)
+            if (user != null) return Json("unable"); // 중복이면 JSON에 unable 넘겨주기
+            else
+            {
+            return Json("able"); // 중복 아니면 JSON에 able 넘겨주기
+            }
+
         }
-        
-        //메일 발송(인증번호)
+
         [HttpPost]
         [ActionName("Send")]
         public void SendMail(string input_mail) 
