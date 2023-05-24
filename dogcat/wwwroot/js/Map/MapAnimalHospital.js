@@ -15,70 +15,70 @@
 
 var map = new naver.maps.Map('map', mapOptions);
 
-// 거리뷰 레이어를 생성합니다.
-var streetLayer = new naver.maps.StreetLayer();
-streetLayer.setMap(map);
+//// 거리뷰 레이어를 생성합니다.
+//var streetLayer = new naver.maps.StreetLayer();
+//streetLayer.setMap(map);
 
-// 거리뷰 버튼에 이벤트를 바인딩합니다.
-var btn = $('#street');
-btn.on("click", function (e) {
-    e.preventDefault();
+//// 거리뷰 버튼에 이벤트를 바인딩합니다.
+//var btn = $('#street');
+//btn.on("click", function (e) {
+//    e.preventDefault();
 
-    // 거리뷰 레이어가 지도 위에 있으면 거리뷰 레이어를 지도에서 제거하고,
-    // 거리뷰 레이어가 지도 위에 없으면 거리뷰 레이어를 지도에 추가합니다.
-    if (streetLayer.getMap()) {
-        streetLayer.setMap(null);
-    } else {
-        streetLayer.setMap(map);
-    }
-});
+//    // 거리뷰 레이어가 지도 위에 있으면 거리뷰 레이어를 지도에서 제거하고,
+//    // 거리뷰 레이어가 지도 위에 없으면 거리뷰 레이어를 지도에 추가합니다.
+//    if (streetLayer.getMap()) {
+//        streetLayer.setMap(null);
+//    } else {
+//        streetLayer.setMap(map);
+//    }
+//});
 
-// 거리뷰 레이어가 변경되면 발생하는 이벤트를 지도로부터 받아 버튼의 상태를 변경합니다.
-naver.maps.Event.addListener(map, 'streetLayer_changed', function (streetLayer) {
-    if (streetLayer) {
-        btn.addClass('control-on');
-    } else {
-        btn.removeClass('control-on');
-    }
-});
+//// 거리뷰 레이어가 변경되면 발생하는 이벤트를 지도로부터 받아 버튼의 상태를 변경합니다.
+//naver.maps.Event.addListener(map, 'streetLayer_changed', function (streetLayer) {
+//    if (streetLayer) {
+//        btn.addClass('control-on');
+//    } else {
+//        btn.removeClass('control-on');
+//    }
+//});
 
-// 지도를 클릭했을 때 발생하는 이벤트를 받아 거리뷰를 표시합니다.
-naver.maps.Event.addListener(map, 'click', function (e) {
-    var latlng = e.coord;
+//// 지도를 클릭했을 때 발생하는 이벤트를 받아 거리뷰를 표시합니다.
+//naver.maps.Event.addListener(map, 'click', function (e) {
+//    var latlng = e.coord;
 
-    // 주변의 거리뷰 정보를 가져옵니다.
-    // 주변의 거리뷰 정보를 가져옵니다.
-    naver.maps.Service.getPanoramaByLocation(latlng, 50, function (status, data) {
-        if (status === naver.maps.Service.Status.OK) {
-            if (data && data.result && data.result.panoId) {
-                var panoId = data.result.panoId;
+//    // 주변의 거리뷰 정보를 가져옵니다.
+//    // 주변의 거리뷰 정보를 가져옵니다.
+//    naver.maps.Service.getPanoramaByLocation(latlng, 50, function (status, data) {
+//        if (status === naver.maps.Service.Status.OK) {
+//            if (data && data.result && data.result.panoId) {
+//                var panoId = data.result.panoId;
 
-                // 거리뷰 표시를 위해 파노라마 객체를 생성하고 위치를 설정합니다.
-                var pano = new naver.maps.Panorama("pano", {
-                    position: latlng
-                });
+//                // 거리뷰 표시를 위해 파노라마 객체를 생성하고 위치를 설정합니다.
+//                var pano = new naver.maps.Panorama("pano", {
+//                    position: latlng
+//                });
 
-                // 파노라마 위치가 갱신되었을 때 발생하는 이벤트를 받아 지도의 중심 위치를 갱신합니다.
-                naver.maps.Event.addListener(pano, 'pano_changed', function () {
-                    var position = pano.getPosition();
+//                // 파노라마 위치가 갱신되었을 때 발생하는 이벤트를 받아 지도의 중심 위치를 갱신합니다.
+//                naver.maps.Event.addListener(pano, 'pano_changed', function () {
+//                    var position = pano.getPosition();
 
-                    if (!position.equals(map.getCenter())) {
-                        map.setCenter(position);
-                    }
-                });
+//                    if (!position.equals(map.getCenter())) {
+//                        map.setCenter(position);
+//                    }
+//                });
 
-                // 파노라마 표시
-                pano.setPano(panoId);
-            } else {
-                // 해당 위치에 거리뷰가 없는 경우에 대한 처리를 할 수 있습니다.
-                console.log("해당 위치에 거리뷰가 없습니다.");
-            }
-        } else {
-            // 주변의 거리뷰 정보를 가져오는데 실패한 경우에 대한 처리를 할 수 있습니다.
-            console.log("거리뷰 정보를 가져오는데 실패하였습니다.");
-        }
-    });
-});
+//                // 파노라마 표시
+//                pano.setPano(panoId);
+//            } else {
+//                // 해당 위치에 거리뷰가 없는 경우에 대한 처리를 할 수 있습니다.
+//                console.log("해당 위치에 거리뷰가 없습니다.");
+//            }
+//        } else {
+//            // 주변의 거리뷰 정보를 가져오는데 실패한 경우에 대한 처리를 할 수 있습니다.
+//            console.log("거리뷰 정보를 가져오는데 실패하였습니다.");
+//        }
+//    });
+//});
 
 
 

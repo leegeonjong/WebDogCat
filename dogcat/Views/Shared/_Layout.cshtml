@@ -21,13 +21,13 @@
                 <img src="/css/avatar2.png" alt="">
             </div>
             <div id="menu">
-                <a href="https://www.naver.com/">게시판</a>
-                <a href="https://www.youtube.com/">시설찾기</a>
-                <a href="https://www.google.com/">권장칼로리</a>
+                <a href="/board/list">게시판</a>
+                <a href="/Map/MapSelectView">시설찾기</a>
+                <a href="/MyPet/CarculateCalorie">권장칼로리</a>
             </div>
             <div id="login">
-                <a href="">로그인</a>
-                <a href="">회원가입</a>
+                <a href="/Login/Login">로그인</a>
+                <a href="/User/Register">회원가입</a>
             </div>
         </div>
         <div class="clear"></div>
@@ -37,7 +37,7 @@
     </div>
     <div class="clear"></div>
     <div id="content">
-       @RenderBody();
+       @RenderBody()
     </div>
 
     <div id="footer">

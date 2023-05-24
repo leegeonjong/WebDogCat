@@ -6,14 +6,14 @@
 }
 
 /*제목 설정*/
-.title {
+.Maptitle {
     text-align: center;
     
 }
 
-    .title h1 {
+    .Maptitle h1 {
         font-size: 30px;
-        height : 40px;
+        height: 40px;
     }
 
 /*텍스트박스 설정*/
@@ -50,12 +50,12 @@
 
 /*버튼 설정*/
 .btn {
-    background-color: red; /*색상 */
+    background-color: lightskyblue; /*색상 */
     
 }
     .btn:hover {
         /* hover 시 적용될 스타일 */
-        background-color: yellow;
+        background-color: gray;
     }
 
 
