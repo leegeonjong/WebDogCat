@@ -206,6 +206,7 @@ namespace dogcat.Controllers
              int? pageRows
             )
         {
+
             // 현재 페이지 parameter
             page ??= 1;   // 디폴트는 1 page
             long cnt;
@@ -257,7 +258,10 @@ namespace dogcat.Controllers
             ViewData["endPage"] = endPage; // [페이징] 에 표시할 마지막 페이지
 
             ViewData["category"] = category;
-
+            int? UserId = HttpContext.Session.GetInt32("userId");
+            string? NickName = HttpContext.Session.GetString("userNickName");
+            ViewData["UserId"] = UserId;
+            ViewData["NickName"] = NickName;
             var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows.Value, category);
             return View(writes);
         }

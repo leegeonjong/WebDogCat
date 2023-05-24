@@ -49,4 +49,23 @@ function sendButtonValue(buttonName) {
         // 필요한 처리를 수행
         window.location.href = '/Board/IsUser?buttonName=Detail&writeId='; // IsUser 액션 호출하면서 버튼 이름과 writeId 전달
     }
+    else if (buttonName === 'mypage') {
+        window.location.href = '/Mypage/Home?buttonName=Mypage'
+    }
 }
+
+$(document).ready(function () {
+    $("#btn1").click(function () {
+        // 테이블 1을 표시하고 테이블 2를 숨기며, table-container를 숨깁니다.
+        $("#table1").css("display", "table");
+        $("#table2").css("display", "none");
+        $(".table-container").show();
+    });
+
+    $("#btn2").click(function () {
+        // 테이블 2를 표시하고 테이블 1을 숨기며, table-container를 숨깁니다.
+        $("#table1").css("display", "none");
+        $("#table2").css("display", "table");
+        $(".table-container").hide();
+    });
+});
