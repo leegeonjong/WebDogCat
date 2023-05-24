@@ -1,0 +1,51 @@
+﻿
+.container1 {
+    margin-top:2.5%;
+    margin-left: 25%;
+    margin-right: 10%;
+}
+
+.container2 {
+    text-align: center;
+    display: flex;
+}
+
+.table-container {
+    display: flex;
+    width: 65%;
+    margin-right: 10%
+}
+.table2 {
+    display: flex;
+    width: 65%;
+    margin-right: 10%
+}
+.btncnt {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+.float-start {
+    margin-top: 0.77%;
+}
+    .btncnt .btn {
+        height: 100px;
+        border: solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s;
+    }
+
+.btncnt .btn:hover {
+    background-color: gray;  원하는 색상으로 변경 가능 
+    }
+
+.table2 {
+    border: solid black;
+}
+    .table2 tr {
+    height: 150px;
+    }

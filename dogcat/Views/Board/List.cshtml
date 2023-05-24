@@ -8,7 +8,8 @@
     int totalPage = (int)ViewData["totalPage"];  // 총 '페이지' 수
     int pageRows = (int)ViewData["pageRows"];  // 한 '페이지' 에 표시할 글 개수
     string category = (string)ViewData["category"];
-   
+    int UserId = (int)ViewData["UserId"];
+    string NickName = (string)ViewData["NickName"];
 }
 @{
     // [페이징]
@@ -18,87 +19,130 @@
     int endPage = (int)ViewData["endPage"]; // [페이징] 에 표시할 마지막 페이지
 }
 
+<head>
+    <script src="~/js/Board/List.js"></script>
+    <link rel="stylesheet" href="~/css/Board/List.css">
+</head>
 
-<script src="~/js/Board/List.js"></script>
+<haeder>
 
-<h2>목록</h2>
+
+</haeder>
+<div class="container1">
+@if (category == "카테고리1")
+{
+    <h2>강아지</h2>
+}
+else if (category == "카테고리2")
+{
+    <h2>고양이</h2>
+}
+else{
+<h2>전체글보기</h2>
+}
+
 
 <hr>
+
 <div class="mb-3 mt-3 clearfix">
-    <span class="float-start me-2">총 @(cnt)개</span>
-    <span class="float-start">page @(page)/@(totalPage)</span>
-    <span class="float-end">
-        <form name="frmPageRows" id="frmPageRows" method="get">
-            <select class="form-select" name="pageRows" onchange="submitForm('frmPageRows')">
+   
+        <form name="frmCombined" id="frmCombined" method="get" action="/Board/List">
+    <span class="float-end me-2">
+            <select class="form-select" name="pageRows">
                 <option value="10" selected="@(pageRows == 10)">10</option>
                 <option value="15" selected="@(pageRows == 15)">15</option>
                 <option value="20" selected="@(pageRows == 20)">20</option>
                 <option value="30" selected="@(pageRows == 30)">30</option>
             </select>
-            <select class="form-select" name="category" onchange="submitForm('frmPageRows')">
+        </span>   
+        <span class="float-end me-3">
+            <select class="form-select" name="category">
                 <option value="전체" selected="@(category == "전체")">전체</option>
                 <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
                 <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
                 <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
             </select>
+        </span>
             <input type="hidden" name="page" value="@(page)">
-            <input type="hidden" name="category" value="@(category)">
         </form>
-    </span>
+        <div class="cntstart">
+            <span class="float-start ">총 @(cnt)개의 글</span>
+        </div>
+        <div class="btntable">
+            <button class="btn" id="btn1">테이블 1</button>
+            <button class="btn" id="btn2">테이블 2</button>
+        </div>
 </div>
 
-
-<div class="mb-3">
-    <form name="frmCategory" id="frmCategory" method="get" action="/Board/List">
-        <select class="form-select" name="category" onchange="submitForm('frmCategory')">
-            <option value="전체" selected="@(category == "전체")">전체</option>
-            <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
-            <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
-            <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
-        </select>
-        <input type="hidden" name="page" value="@(page)">
-    </form>
 </div>
-
-
-
-
-<table class="table table-hover">
-    <thead class="table-success">
+<div class="container2">
+<div class="btncnt">
+    <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">@NickName<br> 반간습니다</a>
+    <br>
+    <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@UserId" name="buttonName" value="mypage">마이페이지로가기</a>
+    <br>
+    <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">게시글 작성하기</a>
+    <br>
+        <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@UserId" name="buttonName" value="Message">메세지 보내기</a>
+</div>
+    <div class="vertical-line"></div>
+    <div class="table-container">
+<table class="table table-hover" id="table1">
+    <thead class="table-primary">
         <tr>
             <th>#</th>
-            <th>제목</th>
             <th>카테고리</th>
+            <th>제목</th>
             <th>작성자</th>
-            <th>조회수</th>
             <th>작성일</th>
+            <th>조회수</th>
         </tr>
     </thead>
     <tbody>
+        
         @foreach (var write in Model)
         {
             <tr>
-                <td>@write.Id</td>
                 <td>
-                    <a asp-controller="Board" asp-action="Detail" asp-route-id="@write.Id" name="buttonName" value="Detail">@write.Title</a>
-                    @*<a class="btn btn-outline-dark" asp-controller="Board" asp-action="IsUser" asp-route-id="@write.Id" onclick="sendButtonValue('Detail')">@write.Title</a>*@
-
+                    @write.Id
                 </td>
                 <td>@write.Category</td>
+                <td>
+                    <a asp-controller="Board" asp-action="Detail" asp-route-id="@write.Id" name="buttonName" value="Detail">@write.Title</a>
+                </td>
                 <td>@write.NickName</td>
-                <td>@write.ViewCnt</td>
                 <td>@write.Time</td>
+                <td>@write.ViewCnt</td>
             </tr>
         }
     </tbody>
 </table>
-<div class="row">
+</div>
+    <table id="table2" class="table2" style="display: none;">
+        @for (var i = 0; i < Model.Count; i += 4)
+        {
+            <tr>
+                @for (var j = i; j < i + 4 && j < Model.Count; j++)
+                {
+                    var write = Model[j];
+                    <td>
+                        @write.Image
+                        <hr>
+                        <a asp-controller="Board" asp-action="Detail" asp-route-id="@write.Id" name="buttonName" value="Detail">@write.Title</a>
+                        <br>
+                        @write.NickName
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+</div>
+
     <div class="col-12">
-        <a class="btn btn-outline-dark" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">작성</a>
-        @*<a class="btn btn-outline-dark" onclick="sendButtonValue('Write')">작성</a>*@
+            <span class="float-end me-5">page @(page)/@(totalPage)</span>
+       
     </div>
 
-</div>
 <div class="container mt-1">
     <ul class="pagination justify-content-center">
         @* << 표시 여부 *@
@@ -111,7 +155,7 @@
         @* < 표시 여부 *@
         @if (startPage > 1)
         {
-            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (startPage - 1)+"&category="+category)"><i class="fas fa-angle-left"></i></a></li>
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (startPage - 1)+"&category="+category + "&pageRows="+pageRows)"><i class="fas fa-angle-left"></i></a></li>
         }
 
         @* [페이징] 안의 '숫자' 표시 *@
@@ -121,7 +165,7 @@
             {
                 @if (k != page)
                 {
-                    <li class="page-item"><a class="page-link" href="@(url + "?page=" + k + "&category=" + category)">@k</a></li>
+                    <li class="page-item"><a class="page-link" href="@(url + "?page=" + k + "&category="+category + "&pageRows="+pageRows)">@k</a></li>
                 }
                 else
                 {
@@ -133,12 +177,12 @@
         @* > 표시 여부 *@
         @if (totalPage > endPage)
         {
-            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (endPage + 1))"><i class="fas fa-angle-right"></i></a></li>
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + (endPage + 1) + "&category="+category + "&pageRows="+pageRows)"><i class="fas fa-angle-right"></i></a></li>
         }
         @* >> 표시 여부 *@
         @if (page < totalPage)
         {
-            <li class="page-item"><a class="page-link" href="@(url + "?page=" + totalPage)"><i class="fas fa-angle-double-right"></i></a></li>
+            <li class="page-item"><a class="page-link" href="@(url + "?page=" + totalPage + "&category="+category + "&pageRows="+pageRows)"><i class="fas fa-angle-double-right"></i></a></li>
         }
     </ul>
 </div>

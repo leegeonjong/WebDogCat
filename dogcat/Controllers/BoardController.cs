@@ -150,7 +150,7 @@ namespace dogcat.Controllers
 
                         await writeRepository.AddimageAsync(new()
                         {
-                            O_image = fileFullPath,
+                            O_image = uploadedFile[0].FileName,
                             D_image = savedFileName,
                             WriteId = write.Id,
                         });
@@ -201,10 +201,12 @@ namespace dogcat.Controllers
         // GET: /Board/List
         [HttpGet]
         public async Task<IActionResult> List(
-            [FromQuery(Name = "page")] int? page, // int? 타입.  만약 page parameter 가 없거나, 변환 안되는 값이면 null 값
-            string category
+             [FromQuery(Name = "page")] int? page, // int? 타입.  만약 page parameter 가 없거나, 변환 안되는 값이면 null 값
+             string category,
+             int? pageRows
             )
         {
+
             // 현재 페이지 parameter
             page ??= 1;   // 디폴트는 1 page
             long cnt;
@@ -215,14 +217,14 @@ namespace dogcat.Controllers
             // writePages: 한 [페이징] 당 몇개의 페이지가 표시되나
             // pageRows: 한 '페이지'에 몇개의 글을 리스트 할것인가?
             int writePages = HttpContext.Session.GetInt32("writePages") ?? C.WRITE_PAGES;
-            int pageRows = HttpContext.Session.GetInt32("pageRows") ?? C.PAGE_ROWS;
+            pageRows ??= HttpContext.Session.GetInt32("pageRows") ?? C.PAGE_ROWS;
             // 현재 페이지 번호 => Session 에 저장
             HttpContext.Session.SetInt32("page", (int)page);
 
             // 글 목록 전체의 개수
             if (category == null || category == "전체")
             {
-               cnt = await writeRepository.CountAsync();
+                cnt = await writeRepository.CountAsync();
             }
             else
             {
@@ -235,7 +237,7 @@ namespace dogcat.Controllers
             if (page > totalPage) page = totalPage;
             if (page <= 0) page = 1;
             // 몇번째 데이터부터?
-            int fromRow = ((int)page - 1) * pageRows;
+            int fromRow = ((int)page - 1) * pageRows.Value;
 
             // [페이징] 에 표시할 '시작페이지' 와 '마지막 페이지' 계산
             int startPage = ((((int)page - 1) / writePages) * writePages) + 1;
@@ -256,8 +258,11 @@ namespace dogcat.Controllers
             ViewData["endPage"] = endPage; // [페이징] 에 표시할 마지막 페이지
 
             ViewData["category"] = category;
-
-            var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows, category);
+            int? UserId = HttpContext.Session.GetInt32("userId");
+            string? NickName = HttpContext.Session.GetString("userNickName");
+            ViewData["UserId"] = UserId;
+            ViewData["NickName"] = NickName;
+            var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows.Value, category);
             return View(writes);
         }
 

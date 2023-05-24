@@ -1,20 +1,93 @@
-﻿@{
-    ViewData["Title"] = "OH,Dog,CAT!!!!";
-}
-@*모델 지정 (이쪽이 맞냐?)*@
-@model dogcat.Models.Domain.User;
+﻿@model List<dogcat.Models.Domain.Write>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-   
-    <h1>어서와</h1>
-    <a href="/Login/Login">로그인</a>
-    <a href="/User/Register">회원가입</a>
-    @if(Model != null)
-    {
-        <p>@(Model.Name)님 안녕하세요~!</p>
-    }
-    
-    <br/>
-    <a class="btn btn-outline-dark" asp-controller="Map" asp-action="MapSelectView">검색</a>
+@{
+    ViewData["Title"] = "OH,Dog,CAT!!!!";
+     
+}
+<div id="content">
+    <div class="board">
+        <div class="free">
+            <b>자유게시판</b>
+            <hr />
+            @if (Model.Count > 0)
+            {
+                @foreach (var i in Model.Where(x => x.User.Admin == 0 && x.Image != null).OrderByDescending(x => x.Time).Take(5))
+                {
+                    <li>
+                        @if (i.Image != null)
+                        {
+                            //<img src="/MyFiles/@i.Images.Where(x => x.WriteId == i.Id).FirstOrDefault(x => x.O_image == i.Image).D_image" width="33" height="34">
+                            //<img src="@i.RequestPath" width="33" height="34">
+                            <span class="image">
+                                <img src="@i.RequestPath" alt="Facebook" width="200" height="150">
+                            </span>
+                            <br>
+                            <span class="title">
+                                <a href="/Board/Detail/@i.Id">@i.Title</a>
+                            </span>
+                        }
+                    </li>
+                }
+            }
+            else
+            {
+                <b>게시판에 글이 없습니다.</b>
+            }
+        </div>
+        <div class="populer">
+            <b>인기글</b>
+            <hr />
+            @if (Model.Count > 0)
+            {
+                @foreach (var i in Model.Where(x => x.User.Admin == 0 && x.Image != null).OrderByDescending(x => x.ViewCnt).Take(5))
+                {
+                    <li>
+                        @if(i.Image != null)
+                        {
+                            //<img src="/MyFiles/@i.Images.Where(x => x.WriteId == i.Id).FirstOrDefault(x => x.O_image == i.Image).D_image" width="33" height="34">
+                            //<img src="@i.RequestPath" width="33" height="34">
+                            <span class="image">
+                                <img src="@i.RequestPath" alt="Facebook" width="200" height="150">
+                            </span>
+                            <br>
+                            <span class="title">
+                                <a href="/Board/Detail/@i.Id">@i.Title</a>
+                            </span>
+                        }
+                    </li>
+                }
+            }
+            else
+            {
+                <b>아직 인기글이 없습니다.</b>
+            }
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="admin">
+        <b>공지사항</b>
+        <hr />
+        @if (Model.Count > 0)
+        {
+
+            @foreach (var i in Model.Where(x => x.User.Admin == 1).OrderByDescending(x => x.Time).ToList().Take(3))
+            {
+                <li><a href="/Board/Detail/@i.Id">@i.Title</a></li>
+            }
+        }
+        else
+        {
+            <b>아직 공지사항이 없습니다.</b>
+        }
+    </div>
+    <div class="explanation">
+        <div class="container">
+            <div class="photo"></div>
+            <div class="text">
+                <h2>반려동물 상태가 이상해요.</h2>
+                <p>새로운곳, 낯선곳에서 반려동물이 아플때, 빨리 병원에 데려가 치료를 받게하고 싶은데 근처의 동물병원이 어디있는지 찾아볼 수 있습니다.</p>
+                <a href="#">찾아보기<span class="fa fa-chevron-right"></span></a>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,76 +1,32 @@
-﻿
-<head>
+﻿<head>
+    <link rel="stylesheet" href="\css\Map\MapAnimalHospital.css" />
     @*클라이언트 아이디 숨길수 있으면 숨기기*@
+    @*<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=wsut629rqw&submodules=panorama"></script>*@
+    @*<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=wsut629rqw&submodules=geocoder"></script>*@
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=wsut629rqw"></script>
-    <h2>우리동네 동물병원</h2>
 </head>
 
 <body>
-    <div id="map" style="width:80%;height:600px;"></div>
 
+    <div class="title">
+        <h1>우리동네 동물병원</h1>
+        <br />
+    </div>
+
+    @*<button id="street">거리뷰</button>*@
+    <div class="map-wrapper">
+        <div id="map" style="width: 80%; height: 600px;"></div>
+        <div id="detail" class="detail"></div>
+    </div>
+    <div class="button">
+        <button onclick="history.back()" class="btn">뒤로가기</button>
+    </div>
     <script>
         var userLat = @Html.Raw(Json.Serialize(ViewBag.UserLat));
         var userLong = @Html.Raw(Json.Serialize(ViewBag.UserLong));
-        var mapOptions = {
-            center: new naver.maps.LatLng(userLat, userLong),
-            zoom: 14,
-        };
-
-        var map = new naver.maps.Map('map', mapOptions);
-
-       
         var animalHospitals = @Html.Raw(Json.Serialize(ViewBag.AnimalHospitals));
-
-        animalHospitals.forEach(function (hospital) {
-            var latitude = hospital.latitude;
-            var longitude = hospital.longitude;
-            var address = hospital.address;
-            var name = hospital.name;
-            var openClose = hospital.openClose;
-
-            // 동물병원 마커 옵션 설정
-            var markerOptions = {
-                position: new naver.maps.LatLng(latitude, longitude),
-                map: map,
-                icon: {
-                    url: 'https://cdn-icons-png.flaticon.com/512/1292/1292629.png',
-                    scaledSize: new naver.maps.Size(20, 20),
-                    origin: new naver.maps.Point(0, 0),
-                }
-            };
-
-            //동물병원 마커 지도에 표시
-            var marker = new naver.maps.Marker(markerOptions);
-
-            var contentString = [
-                '<div class="iw_inner">',
-                '   <h3>이름 : ' + name + '</h3>',
-                '   <p>주소 : ' + address + '</p>',
-                '   <p>영업여부 : ' + openClose + '</p>',
-                '</div>'
-            ].join('');
-
-            var infowindow = new naver.maps.InfoWindow({
-                content: contentString
-            });
-
-            naver.maps.Event.addListener(marker, "click", function (e) { // 마커를 클릭하면 정보가 표시된다.
-                if (infowindow.getMap()) {
-                    infowindow.close();
-                } else {
-                    infowindow.open(map, marker);
-                }
-            });
-        });
-
-        var marker = new naver.maps.Marker({ //사용자 현위치
-            position: new naver.maps.LatLng(userLat, userLong),
-            map: map,
-            icon: {
-                url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF1rdL5BciGb7ROzW5D5vht8Vn3XIuhEUxNA&usqp=CAU',
-                scaledSize: new naver.maps.Size(50, 50),
-                origin: new naver.maps.Point(0, 0),
-            }
-        });
     </script>
+    <script src="~/js/Map/MapAnimalHospital.js"></script>
+
+
 </body>
