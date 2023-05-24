@@ -150,10 +150,19 @@ namespace dogcat.Controllers
         [ActionName("FindPw")]
         public async Task<IActionResult> Find_Pw()
         {
+            //form 에서 사용자가 입력한 id와 email 값 가져오기
             string userid = Request.Form["inputid"];
             string mail = Request.Form["inputmail"];
+            //가져온 값이 데이터베이스에 있는지 확인하기
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Userid== userid.Trim() && x.Mail== (mail.Trim()));
-            return RedirectToAction("ResultPw", user);
+
+            if (user != null)
+            {
+                // 사용자가 데이터베이스에서 일치하는 경우 세션에 값을 저장
+                HttpContext.Session.SetString("UserId", user.Userid);
+                HttpContext.Session.SetString("Email", user.Mail);
+            }
+            return RedirectToAction("ResultPw");
 
         }
         
@@ -164,15 +173,27 @@ namespace dogcat.Controllers
 
         [HttpPost]
         [ActionName("ResultPw")]
-        public IActionResult ResultPw2(User user)
+        public IActionResult ResultPw2(string pw)//form 에서 pw 값 가져오기
         {
-            string new_pw = Request.Form["pw"];
-            var _user= _context.Users.FirstOrDefault(x => x.Id == user.Id);
-            _user.Pw = new_pw;
-            _context.SaveChanges();
+            // 세션에서 ID와 이메일 값 가져오기
+            string userId = HttpContext.Session.GetString("UserId");
+            string mail = HttpContext.Session.GetString("Email");
+
+            // 데이터베이스에서 사용자 찾기
+            var user = _context.Users.FirstOrDefault(x => x.Userid == userId.Trim() && x.Mail == mail.Trim());
+            // 사용자를 찾았다면 
+            if (user != null)
+            {
+                string new_pw = user.Pw;
+
+                // 비밀번호 업데이트
+                user.Pw = pw;
+                _context.SaveChanges();
+            }
+
             return RedirectToAction("Index");
-            
         }
+
 
     } // end controller
 }
