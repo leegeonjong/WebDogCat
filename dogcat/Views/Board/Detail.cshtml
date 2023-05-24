@@ -18,21 +18,29 @@
     var comment = ViewData["Comment"] as List<dogcat.Models.Domain.Comment>;
 }
 @{
-    ViewData["Title"] = $"조회 - {Model?.Title}";
+    ViewData["Title"] = $"{Model?.Title}";
 
     int page = (int)ViewData["page"];
 }
 
+<head>
+    <link rel="stylesheet" href="~/css/Board/Detail.css">
 <script src="~/js/Board/Detail.js"></script>
-<h2>조회 - @Title</h2>
-<hr>
+</head>
+<div class="container">
+
 @if (write != null)
 {
-    <div class="mb-3 mt-3 clearfix">
-        <span class="float-start me-2">id: @UserId</span>
-        <span class="float-end ms-4">작성일: @Time</span>
-        <span class="float-end">조회수: @ViewCnt</span>
-    </div>
+        <div class="mb-3 mt-3">
+            <span class="categorycolor">@Category</span>
+        </div>
+<h2> 
+    @Title
+    <span class="float-end ms-4 span1" >작성일: @Time</span>
+    <span class="float-end span1">조회수: @ViewCnt</span><br>
+    <span class="flaot-start span1"> 작성자: @WriterNickName</span>
+</h2>
+<hr>
 
     <section>
         <form method="POST" name="frmDelete" asp-controller="Board" asp-action="Delete">
@@ -44,48 +52,18 @@
                 <img src="@Path" class="img-thumbnail">
             </div>
         }
-        <div class="mb-3">
-            <label for="name" readonly>작성자:</label>
-            <span class="form-control">@WriterNickName</span>
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="title">제목:</label>
-            <span class="form-control">@Title</span>
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="category">카테고리:</label>
-            <span class="form-control">@Category</span>
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="context">내용:</label>
-            <span class="form-control">@Context</span>
-        </div>
+            <div class="mb-3 mt-3">
+                <textarea class="form-control auto-height" readonly rows="5">@Context</textarea>
+            </div>
         @* 글 작성 수정 삭제 목록*@
-        <div class="d-flex">
-            <a class="btn btn-outline-dark ms-2" asp-controller="Board" asp-action="List" asp-route-page="@(page)">목록</a>
             @if (@UserId==userId)
             {
-                <a class="btn btn-outline-dark" asp-controller="Board" asp-action="Update" asp-route-id="@WriteId">수정</a>
-                <button type="submit" class="btn btn-outline-danger ms-2" id="btnDel" asp-controller="Board" asp-action="Delete" asp-route-id="@WriteId">삭제</button>
+                    <a class="btn btn-outline-dark float-end ms-4" asp-controller="Board" asp-action="Update" asp-route-id="@WriteId">수정</a>
+                    <button type="submit" class="btn btn-outline-danger float-end" id="btnDel" asp-controller="Board" asp-action="Delete" asp-route-id="@WriteId">삭제</button>
             }
-        </div>
-        @*댓글 작성*@
-        <h3>댓글 작성</h3>
-        <form method="post" asp-controller="Board" asp-action="AddComment">
-            <input type="hidden" name="WriteId" value="@WriteId" />
-            <input type="hidden" name="UserId" value="@userId" />
-            <input type="hidden" name="NickName" value="@Nickname" />
-            <div class="mb-3">
-                @*<input type="text" class="form-control" name="NickName" asp-for="@Nickname" readonly />*@
-            </div>
-            <div class="mb-3">
-                <label for="content">댓글 내용:</label>
-                <textarea class="form-control" name="Content" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">댓글 작성</button>
-        </form>
+            <br>
         @*댓글 테이블*@
-        <table>
+        <table class="commenttable">
             <tbody>
                 @foreach (var cmt in comment)
                 {
@@ -107,6 +85,21 @@
             </tbody>
 
         </table>
+        @*댓글 작성*@
+        <h3>댓글 작성</h3>
+        <form method="post" asp-controller="Board" asp-action="AddComment">
+            <input type="hidden" name="WriteId" value="@WriteId" />
+            <input type="hidden" name="UserId" value="@userId" />
+            <input type="hidden" name="NickName" value="@Nickname" />
+            <div class="mb-3">
+                @*<input type="text" class="form-control" name="NickName" asp-for="@Nickname" readonly />*@
+            </div>
+            <div class="mb-3">
+                <label for="content">댓글 내용:</label>
+                <textarea class="form-control" name="Content" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">댓글 작성</button>
+        </form>
 
 
         <!-- 하단 링크 -->
@@ -119,3 +112,4 @@ else
         history.back();
     </script>
 }
+</div>

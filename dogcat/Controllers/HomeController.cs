@@ -1,23 +1,36 @@
-﻿using dogcat.Models;
+﻿using dogcat.Data;
+using dogcat.Models;
+using dogcat.Models.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.IO;
 
 namespace dogcat.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DogcatDbContext _dogcatDbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DogcatDbContext dogcatDbContext)
         {
             _logger = logger;
+            _dogcatDbContext = dogcatDbContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            //var writes = await _dogcatDbContext.Writes.Where(x => x.User.Admin == 1).OrderByDescending(x => x.Time).ToListAsync();
+            var list = await _dogcatDbContext.Writes
+                        .Include(x => x.User)
+                        .ToListAsync();
+            foreach(var i in list)
+            {
+                i.RequestPath = $"/appfiles/{i.Image}";
+            }
+            return View(list);
         }
-
         public IActionResult Privacy()
         {
             return View();
