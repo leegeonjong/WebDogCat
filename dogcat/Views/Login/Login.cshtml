@@ -4,21 +4,16 @@
 
 @{
 }
-@if (Model != null)
-{
-
-}
-else
-{
     <h1>어서와</h1>
-    <form method="POST" asp-controller="Login" asp-action="Login">
-        <label for="ID">ID</label>
-        <input type="text" name="userid" /><br />
-        <label for="Password">Password</label>
-        <input type="password" name="userpassword" /><br />
+    <form method="POST" asp-controller="Login" asp-action="Login" id="Login">
+        <label for="input_id">ID</label>
+        <input type="text" name="userid" id="input_id" /><br />
+        <label for="input_pw" >Password</label>
+        <input type="password" name="userpassword" id="input_pw" /><br />
         <button>로그인</button>
     </form>
     <br />
     <a asp-controller="Login" asp-action="FindId">Id찾기</a> 
     <a asp-controller="Login" asp-action="FindPw">비밀번호 찾기</a>
-}
+    <script src="~/js/User/Valid_check.js"></script>
+

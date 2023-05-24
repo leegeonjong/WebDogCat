@@ -13,10 +13,10 @@ namespace dogcat.Controllers
     public class LoginController : Controller
     {
         //이메일 인증 
-        public string Result { get; set; }
         public string RealPassword { get; set; }
+        public string InputCode { get; set; }
         //이메일인증에 사용할 것들
-        EmailVerify mail = new();
+        EmailVerify _mail = new();
         //public static Random _vcode = new Random(); // 인증번호 
         //DbContext
         private readonly DogcatDbContext _context;
@@ -28,8 +28,8 @@ namespace dogcat.Controllers
         //로그인 View
         public IActionResult Login()
         {
-            var userid = HttpContext.Session.GetString("userid");
-            return View((object)userid);
+
+            return View();
         }
         //메인 View
         public IActionResult Index()
@@ -43,7 +43,7 @@ namespace dogcat.Controllers
 
 
         [HttpPost]
-        [ActionName("FindId")]
+        [ActionName("Login")]
         public IActionResult IsUser()
         {
             string userid = Request.Form["userid"];
@@ -71,12 +71,21 @@ namespace dogcat.Controllers
 
         }
 
-        //fetch API 처리하는 액션 메소드 작성
+        //아이디 중복 검사
+        [HttpPost]
+        [ActionName("Idcheck")]
+        public IActionResult Idcheck(string valid_id)
+        {
+            string id = valid_id;
+            var user = _context.Users.FirstOrDefault(x => x.Userid.Trim().Equals(id));
+            if (user != null) return Json("unable");
+            return Json("able");
+        }
         
         //메일 발송(인증번호)
         [HttpPost]
         [ActionName("Send")]
-        public string SendMail(string input_mail) 
+        public void SendMail(string input_mail) 
         {
             // 이메일 보내는 사람의 구글 이메일 주소
             string fromEmail = "lateaksoo@gmail.com";
@@ -106,12 +115,15 @@ namespace dogcat.Controllers
                 client.Credentials = new NetworkCredential(fromEmail, fromPassword);
                 client.Send(message);
             }
+        }
+
+            
+
           
 
-            Result = "ok";
             
-            return Result;
-        }
+            
+            
 
 
 
@@ -132,9 +144,18 @@ namespace dogcat.Controllers
         {
             string name = Request.Form["inputname"];
             string mail = Request.Form["inputmail"];
+            InputCode = Request.Form["inputverify"];
             var user = _context.Users.FirstOrDefault(x => x.Name.Equals(name.Trim()) && x.Mail.Equals(mail.Trim()));
-                
+            if(InputCode != RealPassword)
+            {
+                TempData["message"] = "인증코드 불일치!";
+                return View();
+            }
+            else
+            {
             return View("ResultId", user);
+            }   
+
         }
         
         public IActionResult ResultId()
