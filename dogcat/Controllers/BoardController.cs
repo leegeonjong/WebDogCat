@@ -150,7 +150,7 @@ namespace dogcat.Controllers
 
                         await writeRepository.AddimageAsync(new()
                         {
-                            O_image = fileFullPath,
+                            O_image = uploadedFile[0].FileName,
                             D_image = savedFileName,
                             WriteId = write.Id,
                         });
