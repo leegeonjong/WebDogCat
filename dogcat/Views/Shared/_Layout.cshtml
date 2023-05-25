@@ -44,6 +44,7 @@
                 else if(isAdmin == 1)
                 {
                     <a href="#">회원관리</a>
+                    <a href="/Message/Home/@userId">쪽지</a>
                     <a href="#">공지사항 작성</a>
                     <a href="/User/Logout">로그아웃</a>
                 }
@@ -52,6 +53,7 @@
                 {
                     <p>@(userNickName)님 환영합니다</p>
                     <a href="/User/Logout">로그아웃</a>
+                    <a href="/Message/Home/@userId">쪽지</a>
                     <a href="/Mypage/Home/@userId">마이페이지</a>
                 }
 

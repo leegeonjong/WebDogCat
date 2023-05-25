@@ -12,11 +12,11 @@
 @*아이디 중복검사 여부*@
     <input type="hidden" value="unable" id="idcheck" name="valid_id" />
     @*문자인증 여부(본인 확인)*@
- <input type="hidden" name="phone_check" value="unable" id="phonecheck" />
+ @*<input type="hidden" name="phone_check" value="unable" id="phonecheck" />*@
 @*ID입력*@
 <label for="Userid">아이디</label>
-<input type="text" asp-for="Userid" /> 
-<button type="button" id="Go_idcheck">중복검사</button> <br />
+<input type="text" asp-for="Userid" />
+    <button type="button" id="Go_idcheck" disabled>중복검사</button> <br />
     <p id="valid_userId"></p>
 @*비밀번호*@
 <label for="Pw">비밀번호</label>
@@ -39,7 +39,7 @@
 <input type="text" asp-for="Mail" /> <br />
     <p id="valid_mail"></p>
 <br />
-@*연락처*@
+@*@*연락처*@
 <label for="Tel">연락처</label>
 <input type="text" asp-for="PhoneNum" /> <button type="button" name="verify_tel">인증번호 받기</button> <br />
     <p id="valid_tel"></p>

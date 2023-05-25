@@ -46,11 +46,12 @@
     })
 
     // 회원가입
+
     //양식입력 유효성 검사
-    $(function () {
         //아이디 검사
+    $(function () {
         $("#Userid").on("keyup", function () {
-            isvalid_Id.val("0"); // ID변경 될 시 인증여부 값 초기화 (다시 인증해야 함)
+            isvalid_Id.val("unable"); // ID변경 될 시 인증여부 값 초기화 (다시 인증해야 함)
             if (id.test($("#Userid").val()) == false) {
                 $("#Go_idcheck").prop("disabled", true);
                 $("#valid_userId").css("color", "red");
@@ -118,105 +119,139 @@
         });
 
         //연락처
-        $("#PhoneNum").on("keyup", function () {
-            if (tel.test($("#PhoneNum").val()) == false) {
-                $("#valid_tel").css("color", "red");
-                $("#valid_tel").text("휴대전화 번호를 올바르게 입력해 주세요.");
-            } else {
-                $("#valid_tel").css("color", "#0C964A");
-                $("#valid_tel").text("Ok!");
-            }
-        });
+        //$("#PhoneNum").on("keyup", function () {
+        //    if (tel.test($("#PhoneNum").val()) == false) {
+        //        $("#valid_tel").css("color", "red");
+        //        $("#valid_tel").text("휴대전화 번호를 올바르게 입력해 주세요.");
+        //    } else {
+        //        $("#valid_tel").css("color", "#0C964A");
+        //        $("#valid_tel").text("Ok!");
+        //    }
+        //});
     });
 
-    // 회원가입 폼 검증
-    $(function () {
-        $("#register").submit(function () {
-            if (input_id.val() == "") {
-                alert('아이디를 입력 하세요.');
-                $("#Userid").focus();
-                return false;
-            } else if (id.test($("#Userid").val()) == false) {
-                alert("잘못된 형식의 아이디 입니다.");
-                $("#Userid").focus();
-                return false;
+    
+    // 아이디 중복검사
+$("#Go_idcheck").on("click", function () {
+    // 변수 지정
+    var input_id = $("#Userid").val();
+    // URL 설정
+    var url = "/User/Idcheck" + "?Userid=" + encodeURIComponent(input_id);
+
+    // Fetch
+    fetch(url)
+        .then(function (response) {
+            // 응답 실패
+            if (!response.ok) {
+                alert("잠시 후 다시 시도하세요");
+                throw new Error("서버 요청에 실패했습니다. 다시 시도해주세요.");
             }
-
-            if ($("#Pw").val() == "") {
-                alert('비밀번호를 입력 하세요.');
-                $("#Pw").focus();
-                return false;
-            } else if (pw.test($("#Pw").val()) == false) {
-                alert("잘못된 형식의 비밀번호 입니다.");
-                $("#Pw").focus();
-                return false;
+            return response.json();
+        })
+        .then(function (usable) { 
+            if (usable == "unable") {
+                isvalid_Id.val("unable");
+                alert("이미 사용중인 아이디입니다.");
             }
-
-            if ($("#Pw").val() != input_pw2.val()) {
-                alert('비밀번호가 일치하지 않습니다.');
-                $("#input_pw2").focus();
-                return false;
-            } else if (input_pw2.val() == "") {
-                alert("비밀번호 확인을 꼭 해주세요!");
-                $("#input_pw2").focus();
-                return false;
-            }
-
-            if ($("#NickName").val() == "") {
-                alert('사용하실 닉네임을 입력 하세요.');
-                $("#NickName").focus();
-                return false;
-            } else if (nickname.test($("#NickName").val()) == false) {
-                alert("잘못된 형식의 닉네임 입니다.");
-                $("#NickName").focus();
-                return false;
-            }
-
-            if ($("#Name").val() == "") {
-                alert('회원님의 이름을 입력 하세요.');
-                $("#Name").focus();
-                return false;
-            } else if (_name.test($("#Name").val()) == false) {
-                alert("이름을 올바르게 입력하세요!");
-                $("#Name").focus();
-                return false;
-            }
-
-            if ($("#Mail").val() == "") {
-                alert('사용하실 이메일을 입력 하세요.');
-                $("#Mail").focus();
-                return false;
-            } else if (mail.test($("#Mail").val()) == false) {
-                alert("잘못된 형식의 이메일 입니다.");
-                $("#Mail").focus();
-                return false;
-            }
-
-            if ($("#PhoneNum").val() == "") {
-                alert('회원님의 연락처를 입력해 주세요.');
-                $("#PhoneNum").focus();
-                return false;
-            } else if (tel.test($("#PhoneNum").val()) == false) {
-                alert("잘못된 형식의 연락처 입니다.");
-                $("#PhoneNum").focus();
-                return false;
-            }
-
-            //SMS 본인 인증 체크
-
-            //이메일인증, 아이디 중복검사 여부 체크
-
-            if ((isvalid_Id.val() == "1" && isvalid_tel.val() == "1") == false) {
-                if (isvalid_Id.val() == "unable") {
-                    alert("아이디 중복검사를 실시 해 주세요!");
-                    return false;
-                } else if (isvalid_tel.val() == "unable") {
-                    alert("본인 확인을 꼭 해 주세요!!");
-                    return false;
-                }
+            else if (usable == "able") {
+                isvalid_Id.val("able");
+                alert("사용 가능한 아이디입니다.");
             }
         });
+});
+//SMS 본인 인증 체크
+//$("#").on("click", function () {
+
+//})
+
+
+
+// 회원가입 폼 검증
+$(function () {
+    $("#register").submit(function () {
+        if ($.trim($("#Userid").val()) == "" || $("#Userid").val() == null) {
+            alert('아이디를 입력 하세요.');
+            $("#Userid").focus();
+            return false;
+        } else if (id.test($("#Userid").val()) == false) {
+            alert("잘못된 형식의 아이디 입니다.");
+            $("#Userid").focus();
+            return false;
+        }
+
+        if ($("#Pw").val() == "" || $("#Pw").val() == null) {
+            alert('비밀번호를 입력 하세요.');
+            $("#Pw").focus();
+            return false;
+        } else if (pw.test($("#Pw").val()) == false) {
+            alert("잘못된 형식의 비밀번호 입니다.");
+            $("#Pw").focus();
+            return false;
+        }
+
+        if ($("#Pw").val() != input_pw2.val()) {
+            alert('비밀번호가 일치하지 않습니다.');
+            $("#input_pw2").focus();
+            return false;
+        } else if ($.trim(input_pw2.val()) == "" || input_pw2.val() == null) {
+            alert("비밀번호 확인을 꼭 해주세요!");
+            $("#input_pw2").focus();
+            return false;
+        }
+
+        if ($.trim($("#NickName").val()) == "" || $("#NickName").val() == null) {
+            alert('사용하실 닉네임을 입력 하세요.');
+            $("#NickName").focus();
+            return false;
+        } else if (nickname.test($("#NickName").val()) == false) {
+            alert("잘못된 형식의 닉네임 입니다.");
+            $("#NickName").focus();
+            return false;
+        }
+
+        if ($.trim($("#Name").val()) == "" || $("#Name").val() == null) {
+            alert('회원님의 이름을 입력 하세요.');
+            $("#Name").focus();
+            return false;
+        } else if (_name.test($("#Name").val()) == false) {
+            alert("이름을 올바르게 입력하세요!");
+            $("#Name").focus();
+            return false;
+        }
+
+        if ($.trim($("#Mail").val()) == "" || $("#Mail").val() == null) {
+            alert('사용하실 이메일을 입력 하세요.');
+            $("#Mail").focus();
+            return false;
+        } else if (mail.test($("#Mail").val()) == false) {
+            alert("잘못된 형식의 이메일 입니다.");
+            $("#Mail").focus();
+            return false;
+        }
+
+        //if ($.trim($("#PhoneNum").val()) == "" || $("#PhoneNum").val() == null) {
+        //    alert('회원님의 연락처를 입력해 주세요.');
+        //    $("#PhoneNum").focus();
+        //    return false;
+        //} else if (tel.test($("#PhoneNum").val()) == false) {
+        //    alert("잘못된 형식의 연락처 입니다.");
+        //    $("#PhoneNum").focus();
+        //    return false;
+        //}
+
+        
+
+        //이메일인증, 아이디 중복검사 여부 체크
+
+        //if ((isvalid_Id.val() == "able" && isvalid_tel.val() == "able") == false) {}
+        if (isvalid_Id.val() == "unable")
+        {
+            alert("아이디 중복검사를 실시 해 주세요!");
+            return false;
+        }
+        
     });
+});
 
     //ID중복 확인 버튼 클릭 시 수행 할 동작 (입력 id값 서버에 넘겨주기)
 
@@ -225,7 +260,7 @@
     //    var inputid = $("#Userid").val(); //사용자 입력 ID
 
     //    //URL 설정
-    //    fetch("/Login/Idcheck", {
+    //    fetch("/User/Idcheck", {
     //        //메소드 설정
     //        method: "POST",
     //        //헤더 설정 (문서타입 : xml / Json)
@@ -252,36 +287,6 @@
     //                alert("사용가능한 ID 입니다!");
     //            }
     //        })
-
-    
-    //Get
-$("#Go_idcheck").on("click", function () {
-    // 변수 지정
-    var input_id = $("#Userid").val();
-    // URL 설정
-    var url = "/Login/Idcheck" + "?Userid=" + encodeURIComponent(input_id);
-
-    // Fetch
-    fetch(url)
-        .then(function (response) {
-            // 응답 실패
-            if (!response.ok) {
-                alert("잠시 후 다시 시도하세요");
-                throw new Error("서버 요청에 실패했습니다. 다시 시도해주세요.");
-            }
-            return response.json();
-        })
-        .then(function (usable) { 
-            if (usable == "unable") {
-                isvalid_Id.val("0");
-                alert("이미 사용중인 아이디입니다.");
-            }
-            else if (usable == "able") {
-                isvalid_Id.val("1");
-                alert("사용 가능한 아이디입니다.");
-            }
-        });
-});
 
 
     
