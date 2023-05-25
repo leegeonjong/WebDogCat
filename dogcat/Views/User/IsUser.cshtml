@@ -1,0 +1,14 @@
+﻿@*
+    로그인 확인 (있는 아이디인지)
+*@
+@{
+}
+@if (Model == null)
+{
+    <script>
+        alert("ID 또는 패스워드 오류입니다.");
+    </script>
+}
+<script>
+    location.href = "@Url.Action("User","Login")"; // method,controller
+</script>

@@ -271,7 +271,7 @@ $("#Go_idcheck").on("click", function () {
             }
             return response.json();
         })
-        .then(function (usable) { // 변수명 수정: useable -> usable
+        .then(function (usable) { 
             if (usable == "unable") {
                 isvalid_Id.val("0");
                 alert("이미 사용중인 아이디입니다.");
