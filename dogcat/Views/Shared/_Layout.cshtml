@@ -3,6 +3,8 @@
 @{
     int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("userId") ?? 0;
     string userNickName = HttpContextAccessor.HttpContext.Session.GetString("userNickName");
+    int? isAdmin = HttpContextAccessor.HttpContext.Session.GetInt32("userAdmin") ?? 0;
+
 }
 <!DOCTYPE html>
 
@@ -36,12 +38,21 @@
             <div id="login">
                 @if (userId == 0 || userId == null)
                 {
-                    <a href="/Login/Login">로그인</a>
+                    <a href="/User/Login">로그인</a>
                     <a href="/User/Register">회원가입</a>
                 }
+                else if(isAdmin == 1)
+                {
+                    <a href="#">회원관리</a>
+                    <a href="#">공지사항 작성</a>
+                    <a href="/User/Logout">로그아웃</a>
+                }
+
                 else
                 {
-                    <p>@userNickName</p>
+                    <p>@(userNickName)님 환영합니다</p>
+                    <a href="/User/Logout">로그아웃</a>
+                    <a href="/Mypage/Home/@userId">마이페이지</a>
                 }
 
             </div>

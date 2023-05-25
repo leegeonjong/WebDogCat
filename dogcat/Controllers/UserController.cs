@@ -63,6 +63,13 @@ namespace dogcat.Controllers
 
         }
         //-------------------------------------------------------------------------------------------------
+        //로그아웃
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("userId");
+            return View("Logout");
+        }
+        //-----------------------------------------------------------------------------------------------
 
         //메인 View
         public IActionResult Index()
@@ -121,14 +128,6 @@ namespace dogcat.Controllers
             }
         }
     //---------------------------------------------------------------------------------------------------------
-
-        //로그아웃
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Remove("userid");
-            return View("Logout");
-        }
-        //-----------------------------------------------------------------------------------------------
 
         //ID찾기
         public IActionResult FindId() //View
