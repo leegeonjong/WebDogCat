@@ -1,7 +1,10 @@
 ﻿@*
     로그인 확인 (있는 아이디인지)
 *@
+
+@using dogcat.Models.Domain
 @{
+    var user = ViewData["user"] as User; // User 모델로 캐스팅
 }
 @if (Model == null)
 {
@@ -10,5 +13,5 @@
     </script>
 }
 <script>
-    location.href = "@Url.Action("Login","Login")"; // method,controller
+    location.href = "@Url.Action("Index", "Home",user)";
 </script>

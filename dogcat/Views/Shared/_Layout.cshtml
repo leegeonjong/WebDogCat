@@ -1,5 +1,8 @@
-﻿@{
-    
+﻿
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("userId") ?? 0;
+    string userNickName = HttpContextAccessor.HttpContext.Session.GetString("userNickName");
 }
 <!DOCTYPE html>
 
@@ -31,11 +34,15 @@
                 <a href="/MyPet/CarculateCalorie">권장칼로리</a>
             </div>
             <div id="login">
-               
-                <a href="/Login/Login">로그인</a>
-                <a href="/User/Register">회원가입</a>
-                
-                
+                @if (userId == 0 || userId == null)
+                {
+                    <a href="/Login/Login">로그인</a>
+                    <a href="/User/Register">회원가입</a>
+                }
+                else
+                {
+                    <p>@userNickName</p>
+                }
 
             </div>
         </div>
