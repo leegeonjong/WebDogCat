@@ -82,7 +82,7 @@ namespace dogcat.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("userid");
+            HttpContext.Session.Remove("userId");
             return View("Logout");
         }
 
