@@ -29,40 +29,41 @@
 
 </haeder>
 <div class="container1">
-@if (category == "카테고리1")
-{
-    <h2>강아지</h2>
-}
-else if (category == "카테고리2")
-{
-    <h2>고양이</h2>
-}
-else{
-<h2>전체글보기</h2>
-}
+    @if (category == "카테고리1")
+    {
+        <h2>강아지</h2>
+    }
+    else if (category == "카테고리2")
+    {
+        <h2>고양이</h2>
+    }
+    else
+    {
+        <h2>전체글보기</h2>
+    }
 
 
-<hr>
+    <hr>
 
-<div class="mb-3 mt-3 clearfix">
-   
+    <div class="mb-3 mt-3 clearfix">
+
         <form name="frmCombined" id="frmCombined" method="get" action="/Board/List">
-    <span class="float-end me-2">
-            <select class="form-select" name="pageRows">
-                <option value="10" selected="@(pageRows == 10)">10</option>
-                <option value="15" selected="@(pageRows == 15)">15</option>
-                <option value="20" selected="@(pageRows == 20)">20</option>
-                <option value="30" selected="@(pageRows == 30)">30</option>
-            </select>
-        </span>   
-        <span class="float-end me-3">
-            <select class="form-select" name="category">
-                <option value="전체" selected="@(category == "전체")">전체</option>
-                <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
-                <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
-                <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
-            </select>
-        </span>
+            <span class="float-end me-2">
+                <select class="form-select" name="pageRows">
+                    <option value="10" selected="@(pageRows == 10)">10</option>
+                    <option value="15" selected="@(pageRows == 15)">15</option>
+                    <option value="20" selected="@(pageRows == 20)">20</option>
+                    <option value="30" selected="@(pageRows == 30)">30</option>
+                </select>
+            </span>
+            <span class="float-end me-3">
+                <select class="form-select" name="category">
+                    <option value="전체" selected="@(category == "전체")">전체</option>
+                    <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
+                    <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
+                    <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
+                </select>
+            </span>
             <input type="hidden" name="page" value="@(page)">
         </form>
         <div class="cntstart">
@@ -72,7 +73,7 @@ else{
             <button class="btn" id="btn1">테이블 1</button>
             <button class="btn" id="btn2">테이블 2</button>
         </div>
-</div>
+    </div>
 
 </div>
 <div class="container2">
@@ -90,37 +91,37 @@ else{
     }
     <div class="vertical-line"></div>
     <div class="table-container">
-<table class="table table-hover" id="table1">
-    <thead class="table-primary">
-        <tr>
-            <th>#</th>
-            <th>카테고리</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>조회수</th>
-        </tr>
-    </thead>
-    <tbody>
-        
-        @foreach (var write in Model)
-        {
-            <tr>
-                <td>
-                    @write.Id
-                </td>
-                <td>@write.Category</td>
-                <td>
-                    <a asp-controller="Board" asp-action="Detail" asp-route-id="@write.Id" name="buttonName" value="Detail">@write.Title</a>
-                </td>
-                <td>@write.NickName</td>
-                <td>@write.Time</td>
-                <td>@write.ViewCnt</td>
-            </tr>
-        }
-    </tbody>
-</table>
-</div>
+        <table class="table table-hover" id="table1">
+            <thead class="table-primary">
+                <tr>
+                    <th>#</th>
+                    <th>카테고리</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var write in Model)
+                {
+                    <tr>
+                        <td>
+                            @write.Id
+                        </td>
+                        <td>@write.Category</td>
+                        <td>
+                            <a asp-controller="Board" asp-action="Detail" asp-route-id="@write.Id" name="buttonName" value="Detail">@write.Title</a>
+                        </td>
+                        <td>@write.NickName</td>
+                        <td>@write.Time</td>
+                        <td>@write.ViewCnt</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
     <table id="table2" class="table2" style="display: none;">
         @for (var i = 0; i < Model.Count; i += 4)
         {
@@ -129,9 +130,9 @@ else{
                 {
                     var write = Model[j];
                     <td>
-                        @if(write.RequestPath != null)
+                        @if (write.RequestPath != null)
                         {
-                            <img src="@write.RequestPath">    
+                            <img src="@write.RequestPath">
                         }
                         <hr>
                         <a asp-controller="Board" asp-action="Detail" asp-route-id="@write.Id" name="buttonName" value="Detail">@write.Title</a>
@@ -144,10 +145,10 @@ else{
     </table>
 </div>
 
-    <div class="col-12">
-            <span class="float-end me-5">page @(page)/@(totalPage)</span>
-       
-    </div>
+<div class="col-12">
+    <span class="float-end me-5">page @(page)/@(totalPage)</span>
+
+</div>
 
 <div class="container mt-1">
     <ul class="pagination justify-content-center">
