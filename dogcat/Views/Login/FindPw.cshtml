@@ -11,10 +11,7 @@
         <div><span class="text-danger"></span></div>
     </div>
     <button type="submit" class="btn btn-outline-dark" onclick="return validateEmailForm()">인증번호발송</button>
-    <a class="btn btn-outline-dark"
-       asp-controller="Email"
-       asp-action="Email">
-    </a>
+    
 </form>
 
 
@@ -25,10 +22,7 @@
         <div><span class="text-danger"></span></div>
     </div>
     <button type="submit" class="btn btn-outline-dark" onclick="return validateVerificationForm()">인증</button>
-    <a class="btn btn-outline-dark"
-       asp-controller="Email"
-       asp-action="EmailCheck">
-    </a>
+    
 </form>
 <input type="hidden" id="emailCodeSent" value="@ViewBag.EmailCodeSent" />
 <script src="~/js/User/Valid_check.js"></script>

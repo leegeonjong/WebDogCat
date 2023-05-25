@@ -320,62 +320,55 @@ $("#Go_idcheck").on("click", function () {
 
 
 //--------------------------Id PW 찾기 검증----------------------------------
-//Id 찾기 검증
+// Id 찾기 검증
 function validateForm() {
     var name = document.forms[0]["Name"].value;
     var email = document.forms[0]["Email"].value;
 
     if (name === "" && email === "") {
-        alert("이름과 이메일을 입력하세요.");
+        displayErrorMessage("이름과 이메일을 입력하세요.");
+        return false;
+    } else if (name === "") {
+        displayErrorMessage("이름을 입력하세요.");
+        return false;
+    } else if (email === "") {
+        displayErrorMessage("이메일을 입력하세요.");
+        return false;
+    } else if (!validateEmailFormat(email)) {
+        displayErrorMessage("올바른 이메일 형식이 아닙니다.");
         return false;
     }
-    else if (name === "") {
-        alert("이름을 입력하세요.");
-        return false;
-    }
-    else if (email === "") {
-        alert("이메일을 입력하세요.");
-        return false;
-    }
-    else if (!validateEmailFormat(email)) {
-        alert("올바른 이메일 형식이 아닙니다.");
-        return false;
-    }
-
 }
+
 function validatepassword() {
     var password = document.forms[1]["InputPassword"].value;
     var emailCodeSent = document.getElementById('emailCodeSent').value;
 
     if (emailCodeSent === "") {
-        alert("이메일 인증번호를 먼저 발송하세요.");
+        displayErrorMessage("이메일 인증번호를 먼저 발송하세요.");
         return false;
-    }
-    else if (password === "") {
-        alert("인증번호를 입력하세요.");
+    } else if (password === "") {
+        displayErrorMessage("인증번호를 입력하세요.");
         return false;
     }
 }
 
-//비밀번호 찾기 검증----------------------
+// 비밀번호 찾기 검증
 function validateEmailForm() {
     var id = document.forms[0]["Id"].value;
     var email = document.forms[0]["Email"].value;
 
     if (id === "" && email === "") {
-        alert("Id와 이메일을 입력하세요.");
+        displayErrorMessage("Id와 이메일을 입력하세요.");
         return false;
-    }
-    else if (id === "") {
-        alert("Id를 입력하세요.");
+    } else if (id === "") {
+        displayErrorMessage("Id를 입력하세요.");
         return false;
-    }
-    else if (email === "") {
-        alert("이메일을 입력하세요.");
+    } else if (email === "") {
+        displayErrorMessage("이메일을 입력하세요.");
         return false;
-    }
-    else if (!validateEmailFormat(email)) {
-        alert("올바른 이메일 형식이 아닙니다.");
+    } else if (!validateEmailFormat(email)) {
+        displayErrorMessage("올바른 이메일 형식이 아닙니다.");
         return false;
     }
 }
@@ -385,11 +378,10 @@ function validateVerificationForm() {
     var emailCodeSent = document.getElementById('emailCodeSent').value;
 
     if (emailCodeSent === "") {
-        alert("이메일 인증번호를 먼저 발송하세요.");
+        displayErrorMessage("이메일 인증번호를 먼저 발송하세요.");
         return false;
-    }
-    else if (verificationCode === "") {
-        alert("인증번호를 입력하세요.");
+    } else if (verificationCode === "") {
+        displayErrorMessage("인증번호를 입력하세요.");
         return false;
     }
 }
@@ -400,7 +392,11 @@ function validateEmailFormat(email) {
 }
 
 
-
+// 오류 메시지 표시
+function displayErrorMessage(message) {
+    var errorContainer = document.querySelector('.text-danger');
+    errorContainer.textContent = message;
+}
 
 
 
