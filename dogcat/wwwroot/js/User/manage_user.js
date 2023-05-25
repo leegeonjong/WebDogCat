@@ -4,7 +4,7 @@ $(function () {
         var mail = $("#input_mail");
 
         $.ajax({
-            url: "/Login/Send",
+            url: "/User/Send",
             type: "POST",
             cache: false,
             data: { input_mail: mail.val() },

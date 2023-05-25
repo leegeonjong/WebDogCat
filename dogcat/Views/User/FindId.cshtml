@@ -1,0 +1,38 @@
+﻿@model dogcat.Controllers.LoginController
+@*
+    ID찾기
+*@
+@{
+    var msg = TempData.Peek("message");
+}
+
+<h1>아이디 찾기</h1>
+<script src="~/js/User/manage_user.js"></script>
+
+<form method="POST" asp-controller="Login" asp-action="FindId">
+    @*이메일 인증여부*@
+    <input type="hidden" value="0" name="email_check" id="emailcheck" />
+    @*이름*@
+    <label for="name">이름</label>
+    <input type="text" name="inputname" id="input_name"><br />
+    @*이메일*@    
+    <label for="mail">이메일</label>
+    <input type="text" name="inputmail" id="input_mail">
+    <button type="button" id="SendMail">이메일 인증</button> <br />
+    @*이메일인증*@
+    <label for="name">인증번호</label>
+    <input type="text" id="inputverify" name="inputverify"><br />
+   
+    <button>찾기</button><br />
+
+    <a href="#">비밀번호 찾기</a> | <a href="#">회원가입</a>
+
+</form>
+
+@*<script>
+    function check(){
+        if(document.getElementById('inputverify').value != @pw){
+            alert("인증번호 불일치");
+        }
+    }
+</script>*@

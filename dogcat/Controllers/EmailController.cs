@@ -3,14 +3,19 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Cryptography;
 using dogcat.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using dogcat.Data;
+using dogcat.Models.Domain;
 
 namespace dogcat.Controllers
 {
     public class EmailController : Controller
     {
-        public IActionResult Index()
+        private readonly DogcatDbContext _context;
+
+        public EmailController(DogcatDbContext context)
         {
-            return View();
+            _context = context;
         }
 
         [HttpGet]
@@ -44,8 +49,13 @@ namespace dogcat.Controllers
         {
             //메일 보내기 
             emailRequest.SendEmail();
+
+            // flag 값 설정 (이메일 발송 여부)
+            bool emailCodeSent = true;
+
+            ViewBag.EmailCodeSent = emailCodeSent;
+
             // Session에 작성자가 작성한 name, email, Id와 RealPassword 저장하기
-            HttpContext.Session.SetString("Name", emailRequest.Name);
             HttpContext.Session.SetString("Email", emailRequest.Email);
             HttpContext.Session.SetString("RealPassword", emailRequest.RealPassword);
 
@@ -72,7 +82,6 @@ namespace dogcat.Controllers
             emailRequest.Name = HttpContext.Session.GetString("Name");
 
             //session 에 저장
-            HttpContext.Session.SetString("Name", emailRequest.Name);
             HttpContext.Session.SetString("Email", emailRequest.Email);
 
             NullCheck(emailRequest);
@@ -83,8 +92,21 @@ namespace dogcat.Controllers
                 //통과
                 if (emailRequest.Id == null)
                 {
-                    //아이디찾기
-                    return View("~/Views/Login/ResultId.cshtml");
+                    string mail = HttpContext.Session.GetString("Email");
+                    string name = HttpContext.Session.GetString("Name");
+                    //mail 과 name 이 일치하는 user 찾기
+                    var user = _context.Users.FirstOrDefault(x => x.Name.Equals(name.Trim()) && x.Mail.Equals(mail.Trim()));
+                    //찾은 user 에서 id를 session 에 저장하기
+                    if (user != null)
+                    {
+                        HttpContext.Session.SetString("Userid", user.Userid);
+                        return View("~/Views/Login/ResultId.cshtml");
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "회원정보가 없습니다.";
+                        return View("~/Views/Login/FindId.cshtml");
+                    }
                 }
                 else
                 {
@@ -97,14 +119,18 @@ namespace dogcat.Controllers
                 //다시 찾기
                 if (emailRequest.Id == null)
                 {
+                    TempData["ErrorMessage"] = "인증번호 틀립니다.";
                     return View("~/Views/Login/FindId.cshtml");
                 }
                 else
                 {
+                    TempData["ErrorMessage"] = "인증번호가 틀립니다.";
                     return View("~/Views/Login/FindPw.cshtml");
                 }
             }
         }
+
+       
 
         //session null일때 처리함수
         private void NullCheck(EmailRequest emailRequest)
