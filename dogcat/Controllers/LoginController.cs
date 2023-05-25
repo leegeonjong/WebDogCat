@@ -92,54 +92,11 @@ namespace dogcat.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //[ActionName("FindId")]
-        //public IActionResult Find_Id()
-        //{
-        //    string mail = HttpContext.Session.GetString("Email");
-        //    string name = HttpContext.Session.GetString("Name");
-
-        //    var user = _context.Users.FirstOrDefault(x => x.Name.Equals(name.Trim()) && x.Mail.Equals(mail.Trim()));
-          
-        //    return View("ResultId", user);
-           
-
-        //}
-        
-        //public IActionResult ResultId()
-        //{
-        //    return View();
-        //}
 
         public IActionResult Findpw() //사용
         {
             return View();
         }
-
-        //[HttpPost]
-        //[ActionName("FindPw")]
-        //public async Task<IActionResult> Find_Pw()
-        //{
-        //    //form 에서 사용자가 입력한 id와 email 값 가져오기
-        //    string userid = Request.Form["inputid"];
-        //    string mail = Request.Form["inputmail"];
-        //    //가져온 값이 데이터베이스에 있는지 확인하기
-        //    var user = await _context.Users.FirstOrDefaultAsync(x => x.Userid== userid.Trim() && x.Mail== (mail.Trim()));
-
-        //    if (user != null)
-        //    {
-        //        // 사용자가 데이터베이스에서 일치하는 경우 세션에 값을 저장
-        //        HttpContext.Session.SetString("UserId", user.Userid);
-        //        HttpContext.Session.SetString("Email", user.Mail);
-        //    }
-        //    return RedirectToAction("ResultPw");
-
-        //}
-        
-        //public IActionResult ResultPw(User user)
-        //{
-        //    return View();
-        //}
 
         [HttpPost]
         [ActionName("ResultPw")]
@@ -161,7 +118,7 @@ namespace dogcat.Controllers
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("Login", "Login");
+            return RedirectToAction("Login", "User");
         }
 
 
