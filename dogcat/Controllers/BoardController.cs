@@ -272,6 +272,13 @@ namespace dogcat.Controllers
             ViewData["NickName"] = NickName;
             }
             var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows.Value, category);
+            foreach(var write in writes)
+            {
+                if(write.Image != null)
+                {
+                    write.RequestPath = $"/appfiles/{write.Image}";
+                }
+            }
             return View(writes);
         }
 
