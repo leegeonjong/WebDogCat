@@ -260,8 +260,17 @@ namespace dogcat.Controllers
             ViewData["category"] = category;
             int? UserId = HttpContext.Session.GetInt32("userId");
             string? NickName = HttpContext.Session.GetString("userNickName");
+            if (UserId == null) {
+                ViewData["UserId"] = 0;
+            }
+            if (NickName == null)
+            {
+                ViewData["NickName"] = "비회원";
+            }
+            else { 
             ViewData["UserId"] = UserId;
             ViewData["NickName"] = NickName;
+            }
             var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows.Value, category);
             return View(writes);
         }

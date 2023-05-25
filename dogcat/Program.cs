@@ -17,7 +17,7 @@ namespace dogcat
             builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
 
             builder.Services.AddSession();
-
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddDbContext<DogcatDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DbName"))
             );

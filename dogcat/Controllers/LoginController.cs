@@ -20,10 +20,12 @@ namespace dogcat.Controllers
         //public static Random _vcode = new Random(); // 인증번호 
         //DbContext
         private readonly DogcatDbContext _context;
+        private readonly ILogger<HomeController> _logger;
         //controller 생성자
-        public LoginController(DogcatDbContext context)
+        public LoginController(DogcatDbContext context, ILogger<HomeController> logger)
         {
             _context = context;
+            _logger = logger;
         }
         //로그인 View
         public IActionResult Login()
@@ -48,14 +50,16 @@ namespace dogcat.Controllers
         {
             string userid = Request.Form["userid"];
             string userpw = Request.Form["userpassword"];
+            List<dogcat.Models.Domain.Write> writes = _context.Writes.ToList();
             var user = _context.Users.FirstOrDefault(u => u.Userid.Equals(userid.Trim()) && u.Pw.Equals(userpw));
             if (user != null)
             {
-                //로그인 성공 시 , 세션에 정보 저장 (굳이 해야할까? 모르겠다)
+                //로그인 성공 시, 세션에 정보 저장
                 HttpContext.Session.SetInt32("userId", (int)user.Id); //사용자 uid(고유번호)
                 HttpContext.Session.SetString("userNickName", user.NickName); //사용자 닉네임
-                HttpContext.Session.SetInt32("userBan", user.Ban);  // 사용자 벤 여부 
+                HttpContext.Session.SetInt32("userBan", user.Ban); // 사용자 벤 여부
                 HttpContext.Session.SetInt32("userAdmin", user.Admin); // 관리자 여부
+
                 //벤 유저 확인
                 if (user.Ban == 1) //벤
                 {
@@ -64,11 +68,11 @@ namespace dogcat.Controllers
                 }
                 else // 벤 x
                 {
-                    return View("Index", user);
+                    ViewData["user"] = user;
+                    return View("IsUser", user);
                 }
             }
             return View("IsUser");
-
         }
 
 
