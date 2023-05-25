@@ -52,7 +52,7 @@ namespace dogcat.Controllers
                 }
                 else // 벤 x
                 {
-                    return View("Index", user);
+                    return View("IsUser", user);
                 }
             }
             return View("IsUser");
