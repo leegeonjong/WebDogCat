@@ -4,16 +4,42 @@
 
 @{
 }
-    <h1>어서와</h1>
-    <form method="POST" asp-controller="Login" asp-action="Login" id="Login">
-        <label for="input_id">ID</label>
-        <input type="text" name="userid" id="input_id" /><br />
-        <label for="input_pw" >Password</label>
-        <input type="password" name="userpassword" id="input_pw" /><br />
-        <button>로그인</button>
-    </form>
-    <br />
-    <a asp-controller="Login" asp-action="FindId">Id찾기</a> 
-    <a asp-controller="Login" asp-action="FindPw">비밀번호 찾기</a>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Login/StyleSheet.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1 style="text-align:center">WelCome!</h1>
+        </div>
+        <div class="container">
+            <form method="POST" asp-controller="User" asp-action="Login" id="Login">
+                <div class="form-group">
+                    <label for="input_id">ID</label>
+                    <input type="text" name="userid" id="input_id" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="input_pw">Password</label>
+                    <input type="password" name="userpassword" id="input_pw" class="form-control">
+                </div>
+                <div class="Login_button">
+                    <button class="btn btn-primary">로그인</button>
+                </div>
+            </form>
+            <div class="links">
+                <a asp-controller="Login" asp-action="FindId">Id찾기</a>
+                <a asp-controller="Login" asp-action="FindPw">비밀번호 찾기</a>
+            </div>
+        </div>
+    </div>
+</body>
     <script src="~/js/User/Valid_check.js"></script>
+</html>
+
+
+
 
