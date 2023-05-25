@@ -25,91 +25,96 @@
 
 <head>
     <link rel="stylesheet" href="~/css/Board/Detail.css">
-<script src="~/js/Board/Detail.js"></script>
+    <script src="~/js/Board/Detail.js"></script>
 </head>
 <div class="container">
 
-@if (write != null)
-{
-        <div class="mb-3 mt-3"><link href="~/css/board/detail.css" rel="stylesheet" />
+    @if (write != null)
+    {
+        <div class="mb-3 mt-3">
+            <link href="~/css/board/detail.css" rel="stylesheet" />
             <span class="categorycolor">@Category</span>
         </div>
-<h2> 
-    @Title
-    <span class="float-end ms-4 span1" >작성일: @Time</span>
-    <span class="float-end span1">조회수: @ViewCnt</span><br>
-    <span class="flaot-start span1"> 작성자: @WriterNickName</span>
-</h2>
-<hr>
+        <h2>
+            @Title
+            <span class="float-end ms-4 span1">작성일: @Time</span>
+            <span class="float-end span1">조회수: @ViewCnt</span><br>
+            <span class="flaot-start span1"> 작성자: @WriterNickName</span>
+        </h2>
+        <hr>
 
-    <section>
-        <form method="POST" name="frmDelete" asp-controller="Board" asp-action="Delete">
-            <input type="hidden" asp-for="@WriteId">
-        </form>
-        @if (Path != null)
-        {
-            <div class="mb-3">
-                <img class="detailimg" src="@Path" class="img-thumbnail">
-            </div>
-        }
+        <section>
+            <form method="POST" name="frmDelete" asp-controller="Board" asp-action="Delete">
+                <input type="hidden" asp-for="@WriteId">
+            </form>
+            @if (Path != null)
+            {
+                <div class="mb-3">
+                    <img class="detailimg" src="@Path" class="img-thumbnail">
+                </div>
+            }
             <div class="mb-3 mt-3">
                 <textarea class="form-control auto-height" readonly rows="5">@Context</textarea>
             </div>
-        @* 글 작성 수정 삭제 목록*@
-            @if (@UserId==userId)
+            @* 글 작성 수정 삭제 목록*@
+            @if (@UserId == userId)
             {
-                    <a class="btn btn-outline-dark float-end ms-4" asp-controller="Board" asp-action="Update" asp-route-id="@WriteId">수정</a>
-                    <button type="submit" class="btn btn-outline-danger float-end" id="btnDel" asp-controller="Board" asp-action="Delete" asp-route-id="@WriteId">삭제</button>
+                <a class="btn btn-outline-dark float-end ms-4" asp-controller="Board" asp-action="Update" asp-route-id="@WriteId">수정</a>
+                <button type="submit" class="btn btn-outline-danger float-end" id="btnDel" asp-controller="Board" asp-action="Delete" asp-route-id="@WriteId">삭제</button>
             }
             <br>
-        @*댓글 테이블*@
-        <table class="commenttable">
-            <tbody>
-                @foreach (var cmt in comment)
-                {
-                    <tr id="comment-@cmt.Id">
-                        <td>@cmt.NickName</td>
-                        <td>@cmt.Content</td>
-                        <td>@cmt.Time</td>
-                        <td>
-                            <form method="POST" name="CommentDelete" asp-controller="Board" asp-action="CommentDelete">
-                                <input type="hidden" name="id" value="@cmt.Id" />
-                                @if (@userId == @cmt.UserId)
-                                {
-                                <button type="button" class="btn btn-outline-danger ms-2" id="btnDeleteComment" data-comment-id="@cmt.Id">삭제</button>
-                                }
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
+            @*댓글 테이블*@
+            <table class="commenttable">
+                <tbody>
+                    @foreach (var cmt in comment)
+                    {
+                        <tr id="comment-@cmt.Id">
+                            <td>@cmt.NickName</td>
+                            <td>@cmt.Content</td>
+                            <td>@cmt.Time</td>
+                            <td>
+                                <form method="POST" name="CommentDelete" asp-controller="Board" asp-action="CommentDelete">
+                                    <input type="hidden" name="id" value="@cmt.Id" />
+                                    @if (@userId == @cmt.UserId)
+                                    {
+                                        <button type="button" class="btn btn-outline-danger ms-2" id="btnDeleteComment" data-comment-id="@cmt.Id">삭제</button>
+                                    }
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
 
-        </table>
-        @*댓글 작성*@
-        <h3>댓글 작성</h3>
-        <form method="post" asp-controller="Board" asp-action="AddComment">
-            <input type="hidden" name="WriteId" value="@WriteId" />
-            <input type="hidden" name="UserId" value="@userId" />
-            <input type="hidden" name="NickName" value="@Nickname" />
-            <div class="mb-3">
-                @*<input type="text" class="form-control" name="NickName" asp-for="@Nickname" readonly />*@
-            </div>
-            <div class="mb-3">
-                <label for="content">댓글 내용:</label>
-                <textarea class="form-control" name="Content" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">댓글 작성</button>
-        </form>
+            </table>
+            @*댓글 작성*@
+            @if (userId != 0)
+            {
+
+                <h3>댓글 작성</h3>
+                <form method="post" asp-controller="Board" asp-action="AddComment">
+                    <input type="hidden" name="WriteId" value="@WriteId" />
+                    <input type="hidden" name="UserId" value="@userId" />
+                    <input type="hidden" name="NickName" value="@Nickname" />
+                    <div class="mb-3">
+                        @*<input type="text" class="form-control" name="NickName" asp-for="@Nickname" readonly />*@
+                    </div>
+                    <div class="mb-3">
+                        <label for="content">댓글 내용:</label>
+                        <textarea class="form-control" name="Content" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">댓글 작성</button>
+                </form>
+            }
 
 
-        <!-- 하단 링크 -->
-    </section>
-}
-else
-{
-    <script>
-        alert("데이터가 없습니다!");
-        history.back();
-    </script>
-}
+            <!-- 하단 링크 -->
+        </section>
+    }
+    else
+    {
+        <script>
+            alert("데이터가 없습니다!");
+            history.back();
+        </script>
+    }
 </div>
