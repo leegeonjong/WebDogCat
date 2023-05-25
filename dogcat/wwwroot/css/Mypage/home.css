@@ -1,6 +1,7 @@
 ﻿.page {
-    text-align: center;
     display: flex;
+margin: 5% 5% 5% 5%;
+height:800px;
 }
 
 .btncnt {
@@ -21,49 +22,67 @@
     }
 
 .mypage {
-    width: 65%;
+    width: 45%;
     margin-right: 10%;
     border: solid black;
+    margin-left:5%;
     
 }
-.a {
+
+.pet {
+display:flex
+
+}
+.pet
+.petinfo {
+    margin-left:50px;
+    margin-top: 50px;
     display: flex;
-    width: 100%;
-    height: 33%;
-    border: solid cyan;
-    
-}
-.a b{
-    width: 100%;
-    height: 50%;
-}
-.a a{
-    text-align:center;
-    width: 300px;
     height: 50px;
+    flex-direction: column;
 }
-.b {
+    .pet b {
+   margin-bottom:50px;
+        }
+
+.pet a {
+    margin-top:3%;
+}
+.account {
     display: flex;
     flex-direction: row-reverse;
-    height: 33%;
-    margin-top: 0.5%;
-    border: solid red;
+    margin-right:50px;
 }
-.c {
+.accountinfo {
+    margin-top: 50px;
     display: flex;
-    height: 33%;
-    margin-top: 0.5%;
-    border: solid blue;
+    flex-direction: column;
+    align-items: flex-end;
 }
-.a img {
-    width: 130px;
-    height: 130px;
+.account .btn{
+    margin-top:50px;
+    width:50%;
 }
-.b img {
-    width: 130px;
-    height: 130px;
+.petcal {
+    display: flex;
+
 }
-.c img {
-    width: 130px;
-    height: 130px;
+.petcalbtn {
+    margin-left: 50px;
+    margin-top: 50px;
+    display: flex;
+    height: 50px;
+    flex-direction: column;
 }
+.petcal .btn{
+    margin-top:50px;
+}
+
+.mypage img {
+    margin-left:5%;
+    margin-top:30px;
+    display:flex;
+    width: 20%;
+    height: 20%;
+}
+
