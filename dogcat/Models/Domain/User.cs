@@ -23,4 +23,10 @@ namespace dogcat.Models.Domain
         public ICollection<Message> Messages { get; set; } = new HashSet<Message>();
 
     }
+
+    public class User_Write
+    {
+        public User LoggedinUser { get; set; }
+        public List<Write> Boards { get; set; }
+    }
 }

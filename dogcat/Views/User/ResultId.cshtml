@@ -1,0 +1,21 @@
+﻿@model dogcat.Models.Domain.User;
+
+@*
+    Id찾기 결과
+*@
+@{
+}
+
+@if(Model != null){
+
+<h1>아이디 찾기</h1> <br />
+<h2>회원님의 아이디는 @Model.Userid 입니다.</h2>
+<a href="#">로그인 하러 가기</a> <br />
+<a href="#">비밀번호 찾기</a>
+}
+else{
+    <script>
+        alert("일치하는 정보가 없습니다.");
+        history.back();
+    </script>
+}

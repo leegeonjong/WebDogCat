@@ -1,5 +1,8 @@
 ﻿@model dogcat.Models.Domain.User
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @{
+    int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("userId");
 }
 <link rel="stylesheet" href="/css/Mypage/home.css">
 @if(Model != null)
@@ -37,6 +40,10 @@
     <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="MypetPage" asp-route-id="@Model.Id">내 애완동물보러가기</a>
     <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="Add" asp-route-id="@Model.Id">애완동물 등록하기</a>
     <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="CarculateCalorie" asp-route-id="@Model.Id">권장 칼로리 알아보기</a>*@
+<a class="btn btn-outline-dark" asp-controller="Mypage" asp-action="Page" asp-route-id="@userId">계정설정</a>
+<a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="MypetPage" asp-route-id="@userId">내 애완동물보러가기</a>
+    <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="Add" asp-route-id="@userId">애완동물 등록하기</a>
+    <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="CarculateCalorie" asp-route-id="@userId">권장 칼로리 알아보기</a>
 }
 else
 {

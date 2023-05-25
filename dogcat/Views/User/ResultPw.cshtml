@@ -1,0 +1,15 @@
+﻿@model dogcat.Models.Domain.User;
+@*
+    비밀번호 찾기 결과
+*@
+@{
+}
+<h1>비밀번호 찾기</h1><br />
+<h2>사용하실 비밀번호를 새로 설정 합니다</h2> <hr />
+<form method="post">
+새 비밀번호 : <input type="password" id="newPw" name="pw" /><br />
+확인 :<input type="password" id="checkPw" /> <br />
+<button>변경하기</button>
+</form>
+@*<p>테스트 결과 비번 : @Model.Pw</p>*@
+<a href="#">홈으로</a>
