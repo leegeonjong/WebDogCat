@@ -1,38 +1,37 @@
-﻿@model dogcat.Controllers.LoginController
-@*
-    ID찾기
-*@
-@{
-    var msg = TempData.Peek("message");
-}
+﻿@model dogcat.Models.ViewModels.EmailRequest
 
-<h1>아이디 찾기</h1>
-<script src="~/js/User/manage_user.js"></script>
 
-<form method="POST" asp-controller="Login" asp-action="FindId">
-    @*이메일 인증여부*@
-    <input type="hidden" value="0" name="email_check" id="emailcheck" />
-    @*이름*@
-    <label for="name">이름</label>
-    <input type="text" name="inputname" id="input_name"><br />
-    @*이메일*@    
-    <label for="mail">이메일</label>
-    <input type="text" name="inputmail" id="input_mail">
-    <button type="button" id="SendMail">이메일 인증</button> <br />
-    @*이메일인증*@
-    <label for="name">인증번호</label>
-    <input type="text" id="inputverify" name="inputverify"><br />
-   
-    <button>찾기</button><br />
+<h2>아이디 찾기</h2>
+<hr>
 
-    <a href="#">비밀번호 찾기</a> | <a href="#">회원가입</a>
+<form method="post" action="/Email/Email">
+    <div class="mb-3">
+        <label for="name">이름:</label>
+        <input type="text" class="form-control" placeholder="이름을 입력하세요" asp-for="Name">
 
+        <label for="email">이메일:</label>
+        <input type="text" class="form-control" placeholder="이메일 입력하세요" asp-for="Email">
+        <div><span class="text-danger"></span></div>
+    </div>
+    <button type="submit" class="btn btn-outline-dark">인증번호발송</button>
+    <a class="btn btn-outline-dark"
+       asp-controller="Email"
+       asp-action="Email">
+    </a>
 </form>
 
-@*<script>
-    function check(){
-        if(document.getElementById('inputverify').value != @pw){
-            alert("인증번호 불일치");
-        }
-    }
-</script>*@
+
+<form method="post" action="/Email/EmailCheck">
+    <div class="mb-3 mt-3">
+        <label for="password">인증번호:</label>
+        <input type="text" class="form-control" placeholder="인증번호  입력하세요" asp-for="InputPassword">
+        <div><span class="text-danger"></span></div>
+    </div>
+    <button type="submit" class="btn btn-outline-dark">인증</button>
+    <a class="btn btn-outline-dark"
+       asp-controller="Email"
+       asp-action="EmailCheck">
+    </a>
+</form>
+
+

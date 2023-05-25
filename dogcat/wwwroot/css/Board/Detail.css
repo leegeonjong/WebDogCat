@@ -1,6 +1,6 @@
-﻿img {
-height:150px;
-width:150px;
+﻿.detailimg {
+    height: 150px;
+    width: 150px;
 }
 .container {
     margin: 5% 5% 5% 5%; /* 상 우 하 좌 */

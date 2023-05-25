@@ -20,10 +20,12 @@ namespace dogcat.Controllers
         //public static Random _vcode = new Random(); // 인증번호 
         //DbContext
         private readonly DogcatDbContext _context;
+        private readonly ILogger<HomeController> _logger;
         //controller 생성자
-        public LoginController(DogcatDbContext context)
+        public LoginController(DogcatDbContext context, ILogger<HomeController> logger)
         {
             _context = context;
+            _logger = logger;
         }
         //로그인 View
         public IActionResult Login()
@@ -48,14 +50,16 @@ namespace dogcat.Controllers
         {
             string userid = Request.Form["userid"];
             string userpw = Request.Form["userpassword"];
+            List<dogcat.Models.Domain.Write> writes = _context.Writes.ToList();
             var user = _context.Users.FirstOrDefault(u => u.Userid.Equals(userid.Trim()) && u.Pw.Equals(userpw));
             if (user != null)
             {
-                //로그인 성공 시 , 세션에 정보 저장 (굳이 해야할까? 모르겠다)
+                //로그인 성공 시, 세션에 정보 저장
                 HttpContext.Session.SetInt32("userId", (int)user.Id); //사용자 uid(고유번호)
                 HttpContext.Session.SetString("userNickName", user.NickName); //사용자 닉네임
-                HttpContext.Session.SetInt32("userBan", user.Ban);  // 사용자 벤 여부 
+                HttpContext.Session.SetInt32("userBan", user.Ban); // 사용자 벤 여부
                 HttpContext.Session.SetInt32("userAdmin", user.Admin); // 관리자 여부
+
                 //벤 유저 확인
                 if (user.Ban == 1) //벤
                 {
@@ -64,11 +68,11 @@ namespace dogcat.Controllers
                 }
                 else // 벤 x
                 {
-                    return View("Index", user);
+                    ViewData["user"] = user;
+                    return View("IsUser", user);
                 }
             }
             return View("IsUser");
-
         }
 
 
@@ -86,39 +90,39 @@ namespace dogcat.Controllers
 
         }
 
-        [HttpPost]
-        [ActionName("Send")]
-        public void SendMail(string input_mail) 
-        {
-            // 이메일 보내는 사람의 구글 이메일 주소
-            string fromEmail = "lateaksoo@gmail.com";
-            // 이메일 보내는 사람의 구글 앱 비밀번호 
-            string fromPassword = "hikhvuxhscwwacew";
-            // 이메일 받는 사람의 이메일 주소
-            string toEmail = input_mail; //Request.Form["inputmail"];
-            // 이메일 제목
-            string subject = "이메일 인증번호 안내 입니다.";
-            //인증번호 (랜덤숫자 6자리)
-            RealPassword = ((int)Math.Floor(new Random().NextDouble() * 10000000)).ToString();
-            // 이메일 내용
-            string body = $"인증번호 안내 : {RealPassword}";
-            // 이메일 메시지 객체 생성
-            MailMessage message = new MailMessage();
+        //[HttpPost]
+        //[ActionName("Send")]
+        //public void SendMail(string input_mail) 
+        //{
+        //    // 이메일 보내는 사람의 구글 이메일 주소
+        //    string fromEmail = "lateaksoo@gmail.com";
+        //    // 이메일 보내는 사람의 구글 앱 비밀번호 
+        //    string fromPassword = "hikhvuxhscwwacew";
+        //    // 이메일 받는 사람의 이메일 주소
+        //    string toEmail = input_mail; //Request.Form["inputmail"];
+        //    // 이메일 제목
+        //    string subject = "이메일 인증번호 안내 입니다.";
+        //    //인증번호 (랜덤숫자 6자리)
+        //    RealPassword = ((int)Math.Floor(new Random().NextDouble() * 10000000)).ToString();
+        //    // 이메일 내용
+        //    string body = $"인증번호 안내 : {RealPassword}";
+        //    // 이메일 메시지 객체 생성
+        //    MailMessage message = new MailMessage();
             
-            message.To.Add(toEmail);
-            message.From = new MailAddress(fromEmail);
-            message.Subject = subject;
-            message.Body = body;
-            // 이메일 메시지 보내기
-            using (var client = new SmtpClient())
-            {
-                client.EnableSsl = true;
-                client.Host = "smtp.gmail.com";
-                client.Port = 587;
-                client.Credentials = new NetworkCredential(fromEmail, fromPassword);
-                client.Send(message);
-            }
-        }
+        //    message.To.Add(toEmail);
+        //    message.From = new MailAddress(fromEmail);
+        //    message.Subject = subject;
+        //    message.Body = body;
+        //    // 이메일 메시지 보내기
+        //    using (var client = new SmtpClient())
+        //    {
+        //        client.EnableSsl = true;
+        //        client.Host = "smtp.gmail.com";
+        //        client.Port = 587;
+        //        client.Credentials = new NetworkCredential(fromEmail, fromPassword);
+        //        client.Send(message);
+        //    }
+        //}
 
             
 
@@ -145,9 +149,9 @@ namespace dogcat.Controllers
         [ActionName("FindId")]
         public IActionResult Find_Id()
         {
-            string name = Request.Form["inputname"];
-            string mail = Request.Form["inputmail"];
-            InputCode = Request.Form["inputverify"];
+            string mail = HttpContext.Session.GetString("Email");
+            string name = HttpContext.Session.GetString("Name");
+
             var user = _context.Users.FirstOrDefault(x => x.Name.Equals(name.Trim()) && x.Mail.Equals(mail.Trim()));
             if(InputCode != RealPassword)
             {
@@ -175,10 +179,19 @@ namespace dogcat.Controllers
         [ActionName("FindPw")]
         public async Task<IActionResult> Find_Pw()
         {
+            //form 에서 사용자가 입력한 id와 email 값 가져오기
             string userid = Request.Form["inputid"];
             string mail = Request.Form["inputmail"];
+            //가져온 값이 데이터베이스에 있는지 확인하기
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Userid== userid.Trim() && x.Mail== (mail.Trim()));
-            return RedirectToAction("ResultPw", user);
+
+            if (user != null)
+            {
+                // 사용자가 데이터베이스에서 일치하는 경우 세션에 값을 저장
+                HttpContext.Session.SetString("UserId", user.Userid);
+                HttpContext.Session.SetString("Email", user.Mail);
+            }
+            return RedirectToAction("ResultPw");
 
         }
         
@@ -189,15 +202,27 @@ namespace dogcat.Controllers
 
         [HttpPost]
         [ActionName("ResultPw")]
-        public IActionResult ResultPw2(User user)
+        public IActionResult ResultPw2(string pw)//form 에서 pw 값 가져오기
         {
-            string new_pw = Request.Form["pw"];
-            var _user= _context.Users.FirstOrDefault(x => x.Id == user.Id);
-            _user.Pw = new_pw;
-            _context.SaveChanges();
+            // 세션에서 ID와 이메일 값 가져오기
+            string userId = HttpContext.Session.GetString("UserId");
+            string mail = HttpContext.Session.GetString("Email");
+
+            // 데이터베이스에서 사용자 찾기
+            var user = _context.Users.FirstOrDefault(x => x.Userid == userId.Trim() && x.Mail == mail.Trim());
+            // 사용자를 찾았다면 
+            if (user != null)
+            {
+                string new_pw = user.Pw;
+
+                // 비밀번호 업데이트
+                user.Pw = pw;
+                _context.SaveChanges();
+            }
+
             return RedirectToAction("Index");
-            
         }
+
 
     } // end controller
 }
