@@ -19,7 +19,7 @@ namespace dogcat.Controllers
             _dogcatDbContext = dogcatDbContext;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(User user)
         {
             //var writes = await _dogcatDbContext.Writes.Where(x => x.User.Admin == 1).OrderByDescending(x => x.Time).ToListAsync();
             var list = await _dogcatDbContext.Writes
