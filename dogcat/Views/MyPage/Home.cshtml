@@ -14,22 +14,31 @@
             <br>
             <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@Model.Id">메세지 보내기</a>
         </div>
+
         <div class="mypage">
-            <div class="a">
+            <div class="pet">
             <img src="/css/avatar2.png" alt="">
+            <div class="petinfo">
             <b>내 애완동물을 등록해보세요!</b>
-            <br>
+
             <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="MypetPage" asp-route-id="@Model.Id">내 애완동물보러가기</a>
             <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="Add" asp-route-id="@Model.Id">내 애완동물 등록하기</a>
             </div>
-            <div class="b">
+            </div>      
+
+            <div class="account">
                 <img src="/css/avatar2.png" alt="">
-                <b>a</b>
+                <div class="accountinfo">
+                <b>아이디, 비밀번호, 계정설정을 하려면 계정설정을 눌러주세요</b>
                 <a class="btn btn-outline-dark" asp-controller="Mypage" asp-action="Page" asp-route-id="@Model.Id">계정설정</a>
+                </div>
             </div>
-            <div class="c">
+            <div class="petcal">
                 <img src="/css/avatar2.png" alt="">
+                <div class="petcalbtn">
+                <b>애완동물의 건강이 걱정 되시나요?</b>
                 <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="CarculateCalorie" asp-route-id="@Model.Id">권장 칼로리 알아보기</a>
+                </div>
             </div>
         </div>
     </div>
