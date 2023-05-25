@@ -129,7 +129,10 @@ else{
                 {
                     var write = Model[j];
                     <td>
-                        @write.Image
+                        @if(write.RequestPath != null)
+                        {
+                            <img src="@write.RequestPath">    
+                        }
                         <hr>
                         <a asp-controller="Board" asp-action="Detail" asp-route-id="@write.Id" name="buttonName" value="Detail">@write.Title</a>
                         <br>

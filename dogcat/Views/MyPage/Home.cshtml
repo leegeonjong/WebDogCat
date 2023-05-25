@@ -4,8 +4,42 @@
 @{
     int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("userId");
 }
+<link rel="stylesheet" href="/css/Mypage/home.css">
 @if(Model != null)
 {
+    <div class="page">
+        <div class="btncnt">
+            <a class="btn" asp-controller="Board" asp-action="Write">@Model.NickName<br> 반간습니다</a>
+            <br>
+            <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@Model.Id">마이페이지로가기</a>
+            <br>
+            <a class="btn" asp-controller="Board" asp-action="Write">게시글 작성하기</a>
+            <br>
+            <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@Model.Id">메세지 보내기</a>
+        </div>
+        <div class="mypage">
+            <div class="a">
+            <img src="/css/avatar2.png" alt="">
+            <b>내 애완동물을 등록해보세요!</b>
+            <br>
+            <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="MypetPage" asp-route-id="@Model.Id">내 애완동물보러가기</a>
+            <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="Add" asp-route-id="@Model.Id">내 애완동물 등록하기</a>
+            </div>
+            <div class="b">
+                <img src="/css/avatar2.png" alt="">
+                <b>a</b>
+                <a class="btn btn-outline-dark" asp-controller="Mypage" asp-action="Page" asp-route-id="@Model.Id">계정설정</a>
+            </div>
+            <div class="c">
+                <img src="/css/avatar2.png" alt="">
+                <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="CarculateCalorie" asp-route-id="@Model.Id">권장 칼로리 알아보기</a>
+            </div>
+        </div>
+    </div>
+    @*<a class="btn btn-outline-dark" asp-controller="Mypage" asp-action="Page" asp-route-id="@Model.Id">계정설정</a>
+    <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="MypetPage" asp-route-id="@Model.Id">내 애완동물보러가기</a>
+    <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="Add" asp-route-id="@Model.Id">애완동물 등록하기</a>
+    <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="CarculateCalorie" asp-route-id="@Model.Id">권장 칼로리 알아보기</a>*@
 <a class="btn btn-outline-dark" asp-controller="Mypage" asp-action="Page" asp-route-id="@userId">계정설정</a>
 <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="MypetPage" asp-route-id="@userId">내 애완동물보러가기</a>
     <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="Add" asp-route-id="@userId">애완동물 등록하기</a>
