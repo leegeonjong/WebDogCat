@@ -86,39 +86,39 @@ namespace dogcat.Controllers
 
         }
 
-        [HttpPost]
-        [ActionName("Send")]
-        public void SendMail(string input_mail) 
-        {
-            // 이메일 보내는 사람의 구글 이메일 주소
-            string fromEmail = "lateaksoo@gmail.com";
-            // 이메일 보내는 사람의 구글 앱 비밀번호 
-            string fromPassword = "hikhvuxhscwwacew";
-            // 이메일 받는 사람의 이메일 주소
-            string toEmail = input_mail; //Request.Form["inputmail"];
-            // 이메일 제목
-            string subject = "이메일 인증번호 안내 입니다.";
-            //인증번호 (랜덤숫자 6자리)
-            RealPassword = ((int)Math.Floor(new Random().NextDouble() * 10000000)).ToString();
-            // 이메일 내용
-            string body = $"인증번호 안내 : {RealPassword}";
-            // 이메일 메시지 객체 생성
-            MailMessage message = new MailMessage();
+        //[HttpPost]
+        //[ActionName("Send")]
+        //public void SendMail(string input_mail) 
+        //{
+        //    // 이메일 보내는 사람의 구글 이메일 주소
+        //    string fromEmail = "lateaksoo@gmail.com";
+        //    // 이메일 보내는 사람의 구글 앱 비밀번호 
+        //    string fromPassword = "hikhvuxhscwwacew";
+        //    // 이메일 받는 사람의 이메일 주소
+        //    string toEmail = input_mail; //Request.Form["inputmail"];
+        //    // 이메일 제목
+        //    string subject = "이메일 인증번호 안내 입니다.";
+        //    //인증번호 (랜덤숫자 6자리)
+        //    RealPassword = ((int)Math.Floor(new Random().NextDouble() * 10000000)).ToString();
+        //    // 이메일 내용
+        //    string body = $"인증번호 안내 : {RealPassword}";
+        //    // 이메일 메시지 객체 생성
+        //    MailMessage message = new MailMessage();
             
-            message.To.Add(toEmail);
-            message.From = new MailAddress(fromEmail);
-            message.Subject = subject;
-            message.Body = body;
-            // 이메일 메시지 보내기
-            using (var client = new SmtpClient())
-            {
-                client.EnableSsl = true;
-                client.Host = "smtp.gmail.com";
-                client.Port = 587;
-                client.Credentials = new NetworkCredential(fromEmail, fromPassword);
-                client.Send(message);
-            }
-        }
+        //    message.To.Add(toEmail);
+        //    message.From = new MailAddress(fromEmail);
+        //    message.Subject = subject;
+        //    message.Body = body;
+        //    // 이메일 메시지 보내기
+        //    using (var client = new SmtpClient())
+        //    {
+        //        client.EnableSsl = true;
+        //        client.Host = "smtp.gmail.com";
+        //        client.Port = 587;
+        //        client.Credentials = new NetworkCredential(fromEmail, fromPassword);
+        //        client.Send(message);
+        //    }
+        //}
 
             
 
@@ -145,9 +145,9 @@ namespace dogcat.Controllers
         [ActionName("FindId")]
         public IActionResult Find_Id()
         {
-            string name = Request.Form["inputname"];
-            string mail = Request.Form["inputmail"];
-            InputCode = Request.Form["inputverify"];
+            string mail = HttpContext.Session.GetString("Email");
+            string name = HttpContext.Session.GetString("Name");
+
             var user = _context.Users.FirstOrDefault(x => x.Name.Equals(name.Trim()) && x.Mail.Equals(mail.Trim()));
             if(InputCode != RealPassword)
             {
