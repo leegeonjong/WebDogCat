@@ -1,0 +1,11 @@
+﻿h1 {
+    text-align:center;
+    margin-top:2.5%;
+    margin-bottom:2.5%;
+}
+.ctn {
+    border:solid black 5%;
+    margin-right:10%;
+    margin-left:10%;
+    border-radius:10px;
+}
