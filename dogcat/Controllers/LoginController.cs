@@ -49,7 +49,7 @@ namespace dogcat.Controllers
                 HttpContext.Session.SetString("userNickName", user.NickName); //사용자 닉네임
                 HttpContext.Session.SetInt32("userBan", user.Ban); // 사용자 벤 여부
                 HttpContext.Session.SetInt32("userAdmin", user.Admin); // 관리자 여부
-
+                string findsesson = HttpContext.Session.GetString("userNickName");
                 //벤 유저 확인
                 if (user.Ban == 1) //벤
                 {
@@ -83,6 +83,10 @@ namespace dogcat.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("userid");
+            HttpContext.Session.Remove("userNickName");
+            HttpContext.Session.Remove("userBan");
+            HttpContext.Session.Remove("userAdmin");
+            string findsesson = HttpContext.Session.GetString("userNickName");
             return View("Logout");
         }
 

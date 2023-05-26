@@ -63,6 +63,9 @@ namespace dogcat.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("userId");
+            HttpContext.Session.Remove("userNickName");
+            HttpContext.Session.Remove("userBan");
+            HttpContext.Session.Remove("userAdmin");
             return View("Logout");
         }
         //-----------------------------------------------------------------------------------------------
