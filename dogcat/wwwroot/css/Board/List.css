@@ -18,7 +18,8 @@
 .table-container {
     display: flex;
     width: 65%;
-    margin-right: 10%
+    margin-right: 10%;
+    height: 10px;
 }
 
 .table2 {
@@ -30,8 +31,8 @@
 .col-12 {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    min-height: 300px;
+    align-items: flex-start;
+    min-height: 100px;
 }
 
 .btncnt {
@@ -72,6 +73,8 @@
         width: 25%;
         padding: 3%;
     }
+
+
 
 td .t_im {
     width: 100%;
