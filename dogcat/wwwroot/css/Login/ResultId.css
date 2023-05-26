@@ -1,0 +1,57 @@
+﻿/*전체크기*/
+.ResultIdForm {
+    max-width: 500px; /* 원하는 최대 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬을 위해 사용 */
+}
+
+h1 {
+    text-align: center;
+    margin: 30px 0 30px 0;
+}
+
+h3 {
+    text-align: center;
+    margin: 0 0 30% 0;
+}
+
+/* form */
+form {
+    border: 3px solid #f1f1f1;
+}
+
+/* Full-width inputs */
+input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+
+
+/* Set a style for all buttons */
+button {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+
+    /* Add a hover effect for buttons */
+    button:hover {
+        opacity: 0.8;
+    }
+
+/* Add padding to containers */
+.container {
+    padding: 16px;
+}
+
+.container2 {
+}

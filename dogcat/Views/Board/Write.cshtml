@@ -1,5 +1,9 @@
 ﻿@model dogcat.Models.ViewModels.addWriteRequest
-
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("userId") ?? 0;
+    string userNickName = HttpContextAccessor.HttpContext.Session.GetString("userNickName");
+}
 @{
     ViewData["Title"] = "글 작성";
     int page = (int)ViewData["page"];
@@ -10,40 +14,55 @@
 </head>
 <div class="container1">
 
-<h2>작성</h2>
-<hr>
-<form method="post" enctype="multipart/form-data">
-<div class="mb-3 mt-3">
-    <label for="category">카테고리를 선택해주세요</label>
-    <select class="form-select" asp-for="Category">
-        <option value="전체" selected>전체</option>
-        <option value="카테고리1">카테고리1</option>
-        <option value="카테고리2">카테고리2</option>
-        <option value="카테고리3">카테고리3</option>
-    </select>
+    <h2>게시글 작성</h2>
+    <hr>
 </div>
-    <div class="mb-3 mt-3">
-        <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title">
-        <div><span class="text-danger">@TempData["SubjectError"]</span></div>
+<div class="container2">
+    <div class="btncnt">
+        <a class="btn" asp-controller="Board" asp-action="Write"  name="buttonName" value="Write">@userNickName<br> 반갑습니다</a>
+        <br>
+        <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@userId" name="buttonName" value="mypage">마이페이지로가기</a>
+        <br>
+        <a class="btn" asp-controller="Board" asp-action="Write"  name="buttonName" value="Write">게시글 작성하기</a>
+        <br>
+        <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@userId" name="buttonName" value="Message">메세지 보내기</a>
     </div>
-    <div class="mb-3 mt-3">
-        <textarea class="form-control" rows="5" placeholder="내용을 입력하세요" asp-for="Context"></textarea>
-    </div>
-    <div class="mb-3 mt-3">
-        <label for="image">이미지:</label>
-        <input type="file" class="form-control" name="uploadedFile">
-    </div>
-    <div class="mb-3">
-        <label for="name">작성자:</label>
-        <input type="hidden" class="form-control" placeholder="작성자를 입력하세요" asp-for="NickName" readonly>
-        <div><span class="text-danger">@TempData["NameError"]</span></div>
-    </div>
+    <div class="right">
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3 mt-3">
+                <label for="category">카테고리를 선택해주세요</label>
+                <select class="form-select" asp-for="Category">
+                    <option value="전체" selected>전체</option>
+                    <option value="카테고리1">카테고리1</option>
+                    <option value="카테고리2">카테고리2</option>
+                    <option value="카테고리3">카테고리3</option>
+                </select>
+            </div>
+            <div class="mb-3 mt-3">
+                <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title">
+                <div><span class="text-danger">@TempData["SubjectError"]</span></div>
+            </div>
+            <div class="mb-3 mt-3">
+                <textarea class="form-control" rows="5" placeholder="내용을 입력하세요" asp-for="Context"></textarea>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="image">이미지:</label>
+                <input type="file" class="form-control" name="uploadedFile">
+            </div>
+            <div class="mb-3">
+                <label for="name">작성자:</label>
+                <input type="hidden" class="form-control" placeholder="작성자를 입력하세요" asp-for="NickName" readonly>
+                <div><span class="text-danger">@TempData["NameError"]</span></div>
+            </div>
 
 
-    <button type="submit" class="btn btn-outline-dark">작성완료</button>
-    <a class="btn btn-outline-dark"
-       asp-controller="Board"
-       asp-action="List"
-       asp-route-page="@(page)">목록</a>
-</form>
+            <button type="submit" class="btn btn-outline-dark">작성완료</button>
+            <a class="btn btn-outline-dark"
+               asp-controller="Board"
+               asp-action="List"
+               asp-route-page="@(page)">목록</a>
+        </form>
+    </div>
+    
 </div>
+

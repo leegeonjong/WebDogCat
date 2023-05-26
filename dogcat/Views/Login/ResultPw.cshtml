@@ -1,16 +1,25 @@
-﻿
-@*
+﻿@*
     비밀번호 찾기 결과
 *@
+<head>
+    <link rel="stylesheet" href="\css\Login\ResultPw.css" />
+</head>
 
-<h1>비밀번호 찾기</h1>
-<br />
-<h2>사용하실 비밀번호를 새로 설정 합니다</h2>
-<hr />
-<form method="post" action="/login/ResultPw">
-    새 비밀번호 : <input type="password" id="newPw" name="pw" /><br />
-    확인 :<input type="password" id="checkPw" /> <br />
-    <button>변경하기</button>
-</form>
-@*<p>테스트 결과 비번 : @Model.Pw</p>*@
-<a href="http://localhost:5094/">홈으로</a>
+<div class="ResultPwForm">
+    <h3>사용하실 비밀번호를 새로 설정 합니다</h3>
+    <form method="post" action="/login/ResultPw">
+        <div class="container">
+            <label for="NewPW">새 비밀번호 :</label>
+            <input type="password" id="newPw" name="pw" /><br />
+            <div><span class="text-danger" id="PwError"></span></div>
+
+            <label for="MatchPw">확인:</label>
+            <input type="password" id="checkPw" name="pw" /> <br />
+            <div><span class="text-danger" id="matchError"></span></div>
+
+            <button type="submit" class="button" onclick="return validatePasswordForm()">변경하기</button>
+        </div>
+    </form>
+</div>
+
+<script src="~/js/User/Valid_check.js"></script>

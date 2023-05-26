@@ -1,24 +1,45 @@
 ﻿@model dogcat.Models.ViewModels.AddMessageRequest
 @{
+    long user = (long)ViewData["user"];
+    string NickName = (string)ViewData["NickName"];
 }
-<form method="post">
-    <input type="hidden" asp-for="Time" />
-    <input type="hidden" asp-for="From_id" />
-    <div class="mb-3 mt-3">
-        <label for="image">받는사람:</label>
-        <input type="text" class="form-control"placeholder="메일을 입력하세요" asp-for="Mail">
-        <div><span class="text-danger">@TempData["MailError"]</span></div>
-    </div>
-    <div class="mb-3">
-        <label for="name">제목:</label>
-        <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title">
-        <div><span class="text-danger">@TempData["TitleError"]</span></div>
-    </div>
-    <div class="mb-3 mt-3">
-        <label for="species">내용:</label>
-        <input type="textarea" class="form-control" placeholder="내용을 입력하세요" asp-for="Context">
-        <div><span class="text-danger">@TempData["ContextError"]</span></div>
+<link rel="stylesheet" href="~/css/Message/Add.css">
+<div class="container1">
+    <h2>메시지 작성</h2>
+    <hr>
+</div>
+<div class="container2">
+        <div class="btncnt">
+            <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">@NickName<br> 반갑습니다</a>
+            <br>
+        <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@user" name="buttonName" value="mypage">마이페이지로가기</a>
+            <br>
+            <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">게시글 작성하기</a>
+            <br>
+        <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@user" name="buttonName" value="Message">메세지 보내기</a>
+        </div>
+    <div class="right">
+        <form method="post">
+            <input type="hidden" asp-for="Time" />
+            <input type="hidden" asp-for="From_id" />
+            <div class="mb-3 mt-3">
+                <label for="image">받는사람:</label>
+                <input type="text" class="form-control" placeholder="메일을 입력하세요" asp-for="Mail">
+                <div><span class="text-danger">@TempData["MailError"]</span></div>
+            </div>
+            <div class="mb-3">
+                <label for="name">제목:</label>
+                <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title">
+                <div><span class="text-danger">@TempData["TitleError"]</span></div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="species">내용:</label>
+                <input type="textarea" class="form-control" placeholder="내용을 입력하세요" asp-for="Context">
+                <div><span class="text-danger">@TempData["ContextError"]</span></div>
+            </div>
+            <button type="submit" class="btn btn-outline-dark">작성완료</button>
+            <button type="button" class="btn btn-outline-dark" onclick="history.back()">취소</button>
+        </form>
     </div>
 
-    <button type="submit" class="btn btn-outline-dark">작성완료</button>
-</form>
+</div>
