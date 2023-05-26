@@ -10,6 +10,8 @@ namespace dogcat.Repositories
 
         Task<User?> GetuserAsync(long id);  // 특정 유저의 정보를 가져온다. 
 
+        
+
          // 유저가 관리자 권한이 있는지
 
 

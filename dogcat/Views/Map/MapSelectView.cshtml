@@ -9,26 +9,29 @@
 
 <body>
     <div class="container2">
-        <div class="Maptitle">
+        <div class="title">
             <h1>주소를 입력하고 지도를 선택하세요</h1>
-            <br />
         </div>
+
         <div class="address">
             <input type="text" id="address" placeholder="주소를 입력해 주세요" readonly onclick="sample6_execDaumPostcode()">
         </div>
 
         <div class="MapButton">
+            <div class="BtnHospital">
             <button id="HMap" onclick="redirectToMapAnimalHospital()" class="btn">
                 <img src="https://th.bing.com/th/id/OIG.bQeA88TO6hDwtrp7ihMX?w=270&h=270&c=6&r=0&o=5&pid=ImgGn" alt="HospitalMap">
                 <br /><span>동물병원 지도</span>
             </button>
-            
+        </div>
+            <div class="line"></div>
             @*줄 그리기*@
-
+            <div class="btnTrack">
             <button id="TMap" onclick="redirectToMapTrail()" class="btn">
                 <img src="https://th.bing.com/th/id/OIG.LBm9ONB1VwIsNkS5FdwQ?w=270&h=270&c=6&r=0&o=5&pid=ImgGn" alt="HospitalMap">
                 <br /> <span> 산책로 지도</span>
             </button>
+            </div>
         </div>
     </div>
 </body>

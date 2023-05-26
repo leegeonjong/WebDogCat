@@ -2,52 +2,71 @@
 @{
     ViewData["Title"] = "권장 칼로리 알아보기";
 }
+
 <script src="~/js/Pet/Calorie.js"></script>
 <link rel="stylesheet" href="~/css/calorie.css">
+
 <div class="container0">
     <h2>권장 칼로리</h2>
-</div>
-<div class="container1">
-<form method="post" action="/MyPet/CarculateCalorie">
-    <div class="dogcat">
-        <div class="mb-3">
-            <img src="https://tools.mypetlife.co.kr/static/media/dog_select.d0cd964d4185a9bebf06.png" onclick="handleButtonClick('dog')" />
-            <img src="https://tools.mypetlife.co.kr/static/media/cat_select.14d59481a42b358448be.png" onclick="handleButtonClick('cat')" />
-        </div>
-        <b>반려동물의 종류를 선택해주세요.</b>
+    <div class="SelectForm">
+        <form>
+            <div class="dogcat">
+                <div class="img">
+                    <img src="https://tools.mypetlife.co.kr/static/media/dog_select.d0cd964d4185a9bebf06.png" onclick="handleButtonClick('dog')" />
+                    <img src="https://tools.mypetlife.co.kr/static/media/cat_select.14d59481a42b358448be.png" onclick="handleButtonClick('cat')" />
+                </div>
+                <b>반려동물의 종류를 선택해주세요.</b>
+            </div>
+        </form>
     </div>
-</form>
+</div>
+
+<div id="dogForm" style="display: none;">
+    <div class="FinddogForm">
+        <form>
+            <div class="container1">
+                <label for="WeightDog">몸무게:</label>
+                <input type="text" class="form-control" placeholder="몸무게를 입력하세요" id="WeightDog" name="WeightDog">
+                <div><span class="text-danger" id="errorDog"></span></div>
+
+                <label for="ActiveLevel">활동수치:</label>
+                <select class="form-select" id="activeLevelSelectDog" name="ActiveLevel">
+                </select>
+                <div class="buttoncontainer">
+                    <button type="button" class="button" onclick="calculateCalorieDog()">권장 칼로리 계산</button>
+                </div>
+                <br />
+                <label for="CalorieDog">권장 칼로리:</label>
+                <input type="text" class="form-control" id="CalorieDog" name="CalorieDog" readonly>
+            </div>
+        </form>
+
+    </div>
 </div>
 
 
-<div class="container2">
-<form method="post" action="/MyPet/CarculateCalorie">
-    <div class="mb-3">
-        <label for="Weight">몸무게:</label>
-        <input type="text" class="form-control" placeholder="몸무게를 입력하세요" name="Weight">
-        <div><span class="text-danger"></span></div>
-    </div>
-    <div class="mb-3">
-        <label for="ActiveLevel">활동수치 :</label>
-        <select class="form-select" id="activeLevelSelect" name="ActiveLevel">
-            <!-- Options will be dynamically updated based on 'result' -->
-        </select>
-        <div><span class="text-danger"></span></div>
-    </div>
+<div id="catForm" style="display: none;">
+    <div class="FindcatForm">
+        <form>
+            <div class="container1">
+                <label for="WeightCat">몸무게:</label>
+                <input type="text" class="form-control" placeholder="몸무게를 입력하세요" id="WeightCat" name="WeightCat">
+                <div><span class="text-danger" id="errorCat"></span></div>
 
-    <button type="submit" class="btn btn-outline-dark">권장 칼로리 계산</button>
-</form>
+                <label for="ActiveLevel">활동수치:</label>
+                <select class="form-select" id="activeLevelSelectCat" name="ActiveLevel">
+                </select>
+                <div class="buttoncontainer">
+                    <button type="button" class="button" onclick="calculateCalorieCat()">권장 칼로리 계산</button>
+                </div>
+                <br />
+                <label for="CalorieCat">권장 칼로리:</label>
+                <input type="text" class="form-control" id="CalorieCat" name="CalorieCat" readonly>
+            </div>
+        </form>
+    </div>
 </div>
 
-<div class="container3">
-<form method="post" action="/MyPet/CarculateCalorie">
-    <div class="mb-3">
-        <label for="Calorie">권장 칼로리:</label>
-        <input type="text" class="form-control" name="Calorie" readonly value="@ViewData["Calrorie"]">
-        <div><span class="text-danger"></span></div>
-    </div>
-</form>
-</div>
 @if (ViewData["WarningMessage"] != null)
 {
     <div class="alert alert-warning">@ViewData["WarningMessage"]</div>
