@@ -27,41 +27,43 @@
     <div id="header">
 
         <div id="container">
-            <div id="icon">
-                <img src="/css/avatar2.png" alt="">
-            </div>
             <div id="menu">
                 <a href="/board/list">게시판</a>
                 <a href="/Map/MapSelectView">시설찾기</a>
                 <a href="/MyPet/CarculateCalorie">권장칼로리</a>
             </div>
-            <div id="login">
                 @if (userId == 0 || userId == null)
                 {
+            <div id="login">
                     <a href="/User/Login">로그인</a>
                     <a href="/User/Register">회원가입</a>
+            </div>
                 }
                 else if(isAdmin == 1)
                 {
-                    <a href="/Admin/AdminAlluser/@userId">회원관리</a>
+                    <div class="login2">
+                    <a href="#">회원관리</a>
                     <a href="/Message/Home/@userId">쪽지</a>
                     <a href="/Board/Write/@userId">공지사항 작성</a>
                     <a href="/User/Logout">로그아웃</a>
+                    </div>
                 }
 
                 else
                 {
+                <div class="login2">
                     <p>@(userNickName)님 환영합니다</p>
+                    <br>
                     <a href="/User/Logout">로그아웃</a>
                     <a href="/Message/Home/@userId">쪽지</a>
                     <a href="/Mypage/Home/@userId">마이페이지</a>
+                </div>
                 }
 
-            </div>
         </div>
         <div class="clear"></div>
         <div id="main">
-            <h1>Oh! Dog, Cat</h1>
+            <h1>  <img src="/css/avatar2.png" alt=""> Oh! Dog, Cat</h1>
         </div>
     </div>
     <div class="clear"></div>

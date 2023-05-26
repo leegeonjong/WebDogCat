@@ -1,5 +1,5 @@
 ﻿@model List<dogcat.Models.Domain.Write>
-
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "목록";
 
@@ -8,8 +8,8 @@
     int totalPage = (int)ViewData["totalPage"];  // 총 '페이지' 수
     int pageRows = (int)ViewData["pageRows"];  // 한 '페이지' 에 표시할 글 개수
     string category = (string)ViewData["category"];
-    int? UserId = (int)ViewData["UserId"];
-    string? NickName = (string)ViewData["NickName"];
+    int? UserId = HttpContextAccessor.HttpContext.Session.GetInt32("userId") ??0;
+    string userNickName = HttpContextAccessor.HttpContext.Session.GetString("userNickName") ?? "비회원";
 }
 @{
     // [페이징]
@@ -77,10 +77,10 @@
 
 </div>
 <div class="container2">
-    @if (@UserId != null && NickName != null)
+    @if (UserId != null && userNickName != null)
     {
         <div class="btncnt">
-            <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">@NickName<br> 반간습니다</a>
+            <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">@userNickName<br> 반간습니다</a>
             <br>
             <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@UserId" name="buttonName" value="mypage">마이페이지로가기</a>
             <br>
@@ -139,6 +139,7 @@
                         <br>
                         @write.NickName
                     </td>
+                    
                 }
             </tr>
         }

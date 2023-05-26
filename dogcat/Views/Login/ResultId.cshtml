@@ -6,20 +6,38 @@
     string Email = HttpContextAccessor.HttpContext.Session.GetString("Email");
     string Userid = HttpContextAccessor.HttpContext.Session.GetString("Userid");
 }
-
+<head>
+    <link rel="stylesheet" href="\css\Login\ResultId.css" />
+</head>
 
 @if (Userid != null)
 {
+    <div class="ResultIdForm">
+        <h1>아이디 찾기</h1>
+        <form method="post" action="/login/ResultPw">
+            <div class="container">
 
-<h1>아이디 찾기</h1> <br />
-    <h2>회원님의 아이디는 @Userid 입니다.</h2>
-    <a href="http://localhost:5094/User/Login">로그인 하러 가기</a>
-    <br />
-    <a href="http://localhost:5094/Login/FindPw">비밀번호 찾기</a>
+                    <h3>
+                        회원님의 아이디는 
+                        <input type="text" id="readOnlyTextBox" class="ResultId" value=@Userid readonly size="@Userid.Length"> 
+                        입니다.
+                    </h3>
+
+                <button type="button" class="button" onclick="location.href='http://localhost:5094/User/Login'">로그인 하러 가기</button>
+                <button type="button" class="button" onclick="location.href='http://localhost:5094/Login/FindPw'">비밀번호 찾기</button>
+            </div>
+        </form>
+    </div>
 }
-else{
-    <script>
-        alert("일치하는 정보가 없습니다.");
-        history.back();
-    </script>
+else
+{
+    <div class="ResultIdForm">
+        <h2>아이디 찾기</h2>
+        <form method="post" action="/login/ResultPw">
+            <div class="container">
+                <h2>회원님의 아이디와 일치하는 정보가 없습니다.</h2>
+                <button type="button" class="button" onclick="location.href='http://localhost:5094/User/Register'">비밀번호 찾기</button>
+            </div>
+        </form>
+    </div>
 }

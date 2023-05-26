@@ -1,41 +1,42 @@
 ﻿@model dogcat.Models.ViewModels.EmailRequest
+<head>
+    <link rel="stylesheet" href="\css\Login\FindId.css" />
+</head>
 
 
-<h2>아이디 찾기</h2>
-<hr>
+@*사진*@
+<div class="FindIdForm">
+    <h2>아이디 찾기</h2>
+    <form method="post" action="/Email/Email">
+        <div class="imgcontainer">
+            <img src="https://e7.pngegg.com/pngimages/944/770/png-clipart-computer-icons-login-google-account-internet-user-cdr-monochrome.png" alt="Avatar" class="avatar">
+        </div>
+        <div class="container">
+            <label for="name">이름:</label>
+            <input type="text" class="form-control" placeholder="이름을 입력하세요" asp-for="Name" required>
+            <div><span class="text-danger" id="nameError"></span></div>
 
-<form method="post" action="/Email/Email">
-    <div class="mb-3">
-        <label for="name">이름:</label>
-        <input type="text" class="form-control" placeholder="이름을 입력하세요" asp-for="Name" required>
+            <label for="email">이메일:</label>
+            <input type="text" class="form-control" placeholder="이메일 입력하세요" asp-for="Email" required>
+            <div><span class="text-danger" id="emailError"></span></div>
+            <button type="submit" class="button" onclick="return validateForm()">인증번호 발송</button>
+        </div>
+    </form>
 
-        <label for="email">이메일:</label>
-        <input type="text" class="form-control" placeholder="이메일 입력하세요" asp-for="Email" required>
-        <div><span class="text-danger"></span></div>
-    </div>
-    <button type="submit" class="btn btn-outline-dark" onclick="return validateForm()">인증번호 발송</button>
-    <a class="btn btn-outline-dark"
-       asp-controller="Email"
-       asp-action="Email">
-    </a>
-</form>
+    <form method="post" action="/Email/EmailCheck">
+        <div class="container">
+            <label for="password">인증번호:</label>
+            <input type="text" class="form-control" placeholder="인증번호 입력하세요" asp-for="InputPassword" required>
+            <div><span class="text-danger" id="validNumError"></span></div>
 
-
-<form method="post" action="/Email/EmailCheck">
-    <div class="mb-3 mt-3">
-        <label for="password">인증번호:</label>
-        <input type="text" class="form-control" placeholder="인증번호 입력하세요" asp-for="InputPassword" required>
-        <div><span class="text-danger"></span></div>
-    </div>
-    <button type="submit" class="btn btn-outline-dark" onclick="return validatepassword()">인증</button>
-    <a class="btn btn-outline-dark"
-       asp-controller="Email"
-       asp-action="EmailCheck">
-    </a>
-</form>
+            <button type="submit" class="button" onclick="return validatepassword()">인증</button>
+        </div>
+    </form>
+</div>
 
 <input type="hidden" id="emailCodeSent" value="@ViewBag.EmailCodeSent" />
 <script src="~/js/User/Valid_check.js"></script>
+
 @if (TempData["ErrorMessage"] != null)
 {
     <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
