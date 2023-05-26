@@ -26,6 +26,7 @@
 <head>
     <link rel="stylesheet" href="~/css/Board/Detail.css">
     <script src="~/js/Board/Detail.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <div class="container">
 
@@ -43,7 +44,7 @@
         </h2>
         <hr>
 
-        <section>
+        
             <form method="POST" name="frmDelete" asp-controller="Board" asp-action="Delete">
                 <input type="hidden" asp-for="@WriteId">
             </form>
@@ -64,28 +65,32 @@
             }
             <br>
             @*댓글 테이블*@
-            <table class="commenttable">
-                <tbody>
-                    @foreach (var cmt in comment)
-                    {
-                        <tr id="comment-@cmt.Id">
-                            <td>@cmt.NickName</td>
-                            <td>@cmt.Content</td>
-                            <td>@cmt.Time</td>
-                            <td>
-                                <form method="POST" name="CommentDelete" asp-controller="Board" asp-action="CommentDelete">
-                                    <input type="hidden" name="id" value="@cmt.Id" />
-                                    @if (@userId == @cmt.UserId)
-                                    {
-                                        <button type="button" class="btn btn-outline-danger ms-2" id="btnDeleteComment" data-comment-id="@cmt.Id">삭제</button>
-                                    }
-                                </form>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
+            <button class="accordion">댓글보기</button>
+                <div class="panel">
+                @foreach (var cmt in comment)
+                {
+                    <tr id="comment-@cmt.Id">
+                        <div class="eotrmf">
+                        <td>@cmt.NickName</td>
+                        <td>@cmt.Content</td>
+                        <div class="right">
+                        <td>@cmt.Time</td>
+                        <td>
+                        <form method="POST" name="CommentDelete" class="btnform" asp-controller="Board" asp-action="CommentDelete">
+                                <input type="hidden" name="id" value="@cmt.Id" />
+                                @if (@userId == @cmt.UserId)
+                                {
+                                    <button type="button" class="btn btn-outline-danger ms-2" id="btnDeleteComment" data-comment-id="@cmt.Id">삭제</button>
+                                }
+                            </form>
+                        </td>
+                        </div>
+                        </div>
+                    </tr>
+                }
+            </div>
 
-            </table>
+            
             @*댓글 작성*@
             @if (userId != 0)
             {
@@ -108,7 +113,7 @@
 
 
             <!-- 하단 링크 -->
-        </section>
+        
     }
     else
     {
@@ -118,3 +123,19 @@
         </script>
     }
 </div>
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+</script>
