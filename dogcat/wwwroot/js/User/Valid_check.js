@@ -168,7 +168,15 @@ $("#Go_idcheck").on("click", function () {
 
 // 회원가입 폼 검증
 $(function () {
+    //입력사항 공백처리
+    var inputid = $.trim($("#Userid").val()); 
+    var inputNick = $.trim($("#NickName").val());
+    var inputName = $.trim($("#Name").val());
+
+
+
     $("#register").submit(function () {
+        
         if ($.trim($("#Userid").val()) == "" || $("#Userid").val() == null) {
             alert('아이디를 입력 하세요.');
             $("#Userid").focus();
@@ -306,13 +314,13 @@ $("#Go_idcheck").on("click", function () {
             }
             return response.json();
         })
-        .then(function (usable) { // 변수명 수정: useable -> usable
+        .then(function (usable) { 
             if (usable == "unable") {
-                isvalid_Id.val("0");
+                isvalid_Id.val("unable");
                 alert("이미 사용중인 아이디입니다.");
             }
             else if (usable == "able") {
-                isvalid_Id.val("1");
+                isvalid_Id.val("able");
                 alert("사용 가능한 아이디입니다.");
             }
         });
