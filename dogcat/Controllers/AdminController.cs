@@ -20,6 +20,7 @@ namespace dogcat.Controllers
             if (user == null) return null;
             return View(user);
         }
+        
         [HttpGet]
         public async Task<IActionResult> Detail(long id)
         {
