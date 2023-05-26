@@ -8,35 +8,48 @@
 
 }
 <link rel="stylesheet" href="~/css/Message/home.css">
+<form method="post" id="Delete">
 <div class="container1">
     <h2>쪽지함</h2>
+    <button type="button" id="delete_message">삭제</button>
     <hr>
 </div>
-<div class="box">
-<table class="table">
-    <thead class="table-success">
-        <tr>
-            <th>제목</th>
-            <th>보낸사람</th>
-            <th>수신 날짜</th>
-        </tr>
-    </thead>
-    @if (Model != null)
-    {
-    <tbody>
-        
-        @foreach(var m in Model)
-        {
-        <tr>
-            <td><a asp-controller="Message" asp-action="Detail" asp-route-id="@m.Id">@m.Title</a> </td>
-            <td>@m.User_from.Name</td>
-            <td>@m.Time</td>
-        </tr>
-        }
-        
-    </tbody>
-    
-    }
-</table>
-</div>
+    <div class="box">
+
+
+        <table class="table">
+            <thead class="table-success">
+                <tr>
+                    <th>제목</th>
+                    <th>보낸사람</th>
+                    <th>수신 날짜</th>
+                    <th>선택</th>
+                </tr>
+            </thead>
+            @if (Model != null)
+            {
+                <tbody>
+
+                    @foreach (var m in Model)
+                    {
+                        <tr>
+                            <td><a asp-controller="Message" asp-action="Detail" asp-route-id="@m.Id">@m.Title</a> </td>
+                            <td>@m.User_from.Name</td>
+                            <td>@m.Time</td>
+                            <td>
+                                <input type="checkbox" class="message_select" value="@m.Id">
+                            </td>
+                        </tr>
+                        
+                    }
+
+                </tbody>
+
+            }
+        </table>
+    </div>
 <a class="btn btn-outline-dark" asp-controller="Message" asp-action="Add" asp-route-id="@userId">보내기</a>
+</form>
+
+<script src="~/js/Message/Delete.js">
+</script>

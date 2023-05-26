@@ -36,7 +36,7 @@ namespace dogcat.Repositories
         {
             var message = await _dogcatDbContext.Messages.Where(x => x.To_id == id).ToListAsync();
             if (message.Count == 0) return null;
-            foreach(var m  in message)
+            foreach (var m in message)
             {
                 var user_from = await _dogcatDbContext.Users.FirstOrDefaultAsync(x => x.Id == m.From_id);
                 var user_to = await _dogcatDbContext.Users.FirstOrDefaultAsync(x => x.Id == m.To_id);
@@ -51,6 +51,19 @@ namespace dogcat.Repositories
             await _dogcatDbContext.SaveChangesAsync();
             return m;
         }
-        
+
+        public async Task DeleteMessage(long messageId)
+        {
+            var message = _dogcatDbContext.Messages.Find(messageId);
+            if (message != null)
+            {
+                _dogcatDbContext.Messages.Remove(message);
+                _dogcatDbContext.SaveChanges();
+            }
+        }
+
+
+
+
     }
 }

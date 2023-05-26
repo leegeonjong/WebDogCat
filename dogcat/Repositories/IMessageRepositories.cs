@@ -13,5 +13,8 @@ namespace dogcat.Repositories
         Task<User> MailAsync(string mail);  // mail 로 유저 가져오기
 
         Task<Message> AddAsync(Message m);  // mail 보내기
+
+        Task DeleteMessage(long messageId); // 삭제
+
     }
 }

@@ -72,5 +72,17 @@ namespace dogcat.Controllers
             await _messageRepositories.AddAsync(Message);
             return RedirectToAction("home", new {id = Message.From_id});
         }
+
+        [HttpPost]
+        public IActionResult Delete(List<long> ids)
+        {
+            // 선택한 쪽지 삭제
+            foreach (var id in ids)
+            {
+                _messageRepositories.DeleteMessage(id);
+            }
+
+            return View("home");
+        }
     }
 }
