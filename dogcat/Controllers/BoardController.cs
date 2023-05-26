@@ -78,6 +78,7 @@ namespace dogcat.Controllers
                 NickName = HttpContext.Session.GetString("userNickName")
 
             };
+
             return View(addWriteRequest);
         }
 

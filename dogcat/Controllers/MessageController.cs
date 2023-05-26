@@ -37,6 +37,8 @@ namespace dogcat.Controllers
                 From_id = user.Id,
                 Time = DateTime.Now,
             };
+            ViewData["user"] = user.Id;
+            ViewData["NickName"] = user.NickName;
             return View(m);
         }
         [HttpPost]

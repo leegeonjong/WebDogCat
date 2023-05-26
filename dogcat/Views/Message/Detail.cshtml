@@ -1,22 +1,27 @@
 ﻿@model dogcat.Models.Domain.Message
 @{
-    ViewData["TItle"] = "쪽지보기";
+    ViewData["Title"] = "쪽지보기";
 }
+<link rel="stylesheet" href="~/css/Message/Detail.css">
+<div class="box">
+    <div class="in">
+    <div class="mb-3">
+        <label for="from_id">보낸사람:</label>
+        <span class="form-control">@Model.User_from.Name</span>
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="title">제목:</label>
+        <span class="form-control">@Model.Title</span>
+    </div>
+    <div class="mb-3 mt-3">
+        <p>수신: @Model.Time</p> 
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="context">내용:</label>
+        <span class="form-control" id="c">@Model.Context</span>
+    </div>
+    </div>
+</div>
 
-<div class="mb-3">
-    <label for="from_id">보낸사람:</label>
-    <span class="form-control">@Model.User_from.Name</span>
-</div>
-<div class="mb-3 mt-3">
-    <label for="title">제목:</label>
-    <span class="form-control">@Model.Title</span>
-</div>
-<div class="mb-3 mt-3">
-    <label for="time">수신날짜:</label>
-    <span class="form-control">@Model.Time</span>
-</div>
-<div class="mb-3 mt-3">
-    <label for="context">내용:</label>
-    <span class="form-control">@Model.Context</span>
-</div>
+<button type="button" class="btn btn-outline-dark" onclick="history.back()">뒤로가기</button>
 

@@ -3,9 +3,11 @@
     margin-left: 25%;
     margin-right: 10%;
 }
+
 .container2 {
     display: flex;
 }
+
 .btncnt {
     display: flex;
     flex-direction: column;
@@ -13,22 +15,19 @@
     margin-right: 5%;
     margin-left: 5%;
 }
-
-    .btncnt .btn {
-        height: 100px;
-        border: solid black;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: background-color 0.3s;
-    }
-
+.btncnt .btn {
+    height: 100px;
+    border: solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+}
 .right {
     display: flex;
     width: 65%;
     margin-right: 10%;
 }
-
-    .right form {
-        width: 100%;
-    }
+.right form{
+    width: 100%;
+}

@@ -49,3 +49,18 @@
     .table2 tr {
     height: 150px;
     }
+.table2 td{
+    width: 25%;
+    padding: 3%;
+    
+}
+td .t_im{
+    width: 100%;
+}
+.t_im img{
+    width: 130px;
+    height: 130px;
+}
+tbody tr{
+    height:42px
+}

@@ -3,16 +3,24 @@
     ViewData["Title"] = "권장 칼로리 알아보기";
 }
 <script src="~/js/Pet/Calorie.js"></script>
-
+<link rel="stylesheet" href="~/css/calorie.css">
+<div class="container0">
+    <h2>권장 칼로리</h2>
+</div>
+<div class="container1">
 <form method="post" action="/MyPet/CarculateCalorie">
-    <div class="mb-3">
-        <img src="https://tools.mypetlife.co.kr/static/media/dog_select.d0cd964d4185a9bebf06.png" onclick="handleButtonClick('dog')" />
-        <img src="https://tools.mypetlife.co.kr/static/media/cat_select.14d59481a42b358448be.png" onclick="handleButtonClick('cat')" />
+    <div class="dogcat">
+        <div class="mb-3">
+            <img src="https://tools.mypetlife.co.kr/static/media/dog_select.d0cd964d4185a9bebf06.png" onclick="handleButtonClick('dog')" />
+            <img src="https://tools.mypetlife.co.kr/static/media/cat_select.14d59481a42b358448be.png" onclick="handleButtonClick('cat')" />
+        </div>
+        <b>반려동물의 종류를 선택해주세요.</b>
     </div>
 </form>
+</div>
 
 
-
+<div class="container2">
 <form method="post" action="/MyPet/CarculateCalorie">
     <div class="mb-3">
         <label for="Weight">몸무게:</label>
@@ -29,8 +37,9 @@
 
     <button type="submit" class="btn btn-outline-dark">권장 칼로리 계산</button>
 </form>
+</div>
 
-
+<div class="container3">
 <form method="post" action="/MyPet/CarculateCalorie">
     <div class="mb-3">
         <label for="Calorie">권장 칼로리:</label>
@@ -38,7 +47,7 @@
         <div><span class="text-danger"></span></div>
     </div>
 </form>
-
+</div>
 @if (ViewData["WarningMessage"] != null)
 {
     <div class="alert alert-warning">@ViewData["WarningMessage"]</div>
