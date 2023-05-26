@@ -10,6 +10,7 @@
 }
 
 <head>
+    <script src="~/js/Board/Write.js"></script>
     <link rel="stylesheet" href="~/css/Board/Write.css">
 </head>
 <div class="container1">
@@ -41,23 +42,22 @@
             </div>
             <div class="mb-3 mt-3">
                 <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title">
-                <div><span class="text-danger">@TempData["SubjectError"]</span></div>
+                <div><span class="text-danger" id="validError1"></span></div>
             </div>
             <div class="mb-3 mt-3">
                 <textarea class="form-control" rows="5" placeholder="내용을 입력하세요" asp-for="Context"></textarea>
+                <div><span class="text-danger" id="validError2"></span></div>
             </div>
             <div class="mb-3 mt-3">
                 <label for="image">이미지:</label>
                 <input type="file" class="form-control" name="uploadedFile">
             </div>
             <div class="mb-3">
-                <label for="name">작성자:</label>
                 <input type="hidden" class="form-control" placeholder="작성자를 입력하세요" asp-for="NickName" readonly>
-                <div><span class="text-danger">@TempData["NameError"]</span></div>
             </div>
 
 
-            <button type="submit" class="btn btn-outline-dark">작성완료</button>
+            <button type="submit" class="btn btn-outline-dark" onclick="return validateForm()">작성완료</button>
             <a class="btn btn-outline-dark"
                asp-controller="Board"
                asp-action="List"
