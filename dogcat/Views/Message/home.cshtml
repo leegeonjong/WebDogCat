@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "메시지함";
 }
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("userId") ?? 0;
+
+}
 <link rel="stylesheet" href="~/css/Message/home.css">
 <div class="container1">
     <h2>쪽지함</h2>
@@ -34,4 +39,4 @@
     }
 </table>
 </div>
-<a class="btn btn-outline-dark" asp-controller="Message" asp-action="Add" asp-route-id="@Model[0].To_id">보내기</a>
+<a class="btn btn-outline-dark" asp-controller="Message" asp-action="Add" asp-route-id="@userId">보내기</a>
