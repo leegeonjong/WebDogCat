@@ -45,23 +45,23 @@ $(function () {
     })
 })
 
-    // 회원가입
+// 회원가입
 
-    //양식입력 유효성 검사
-        //아이디 검사
-    $(function () {
-        $("#Userid").on("keyup", function () {
-            isvalid_Id.val("unable"); // ID변경 될 시 인증여부 값 초기화 (다시 인증해야 함)
-            if (id.test($("#Userid").val()) == false) {
-                $("#Go_idcheck").prop("disabled", true);
-                $("#valid_userId").css("color", "red");
-                $("#valid_userId").text("id는 영문숫자 3~16 글자");
-            } else {
-                $("#Go_idcheck").prop("disabled", false);
-                $("#valid_userId").css("color", "#0C964A");
-                $("#valid_userId").text("OK!");
-            }
-        });
+//양식입력 유효성 검사
+//아이디 검사
+$(function () {
+    $("#Userid").on("keyup", function () {
+        isvalid_Id.val("unable"); // ID변경 될 시 인증여부 값 초기화 (다시 인증해야 함)
+        if (id.test($("#Userid").val()) == false) {
+            $("#Go_idcheck").prop("disabled", true);
+            $("#valid_userId").css("color", "red");
+            $("#valid_userId").text("id는 영문숫자 3~16 글자");
+        } else {
+            $("#Go_idcheck").prop("disabled", false);
+            $("#valid_userId").css("color", "#0C964A");
+            $("#valid_userId").text("OK!");
+        }
+    });
 
     //비밀번호
     $("#Pw").on("keyup", function () {
@@ -118,20 +118,20 @@ $(function () {
         }
     });
 
-        //연락처
-        //$("#PhoneNum").on("keyup", function () {
-        //    if (tel.test($("#PhoneNum").val()) == false) {
-        //        $("#valid_tel").css("color", "red");
-        //        $("#valid_tel").text("휴대전화 번호를 올바르게 입력해 주세요.");
-        //    } else {
-        //        $("#valid_tel").css("color", "#0C964A");
-        //        $("#valid_tel").text("Ok!");
-        //    }
-        //});
-    });
+    //연락처
+    //$("#PhoneNum").on("keyup", function () {
+    //    if (tel.test($("#PhoneNum").val()) == false) {
+    //        $("#valid_tel").css("color", "red");
+    //        $("#valid_tel").text("휴대전화 번호를 올바르게 입력해 주세요.");
+    //    } else {
+    //        $("#valid_tel").css("color", "#0C964A");
+    //        $("#valid_tel").text("Ok!");
+    //    }
+    //});
+});
 
-    
-    // 아이디 중복검사
+
+// 아이디 중복검사
 $("#Go_idcheck").on("click", function () {
     // 변수 지정
     var input_id = $("#Userid").val();
@@ -148,7 +148,7 @@ $("#Go_idcheck").on("click", function () {
             }
             return response.json();
         })
-        .then(function (usable) { 
+        .then(function (usable) {
             if (usable == "unable") {
                 isvalid_Id.val("unable");
                 alert("이미 사용중인 아이디입니다.");
@@ -239,17 +239,16 @@ $(function () {
         //    return false;
         //}
 
-        
+
 
         //이메일인증, 아이디 중복검사 여부 체크
 
         //if ((isvalid_Id.val() == "able" && isvalid_tel.val() == "able") == false) {}
-        if (isvalid_Id.val() == "unable")
-        {
+        if (isvalid_Id.val() == "unable") {
             alert("아이디 중복검사를 실시 해 주세요!");
             return false;
         }
-        
+
     });
 });
 
@@ -259,34 +258,34 @@ $(function () {
 //$("#Go_idcheck").on("click", function () {
 //    var inputid = $("#Userid").val(); //사용자 입력 ID
 
-    //    //URL 설정
-    //    fetch("/User/Idcheck", {
-    //        //메소드 설정
-    //        method: "POST",
-    //        //헤더 설정 (문서타입 : xml / Json)
-    //        headers: {
-    //            "Content-Type": "application/json"
-    //        },
-    //        cache: "no-cache",
-    //        //body 설정 (전송할 데이터)
-    //        body: JSON.stringify({ UserId: inputid })
-    //    })
-    //        .then(function (response) {
-    //            if (!response.ok) { //실패 했을 때
-    //                alert("서버 오류입니다. 잠시 후 다시 시도하세요!");
-    //                throw new Error("서버 요청에 실패했습니다. 다시 시도해주세요.");
-    //            }
-    //            return response.json();
-    //        })
-    //        .then(function (useable) { // 요청 성공 시, 중복검사 결과
-    //            if (useable == "unable") { //아이디가 중복일 경우
-    //                alert("이미 사용중인 아이디 입니다.");
-    //            }
-    //            else if (useable == "able") { // 중복 아닐 경우
-    //                isvalid_Id.val("1");
-    //                alert("사용가능한 ID 입니다!");
-    //            }
-    //        })
+//    //URL 설정
+//    fetch("/User/Idcheck", {
+//        //메소드 설정
+//        method: "POST",
+//        //헤더 설정 (문서타입 : xml / Json)
+//        headers: {
+//            "Content-Type": "application/json"
+//        },
+//        cache: "no-cache",
+//        //body 설정 (전송할 데이터)
+//        body: JSON.stringify({ UserId: inputid })
+//    })
+//        .then(function (response) {
+//            if (!response.ok) { //실패 했을 때
+//                alert("서버 오류입니다. 잠시 후 다시 시도하세요!");
+//                throw new Error("서버 요청에 실패했습니다. 다시 시도해주세요.");
+//            }
+//            return response.json();
+//        })
+//        .then(function (useable) { // 요청 성공 시, 중복검사 결과
+//            if (useable == "unable") { //아이디가 중복일 경우
+//                alert("이미 사용중인 아이디 입니다.");
+//            }
+//            else if (useable == "able") { // 중복 아닐 경우
+//                isvalid_Id.val("1");
+//                alert("사용가능한 ID 입니다!");
+//            }
+//        })
 
 
 //Get
@@ -320,35 +319,45 @@ $("#Go_idcheck").on("click", function () {
 
 
 //--------------------------Id PW 찾기 검증----------------------------------
+
 // Id 찾기 검증
 function validateForm() {
     var name = document.forms[0]["Name"].value;
     var email = document.forms[0]["Email"].value;
 
+    // 오류 메시지 초기화
+    displayErrorIdMessage("", "nameError");
+    displayErrorIdMessage("", "emailError");
+
     if (name === "" && email === "") {
-        displayErrorMessage("이름과 이메일을 입력하세요.");
+        displayErrorIdMessage("이름을 입력하세요.", "nameError");
+        displayErrorIdMessage("이메일을 입력하세요.", "emailError");
         return false;
     } else if (name === "") {
-        displayErrorMessage("이름을 입력하세요.");
+        displayErrorIdMessage("이름을 입력하세요.", "nameError");
         return false;
     } else if (email === "") {
-        displayErrorMessage("이메일을 입력하세요.");
+        displayErrorIdMessage("이메일을 입력하세요.", "emailError");
         return false;
     } else if (!validateEmailFormat(email)) {
-        displayErrorMessage("올바른 이메일 형식이 아닙니다.");
+        displayErrorIdMessage("올바른 이메일 형식이 아닙니다.", "emailError");
         return false;
     }
 }
 
 function validatepassword() {
+    // 오류 메시지 초기화
+    displayErrorIdMessage("", "validNumError");
+
     var password = document.forms[1]["InputPassword"].value;
     var emailCodeSent = document.getElementById('emailCodeSent').value;
 
+
     if (emailCodeSent === "") {
-        displayErrorMessage("이메일 인증번호를 먼저 발송하세요.");
+        displayErrorIdMessage("이메일 인증번호를 먼저 발송하세요.", "validNumError");
         return false;
     } else if (password === "") {
-        displayErrorMessage("인증번호를 입력하세요.");
+        displayErrorIdMessage("인증번호를 입력하세요.", "validNumError");
         return false;
     }
 }
@@ -358,17 +367,22 @@ function validateEmailForm() {
     var id = document.forms[0]["Id"].value;
     var email = document.forms[0]["Email"].value;
 
+    // 오류 메시지 초기화
+    displayErrorIdMessage("", "idError");
+    displayErrorIdMessage("", "emailError");
+
     if (id === "" && email === "") {
-        displayErrorMessage("Id와 이메일을 입력하세요.");
+        displayErrorIdMessage("Id를 입력하세요.", "idError");
+        displayErrorIdMessage("이메일을 입력하세요.", "emailError");
         return false;
     } else if (id === "") {
-        displayErrorMessage("Id를 입력하세요.");
+        displayErrorIdMessage("Id를 입력하세요.", "idError");
         return false;
     } else if (email === "") {
-        displayErrorMessage("이메일을 입력하세요.");
+        displayErrorIdMessage("이메일을 입력하세요.", "emailError");
         return false;
     } else if (!validateEmailFormat(email)) {
-        displayErrorMessage("올바른 이메일 형식이 아닙니다.");
+        displayErrorIdMessage("올바른 이메일 형식이 아닙니다.", "emailError");
         return false;
     }
 }
@@ -377,11 +391,14 @@ function validateVerificationForm() {
     var verificationCode = document.forms[1]["InputPassword"].value;
     var emailCodeSent = document.getElementById('emailCodeSent').value;
 
+    // 오류 메시지 초기화
+    displayErrorIdMessage("", "validNumError");
+
     if (emailCodeSent === "") {
-        displayErrorMessage("이메일 인증번호를 먼저 발송하세요.");
+        displayErrorIdMessage("이메일 인증번호를 먼저 발송하세요.", "validNumError");
         return false;
-    } else if (verificationCode === "") {
-        displayErrorMessage("인증번호를 입력하세요.");
+    } else if (password === "") {
+        displayErrorIdMessage("인증번호를 입력하세요.", "validNumError");
         return false;
     }
 }
@@ -391,14 +408,38 @@ function validateEmailFormat(email) {
     return emailRegex.test(email);
 }
 
-
 // 오류 메시지 표시
-function displayErrorMessage(message) {
-    var errorContainer = document.querySelector('.text-danger');
-    errorContainer.textContent = message;
+function displayErrorIdMessage(message, errorId) {
+    var errorElement = document.getElementById(errorId);
+    if (errorElement) {
+        errorElement.innerHTML = message;
+    }
 }
 
+function validatePasswordForm() {
+    var newPw = document.forms[0]["newPw"].value;
+    var checkPw = document.forms[0]["checkPw"].value;
 
+    // 오류 메시지 초기화
+    displayErrorIdMessage("", "PwError");
+    displayErrorIdMessage("", "matchError");
+
+    if (newPw === "" && checkPw === "") {
+        displayErrorIdMessage("비밀번호를 입력하세요.", "PwError");
+        displayErrorIdMessage("비밀번호를 한번더 입력하세요.", "matchError");
+        return false;
+    } else if (newPw === "") {
+        displayErrorIdMessage("비밀번호를 입력하세요.", "PwError");
+        return false;
+    } else if (checkPw === "") {
+        displayErrorIdMessage("비밀번호를 한번더 입력하세요.", "matchError");
+        return false;
+    }
+    if (newPw !== checkPw) {
+        displayErrorIdMessage("비밀번호가 틀립니다.", "matchError");
+        return false;
+    }
+}
 
 
 
