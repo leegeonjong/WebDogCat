@@ -2,9 +2,20 @@
 @{
     ViewData["Title"] = "유저 관리";
 }
+<head>
+    <link rel="stylesheet" href="~/css/Admin/User.css">
+    <script src="/js/Admin/search.js"> </script>
+</head>
+
 @if (Model != null)
 {
-
+    <div class="ta">
+        
+        <form class="search" action="action_page.php">
+            <input type="text" placeholder="검색할 회원의 아이디를 입력해주세요" name="search">
+            <button type="submit" id="searchbtn"><i class="fa fa-search"></i></button>
+        </form>
+        
     <table class="table table-hover">
         <thead class="table-success">
             <tr>
@@ -34,6 +45,7 @@
             }
         </tbody>
     </table>
+    </div>
 }
 else
 {
