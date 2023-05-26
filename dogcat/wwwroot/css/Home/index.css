@@ -1,0 +1,106 @@
+﻿
+
+.admin {
+    border: 1px solid black;
+    margin-top: 20px;
+    margin-left: 100px;
+    margin-bottom: 20px;
+}
+
+    .admin li {
+        list-style: circle;
+        margin-bottom: 5px;
+    }
+.freeboard {
+    display:flex;
+}
+.freewrite {
+display:flex;
+    flex-direction:column
+}
+
+.board img {
+width:200px;
+height:200px;
+}
+.baord li {
+width:250px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+.explanation h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.explanation p {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.8;
+    opacity: 0.8;
+}
+
+.explanation a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #fff;
+    background-color: #BF6A7A;
+    padding: 10px 30px;
+    border: solid 3px currentColor;
+    border-radius: 6px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+    .explanation a:hover {
+        background-image: linear-gradient( rgba(255,255,255,0.2), rgba(255,255,255,0.2) );
+    }
+
+.explanation {
+    background-color: #5D9AB2;
+    color: #fff;
+}
+
+    .explanation .text {
+        padding: 20px;
+    }
+
+    .explanation .photo {
+        min-height: 200px;
+        background-image: url(/css/pet1.jpg);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .explanation .container {
+        display: flex;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .explanation .photo {
+        flex: 3;
+    }
+
+    .explanation .text {
+        flex: 2;
+        padding: 50px;
+    }
+*/

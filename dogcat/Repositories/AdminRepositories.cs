@@ -1,5 +1,6 @@
 ﻿using dogcat.Data;
 using dogcat.Models.Domain;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace dogcat.Repositories
@@ -25,6 +26,11 @@ namespace dogcat.Repositories
             }
             return null;
         }
+        //public async Task<IEnumerable<User>> FindUserAsync(string id) 
+        //{ 
+        
+        //}
+
 
         public async Task<User?> GetuserAsync(long id)
         {

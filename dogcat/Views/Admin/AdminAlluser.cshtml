@@ -1,10 +1,22 @@
 ﻿@model List<dogcat.Models.Domain.User>
 @{
     ViewData["Title"] = "유저 관리";
+    
 }
+<head>
+    <link rel="stylesheet" href="~/css/Admin/User.css">
+    <script src="/js/Admin/search.js"> </script>
+</head>
+
 @if (Model != null)
 {
-
+    <div class="ta">
+        
+        <form class="search">
+            <input type="text" placeholder="검색할 회원의 아이디를 입력해주세요" name="search">
+            <button type="submit" id="searchbtn"><i class="fa fa-search"></i></button>
+        </form>
+        
     <table class="table table-hover">
         <thead class="table-success">
             <tr>
@@ -19,7 +31,8 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var user in Model)
+                
+                @foreach (var user in Model)
             {
                 <tr>
                     <td><a asp-controller="Admin" asp-action="Detail" asp-route-id="@user.Id">@user.Name</a> </td>
@@ -34,6 +47,7 @@
             }
         </tbody>
     </table>
+    </div>
 }
 else
 {

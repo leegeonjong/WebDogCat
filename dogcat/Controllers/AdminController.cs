@@ -17,8 +17,10 @@ namespace dogcat.Controllers
         
         {
             var user = await _adminRepositories.AlluserAsync(id);
+            if (user == null) return null;
             return View(user);
         }
+        
         [HttpGet]
         public async Task<IActionResult> Detail(long id)
         {
