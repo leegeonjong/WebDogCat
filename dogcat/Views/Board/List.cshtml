@@ -80,7 +80,7 @@
     @if (UserId != null && userNickName != null)
     {
         <div class="btncnt">
-            <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">@userNickName<br> 반갑습니다</a>
+            <a class="btn">@userNickName 님<br> 반갑습니다</a>
             <br>
             @if (UserId != 0)
             {
