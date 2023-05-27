@@ -1,11 +1,22 @@
 ﻿@model dogcat.Models.Domain.Pet
 @{
 }
+
+<script>
+    function showSelectedImage() {
+        var fileInput = document.getElementById('uploadedFile');
+        var filePath = fileInput.value;
+        var fileName = filePath.split('\\').pop(); // 파일 이름 추출
+        var imageInfo = document.getElementById('selectedImageInfo');
+        imageInfo.innerHTML = fileName; // 이미지 정보 출력
+    }
+</script>
+
 <form method="post" name="frmpet" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id">
     <div class="mb-3 mt-3">
         <label for="image">이미지:</label>
-        <input type="file" class="form-control" name="uploadedFile">
+        <input type="file" class="form-control" id="uploadedFile" name="uploadedFile" onchange="showSelectedImage()">
     </div>
     <div class="mb-3">
         <label for="name">이름:</label>
@@ -23,5 +34,6 @@
         <label for="weight">무게(kg):</label>
         <input type="text" class="form-control" asp-for="Weight" />
     </div>
+    <div id="selectedImageInfo"></div> <!-- 선택한 이미지 정보를 출력할 요소 -->
     <button type="submit" class="btn btn-outline-dark">수정완료</button>
 </form>
