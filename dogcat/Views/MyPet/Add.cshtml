@@ -5,41 +5,47 @@
 
 <head>
     <link rel="stylesheet" href="~/css/MyPet/add.css">
+    <script type="text/javascript">
+        window.history.forward();
+        function noBack() { window.history.forward(); }
+    </script>
 </head>
-<div class="ctn">
-    <h1>애완동물 등록하기</h1>
-    <form method="post" enctype="multipart/form-data">
-        <input type="hidden" asp-for="Userid" />
-        <div class="mb-3 mt-3 ">
-            <label for="image">이미지:</label>
-            <input type="file" class="form-control" name="uploadedFile">
-        </div>
-        <div class="mb-3">
-            <label for="name">이름:</label>
-            <input type="text" class="form-control" placeholder="이름를 입력하세요" asp-for="Name">
-            <div><span class="text-danger">@TempData["NameError"]</span></div>
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="species">종류:</label>
-            <input type="text" class="form-control" placeholder="종류를 입력하세요" asp-for="Species">
-            <div><span class="text-danger">@TempData["SpeciesError"]</span></div>
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="old">나이:</label>
-            <input type="text" class="form-control" placeholder="나이를 입력하세요" asp-for="Old">
-            <div><span class="text-danger">@TempData["OldError"]</span></div>
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="weight">무게(kg):</label>
-            <input type="text" class="form-control" placeholder="무게를 입력하세요" asp-for="Weight">
-            <div><span class="text-danger">@TempData["WeightError"]</span></div>
-        </div>
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+    <div class="ctn">
+        <h1>애완동물 등록하기</h1>
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Userid" />
+            <div class="mb-3 mt-3 ">
+                <label for="image">이미지:</label>
+                <input type="file" class="form-control" name="uploadedFile">
+            </div>
+            <div class="mb-3">
+                <label for="name">이름:</label>
+                <input type="text" class="form-control" placeholder="이름를 입력하세요" asp-for="Name">
+                <div><span class="text-danger">@TempData["NameError"]</span></div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="species">종류:</label>
+                <input type="text" class="form-control" placeholder="종류를 입력하세요" asp-for="Species">
+                <div><span class="text-danger">@TempData["SpeciesError"]</span></div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="old">나이:</label>
+                <input type="text" class="form-control" placeholder="나이를 입력하세요" asp-for="Old">
+                <div><span class="text-danger">@TempData["OldError"]</span></div>
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="weight">무게(kg):</label>
+                <input type="text" class="form-control" placeholder="무게를 입력하세요" asp-for="Weight">
+                <div><span class="text-danger">@TempData["WeightError"]</span></div>
+            </div>
 
 
-        <button type="submit" class="btn">작성완료</button>
+            <button type="submit" class="btn">작성완료</button>
 
-    </form>
+        </form>
 
-    <script src="~/js/Pet/Verified.js"></script>
-</div>
+        <script src="~/js/Pet/Verified.js"></script>
+    </div>
 
+</body>
