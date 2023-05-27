@@ -1,0 +1,31 @@
+﻿.DetailForm {
+    max-width: 500px; /* 원하는 최대 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬을 위해 사용 */
+}
+
+.img-thumbnail {
+    display: block;
+    margin: 0 auto;
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.label{
+    text-align : left;
+    margin : 2% 0 0 0;
+}
+
+.form-control {
+    max-width: 100%
+}
+
+/* form */
+form {
+    margin : 3% 0 3% 0;
+    border: 3px solid #f1f1f1;
+}
+
+.col{
+    width : 20px
+}
+
