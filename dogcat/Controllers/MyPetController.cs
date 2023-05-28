@@ -40,7 +40,7 @@ namespace dogcat.Controllers
         [ActionName("Edit")]
         public async Task<IActionResult> Edit(Pet pet, IList<IFormFile> uploadedFile)
         {
-            if (uploadedFile == null)
+            if (uploadedFile == null || uploadedFile.Count == 0)
             {
                 await _petRepositories.PetupdateAsync(pet);
                 return RedirectToAction("Detail", new { id = pet.Id });

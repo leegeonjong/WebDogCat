@@ -7,8 +7,12 @@
 {
     <script>
         alert("ID 또는 패스워드 오류입니다.");
+        location.href = "@Url.Action("Login","User")"; // method,controller
     </script>
 }
-<script>
-    location.href = "@Url.Action("Index","Home")"; // method,controller
-</script>
+else
+{
+    <script>
+        location.href = "@Url.Action("Index","Home")"; // method,controller
+    </script>
+}
