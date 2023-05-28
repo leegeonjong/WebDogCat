@@ -13,10 +13,10 @@ namespace dogcat.Controllers
             _adminRepositories = adminRepositories;
         }
         [HttpGet]
-        public async Task<IActionResult> AdminAlluser(long id)
+        public async Task<IActionResult> AdminAlluser(long id, string search)
         
         {
-            var user = await _adminRepositories.AlluserAsync(id);
+            var user = await _adminRepositories.AlluserAsync(id,search);
             if (user == null) return null;
             return View(user);
         }

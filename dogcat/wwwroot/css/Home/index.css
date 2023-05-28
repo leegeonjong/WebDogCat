@@ -4,6 +4,7 @@
     border: 1px solid black;
     margin-top: 20px;
     margin-left: 100px;
+    margin-right: 100px;
     margin-bottom: 20px;
 }
 
@@ -11,14 +12,16 @@
         list-style: circle;
         margin-bottom: 5px;
     }
-.freeboard {
-    display:flex;
+.userBoard {
+    margin: 5% 10% 10% 5%;
+    display: flex;
 }
-.freewrite {
-display:flex;
-    flex-direction:column
+    .userBoard b {
+        font-size: 300%;
+    }
+.free {
+margin-right:5%;
 }
-
 .board img {
 width:200px;
 height:200px;
