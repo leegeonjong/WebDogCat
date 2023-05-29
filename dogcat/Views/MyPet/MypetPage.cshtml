@@ -14,45 +14,46 @@
 </head>
 <h1>애완동물 보러가기</h1>
 <div class="petcontainer">
-<div class="btncnt">
-    <a class="btn" asp-controller="Board" asp-action="Write">@userNickName<br> 반간습니다</a>
-    <br>
-    <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@userId">마이페이지로가기</a>
-    <br>
-    <a class="btn" asp-controller="Board" asp-action="Write">게시글 작성하기</a>
-    <br>
-    <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@userId">메세지 보내기</a>
-</div>
-<div class="petflex">
-@if(Model != null)
-{
-  
-        @foreach (var pet in Model)
-        {
-<div class="container2">
-
-                <img src="/css/avatar2.png" alt="">
-            <div class="petinfo">
-                <a asp-controller="Mypet" asp-action="Detail" asp-route-id="@pet.Id">@pet.Name</a>
-                <span> 종: @pet.Species</span>
-                @pet.Old
-                @pet.Weight
-            </div>
-   
-           
+    <div class="btncnt">
+        <a class="btn">@userNickName 님<br> 반갑습니다</a>
+        <br>
+        <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@userId">마이페이지로가기</a>
+        <br>
+        <a class="btn" asp-controller="Board" asp-action="Write">게시글 작성하기</a>
+        <br>
+        <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@userId">메세지 보내기</a>
     </div>
+    <div class="petflex">
+        @if (Model != null)
+        {
+
+            @foreach (var pet in Model)
+            {
+                <div class="container2">
+
+                    <img src="/css/avatar2.png" alt="">
+                    <div class="petinfo">
+                        <a asp-controller="Mypet" asp-action="Detail" asp-route-id="@pet.Id">@pet.Name</a>
+                        <span> 종: @pet.Species</span>
+                        @pet.Old
+                        @pet.Weight
+                    </div>
+
+
+                </div>
+            }
+
         }
- 
-}
-else{
-    <script>
-        alert("등록된 애완동물이 없습니다.");
-        history.back();
-        </script>
-}
+        else
+        {
+            <script>
+                alert("등록된 애완동물이 없습니다.");
+                history.back();
+            </script>
+        }
         <a class="btn btn-outline-dark"
            asp-controller="MyPet"
            asp-action="Add"
            asp-route-id="@userId">애완동물 등록하기</a>
-</div>
+    </div>
 </div>

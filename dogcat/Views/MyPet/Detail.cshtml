@@ -2,17 +2,11 @@
 @{
     ViewData["Title"] = "펫 상세보기";
 }
-<head>
-    <script type="text/javascript">
-        window.history.forward();
-        function noBack() { window.history.forward(); }
-    </script>
 
-</head>
 
 <link rel="stylesheet" href="/css/MyPet/detail.css" />
 <script src="~/js/Pet/delete.js"></script>
-<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+
 
     @if (Model != null)
     {
@@ -58,4 +52,3 @@
         </script>
     }
 
-</body>
