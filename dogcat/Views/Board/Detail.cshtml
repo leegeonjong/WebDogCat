@@ -1,4 +1,11 @@
-﻿@{
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("userId") ?? 0;
+    string userNickName = HttpContextAccessor.HttpContext.Session.GetString("userNickName") ?? "비회원";
+    int? isAdmin = HttpContextAccessor.HttpContext.Session.GetInt32("userAdmin") ?? 0;
+
+}
+@{
     var write = ViewData["Write"] as dogcat.Models.Domain.Write;
     long WriteId = write.Id;
     long UserId = write.UserId;
@@ -9,10 +16,6 @@
     string Context = write.Context;
     string WriterNickName = write.NickName;
     string Path = write.RequestPath;
-}
-@{
-    string Nickname = (string)ViewData["Nickname"];
-    int userId = (int)ViewData["UserId"];
 }
 @{
     var comment = ViewData["Comment"] as List<dogcat.Models.Domain.Comment>;
@@ -57,23 +60,22 @@
         </form>
     </div>
     <div class="container3">
-        @if (UserId != null && Nickname != null)
-        {
+
             <div class="btncnt">
-                <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">@Nickname<br> 반갑습니다</a>
+            <a class="btn">@userNickName 님<br> 반갑습니다</a>
                 <br>
-                @if (UserId != 0)
+                @if (userId != 0)
                 {
                     <div class="UserOnly">
-                        <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@UserId" name="buttonName" value="mypage">마이페이지로가기</a>
+                        <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@userId" name="buttonName" value="mypage">마이페이지로가기</a>
                         <br>
                         <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">게시글 작성하기</a>
                         <br>
-                        <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@UserId" name="buttonName" value="Message">메세지 보내기</a>
+                        <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@userId" name="buttonName" value="Message">메세지 보내기</a>
                     </div>
                 }
             </div>
-        }
+        
         <div class="container4">
             @if (Path != "/appfiles/")
             {
@@ -123,7 +125,7 @@
             <form method="post" asp-controller="Board" asp-action="AddComment">
                 <input type="hidden" name="WriteId" value="@WriteId" />
                 <input type="hidden" name="UserId" value="@userId" />
-                <input type="hidden" name="NickName" value="@Nickname" />
+                <input type="hidden" name="NickName" value="@userNickName" />
                 <div class="mb-3">
                         @*<input type="text" class="form-control" name="NickName" asp-for="@Nickname" readonly />*@
                 </div>
