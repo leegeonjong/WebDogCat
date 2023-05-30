@@ -1,31 +1,49 @@
 ﻿
 
 .admin {
-    border: 1px solid black;
+    border: 5px solid rgb(125,182,202);
+    border-radius: 10px;
     margin-top: 20px;
     margin-left: 100px;
+    margin-right: 100px;
     margin-bottom: 20px;
+    background-color: rgb(125,182,202);
 }
+    .admin b {
+        font-size: 250%;
+        margin-left: 2.5%;
+    }
 
     .admin li {
+        margin-top:1%;
+        padding-bottom:1.5%;
+        margin-left: 2.5%;
         list-style: circle;
-        margin-bottom: 5px;
     }
-.freeboard {
-    display:flex;
+.admin a {
+    font-size:200%;
 }
-.freewrite {
-display:flex;
-    flex-direction:column
+.adminwrite {
+    background-color: white;
+}
+hr {
+margin:0px;
+}
+.userBoard {
+    margin: 5% 10% 10% 5%;
+    display: flex;
+}
+    .userBoard b {
+        font-size: 300%;
+    }
+.free {
+margin-right:5%;
+}
+.board img {
+width:250px;
+height:250px;
 }
 
-.board img {
-width:200px;
-height:200px;
-}
-.baord li {
-width:250px;
-}
 
 
 

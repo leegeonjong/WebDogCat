@@ -12,7 +12,7 @@ namespace dogcat.Repositories
         {
             _dogcatDbContext = dogcatDbContext;
         }
-        public async Task<IEnumerable<User>> AlluserAsync(long id)  // 모든 유저 불러오기
+        public async Task<IEnumerable<User>> AlluserAsync(long id, string search)  // 모든 유저 불러오기
         {
             var admin = await _dogcatDbContext.Users.FindAsync(id);
             if (admin != null)
@@ -20,6 +20,7 @@ namespace dogcat.Repositories
                 if (admin.Admin == 1)
                 {
                     var user = await _dogcatDbContext.Users.ToListAsync();
+                    if (search != null) {user = await _dogcatDbContext.Users.Where(x => x.Name == search).ToListAsync(); }
                     return user;
                 }
                 return null;

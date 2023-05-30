@@ -3,6 +3,7 @@
 @{
     int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("userId") ?? 0;
     string userNickName = HttpContextAccessor.HttpContext.Session.GetString("userNickName");
+    int? admin = HttpContextAccessor.HttpContext.Session.GetInt32("userAdmin") ?? 0; //관리자 여부
 }
 @{
     ViewData["Title"] = "글 작성";
@@ -20,11 +21,11 @@
 </div>
 <div class="container2">
     <div class="btncnt">
-        <a class="btn" asp-controller="Board" asp-action="Write"  name="buttonName" value="Write">@userNickName<br> 반갑습니다</a>
+        <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">@userNickName<br> 반갑습니다</a>
         <br>
         <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@userId" name="buttonName" value="mypage">마이페이지로가기</a>
         <br>
-        <a class="btn" asp-controller="Board" asp-action="Write"  name="buttonName" value="Write">게시글 작성하기</a>
+        <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">게시글 작성하기</a>
         <br>
         <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@userId" name="buttonName" value="Message">메세지 보내기</a>
     </div>
@@ -37,7 +38,10 @@
                     <option value="카테고리1">카테고리1</option>
                     <option value="카테고리2">카테고리2</option>
                     <option value="카테고리3">카테고리3</option>
-                    <option value="공지사항">공지사항</option>
+                    @if (admin == 1)
+                    {
+                        <option value="공지사항">공지사항</option>
+                    }
                 </select>
             </div>
             <div class="mb-3 mt-3">
@@ -64,6 +68,6 @@
                asp-route-page="@(page)">목록</a>
         </form>
     </div>
-    
+
 </div>
 

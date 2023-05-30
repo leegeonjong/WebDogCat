@@ -4,7 +4,7 @@ namespace dogcat.Repositories
 {
     public interface IAdminRepositories
     {
-        Task<IEnumerable<User>> AlluserAsync(long id);  // 모든 유저를 불러온다
+        Task<IEnumerable<User>> AlluserAsync(long id, string search);  // 모든 유저를 불러온다
 
         Task<User> UserBanAsync(long id);  // 특정 유저를 벤한다.
 

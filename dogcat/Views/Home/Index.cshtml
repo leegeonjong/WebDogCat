@@ -10,14 +10,15 @@
     <div class="board">
         <div class="admin">
             <b>공지사항</b>
-            <hr />
             @if (Model.Count > 0)
             {
-
+                <div class="adminwrite">
                 @foreach (var i in Model.Where(x => x.Category == "공지사항").OrderByDescending(x => x.Time).ToList().Take(3))
                 {
-                    <li><a href="/Board/Detail/@i.Id">@i.Title</a></li>
+                    <hr>
+                        <li><a href="/Board/Detail/@i.Id">@i.Title</a></li>
                 }
+                </div>
             }
             else
             {
@@ -25,67 +26,78 @@
             }
         </div>
         <div class="userBoard">
+            <div class="free">
+
                 <b>자유게시판</b>
-                <hr />
-                    @if (Model.Count > 0)
-                    {
-                    int count = 0;
-                        @foreach (var i in Model.Where(x => x.User.Admin == 0 && x.Image != null).OrderByDescending(x => x.Time).Take(6))
-                        {
-                <div class="freeboard">
-                            @if (i.Image != null)
-                            {
-                            count++;
-                            <div class="freewrite">
-                                    <img src="@i.RequestPath" alt="Facebook">
-                                    <br>
-                                    <a href="/Board/Detail/@i.Id">@i.Title</a>
-                                </div>
-                            }
-                </div>
-                    <div class="freeboard">
-                                @if (i.Image != null&& count==3)
-                            {
-                            count++;
-                            <div class="freewrite">
-                                    <img src="@i.RequestPath" alt="Facebook">
-                                    <br>
-                                    <a href="/Board/Detail/@i.Id">@i.Title</a>
-                                </div>
-                            }
-                    </div>
-                        }
-                    }
-                    else
-                    {
-                        <b>게시판에 글이 없습니다.</b>
-                    }
-            <div class="populer">
-                <b>인기글</b>
+
                 <hr />
                 @if (Model.Count > 0)
                 {
-                    @foreach (var i in Model.Where(x => x.User.Admin == 0 && x.Image != null).OrderByDescending(x => x.ViewCnt).Take(6))
-                    {
-                        <li>
-                            @if (i.Image != null)
-                            {
-                                //<img src="/MyFiles/@i.Images.Where(x => x.WriteId == i.Id).FirstOrDefault(x => x.O_image == i.Image).D_image" width="33" height="34">
-                                //<img src="@i.RequestPath" width="33" height="34">
-                                <span class="image">
-                                    <img src="@i.RequestPath" alt="Facebook" width="200" height="150">
-                                </span>
-                                <br>
-                                <span class="title">
-                                    <a href="/Board/Detail/@i.Id">@i.Title</a>
-                                </span>
-                            }
-                        </li>
-                    }
+                    <table border="1" cellpadding="5" cellspacing="0">
+                        @for (var i = 0; i < 2; i++)
+                        {
+                            <tr>
+                                @for (var j = 0; j < 3; j++)
+                                {
+                                    var index = i * 3 + j;
+                                    var item = Model.Where(x => x.User.Admin == 0 && x.Image != null)
+                                    .OrderByDescending(x => x.Time)
+                                    .Skip(index)
+                                    .FirstOrDefault();
+
+                                    <td>
+                                        @if (item != null)
+                                        {
+                                            <img src="@item.RequestPath" alt="Facebook">
+                                            <br>
+                                            <a href="/Board/Detail/@item.Id">@item.Title</a>
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </table>
                 }
                 else
                 {
-                    <b>아직 인기글이 없습니다.</b>
+                    <b>게시판에 글이 없습니다.</b>
+                }
+            </div>
+
+            <div class="populer">
+                <b>인기글</b>
+                <hr />
+
+                @if (Model.Count > 0)
+                {
+                    <table border="1" cellpadding="5" cellspacing="0">
+                        @for (var i = 0; i < 2; i++)
+                        {
+                            <tr>
+                                @for (var j = 0; j < 3; j++)
+                                {
+                                    var index = i * 3 + j;
+                                    var item = Model.Where(x => x.User.Admin == 0 && x.Image != null)
+                                    .OrderByDescending(x => x.ViewCnt)
+                                    .Skip(index)
+                                    .FirstOrDefault();
+
+                                    <td>
+                                        @if (item != null)
+                                        {
+                                            <img src="@item.RequestPath" alt="Facebook">
+                                            <br>
+                                            <a href="/Board/Detail/@item.Id">@item.Title</a>
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <b>게시판에 글이 없습니다.</b>
                 }
             </div>
         </div>
