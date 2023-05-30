@@ -27,11 +27,15 @@ height:10px;
 
 }
 
-    .table2 {
-        display: flex;
-        width: 65%;
-        margin-right: 10%
-    }
+.container{
+    margin-top : 12px;
+}
+
+.table2 {
+    display: flex;
+    width: 65%;
+    margin-right: 10%
+}
 
 .col-12 {
     display: flex;
@@ -70,6 +74,10 @@ height:10px;
     border: solid black;
 }
 
+.table2 img{
+    width : 200px;
+    height : 200px;
+}
     .table2 tr {
         height: 150px;
     }

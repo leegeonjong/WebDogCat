@@ -59,9 +59,9 @@
             <span class="float-end me-3">
                 <select class="form-select" name="category">
                     <option value="전체" selected="@(category == "전체")">전체</option>
-                    <option value="카테고리1" selected="@(category == "카테고리1")">카테고리1</option>
-                    <option value="카테고리2" selected="@(category == "카테고리2")">카테고리2</option>
-                    <option value="카테고리3" selected="@(category == "카테고리3")">카테고리3</option>
+                    <option value="카테고리1" selected="@(category == "카테고리1")">강아지</option>
+                    <option value="카테고리2" selected="@(category == "카테고리2")">고양이</option>
+                    <option value="카테고리3" selected="@(category == "카테고리3")">그외 동물</option>
                 </select>
             </span>
             <input type="hidden" name="page" value="@(page)">
@@ -157,7 +157,7 @@
 
 </div>
 
-<div class="container mt-1">
+<div class="container ">
     <ul class="pagination justify-content-center">
         @* << 표시 여부 *@
         @if (page > 1)
