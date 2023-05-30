@@ -33,16 +33,40 @@ margin:0px;
     margin: 5% 10% 10% 5%;
     display: flex;
 }
+td {
+margin-bottom:5px;
+}
     .userBoard b {
         font-size: 300%;
     }
+userBoaed .fontcolor {
+    color: gray;
+}
 .free {
-margin-right:5%;
+    margin-right: 10%;
+    margin-left: 12%;
+}
+tr {
+border:0px solid white;
 }
 .board img {
-width:250px;
-height:250px;
+width:190px;
+height:190px;
+border:10px solid white;
 }
+.userBoard hr {
+    height: 5px;
+    color: rgb(125,182,202);
+}
+.userBoard a {
+color:black;
+text-decoration:none;
+}
+
+.userBoard a:hover {
+ color:blue;
+}
+
 
 
 #text {
