@@ -29,11 +29,10 @@
             <div class="free">
 
                 <b>자유게시판</b>
-
                 <hr>
                 @if (Model.Count > 0)
                 {
-                    <table border="1" cellpadding="5" cellspacing="0">
+                    <table>
                         @for (var i = 0; i < 2; i++)
                         {
                             <tr>
@@ -48,9 +47,13 @@
                                     <td>
                                         @if (item != null)
                                         {
-                                            <img src="@item.RequestPath" alt="Facebook">
+                                            <a href="/Board/Detail/@item.Id">
+                                            <img  src="@item.RequestPath" alt="Facebook">
+                                            </a>
                                             <br>
                                             <a href="/Board/Detail/@item.Id">@item.Title</a>
+                                            <br>
+                                            
                                         }
                                     </td>
                                 }
@@ -67,10 +70,9 @@
             <div class="populer">
                 <b>인기글</b>
                 <hr>
-
                 @if (Model.Count > 0)
                 {
-                    <table border="1" cellpadding="5" cellspacing="0">
+                    <table>
                         @for (var i = 0; i < 2; i++)
                         {
                             <tr>
@@ -85,7 +87,9 @@
                                     <td>
                                         @if (item != null)
                                         {
-                                            <img src="@item.RequestPath" alt="Facebook">
+                                             <a href="/Board/Detail/@item.Id">
+                                            <img  src="@item.RequestPath" alt="Facebook">
+                                            </a>
                                             <br>
                                             <a href="/Board/Detail/@item.Id">@item.Title</a>
                                         }
