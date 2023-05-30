@@ -3,6 +3,7 @@
     width: 1210px;
     height: 500px;
     margin-left: 400px;
+    overflow:auto;
 }
 .btn {
     margin-left: 1535px;
