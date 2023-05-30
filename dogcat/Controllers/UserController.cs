@@ -36,6 +36,7 @@ namespace dogcat.Controllers
         {
             string userid = Request.Form["userid"];
             string userpw = Request.Form["userpassword"];
+
             var user = _context.Users.FirstOrDefault(u => u.Userid.Equals(userid.Trim()) && u.Pw.Equals(userpw));
             if (user != null)
             {
