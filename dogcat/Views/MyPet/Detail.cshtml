@@ -1,54 +1,60 @@
 ﻿@model dogcat.Models.Domain.Pet
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("userId") ?? 0;
+}
 @{
     ViewData["Title"] = "펫 상세보기";
 }
 
 
-<link rel="stylesheet" href="/css/MyPet/detail.css" />
+
 <script src="~/js/Pet/delete.js"></script>
+<link rel="stylesheet" href="~/css/MyPet/detail.css" />
+@if (Model != null)
+{
 
-
-    @if (Model != null)
-    {
-        <div class="DetailForm">
-            <form method="post" name="frmpet">
-                @if (Model.Image != null)
-                {
-                    <img src="@Model.RequestPath" class="img-thumbnail">
-                }
-
-                <input type="hidden" asp-for="Id">
+    <form method="post" name="frmpet">
+        <input type="hidden" asp-for="Id">
+    </form>
+    <div class="card">
+        @if (Model.Image != null)
+        {
+            <img src="@Model.RequestPath" class="img-thumbnail">
+        }
+        <div class="container">
+            <div class="box">
                 <div class="mb-3">
-                    <label class="label" for="name">이름:</label>
+                    <label for="name">이름:</label>
                     <span class="form-control">@Model.Name</span>
-
-                    <label class="label" for="species">종류:</label>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="species">종류:</label>
                     <span class="form-control">@Model.Species</span>
-
-                    <label class="label" for="old">나이(세):</label>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="old">나이(세):</label>
                     <span class="form-control">@Model.Old</span>
-
-                    <label class="label" for="weight">무게(kg):</label>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="weight">무게(kg):</label>
                     <span class="form-control">@Model.Weight</span>
                 </div>
-
-                <div class="row">
-                    <div class="col">
-                        <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="Edit" asp-route-id="@Model.Id">수정</a>
-
-                        <button type="submit" class="btn btn-outline-dark" id="delete">삭제</button>
-                    </div>
-                </div>
-            </form>
+            </div>
+            <a class="btn btn-outline-dark" asp-controller="Mypet" asp-action="Edit" asp-route-id="@Model.Id">수정</a>
+            <button type="submit" class="btn btn-outline-dark" id="delete">삭제</button>
         </div>
+    </div>
+    <br>
 
 
-    }
-    else
-    {
-        <script>
-            alert("없는 데이터입니다.");
-            history.back();
-        </script>
-    }
+
+}
+else
+{
+    <script>
+        alert("없는 데이터입니다.");
+        history.back();
+    </script>
+}
 

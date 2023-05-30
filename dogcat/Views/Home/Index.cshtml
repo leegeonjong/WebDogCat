@@ -13,11 +13,11 @@
             @if (Model.Count > 0)
             {
                 <div class="adminwrite">
-                @foreach (var i in Model.Where(x => x.Category == "공지사항").OrderByDescending(x => x.Time).ToList().Take(3))
-                {
-                    <hr>
+                    @foreach (var i in Model.Where(x => x.Category == "공지사항").OrderByDescending(x => x.Time).ToList().Take(3))
+                    {
+                        <hr>
                         <li><a href="/Board/Detail/@i.Id">@i.Title</a></li>
-                }
+                    }
                 </div>
             }
             else
@@ -102,15 +102,13 @@
             </div>
         </div>
     </div>
-    @* <div class="clear"></div>
-    <div class="explanation">
-    <div class="container">
-    <div class="photo"></div>
+
     <div class="text">
-    <h2>반려동물 상태가 이상해요.</h2>
-    <p>새로운곳, 낯선곳에서 반려동물이 아플때, 빨리 병원에 데려가 치료를 받게하고 싶은데 근처의 동물병원이 어디있는지 찾아볼 수 있습니다.</p>
-    <a href="#">찾아보기<span class="fa fa-chevron-right"></span></a>
+        <img src="https://mblogthumb-phinf.pstatic.net/MjAxOTA0MTZfMjEy/MDAxNTU1MzQ3OTcyMTE3.ZoQoEnuWGBCXVoowqLyfnqH92Sr9GJMIj53unUXvrqcg.sD-J4fKTc4B9HtMPimRiJP6JUQns4JNd8DaRNzGSemYg.JPEG.jubbigi/%EA%B3%A0%EC%96%91%EC%9D%B4%EC%A7%A47.jpg?type=w800"></img>
+       <div class="textctn">
+        <span>반려동물 상태가 이상해요.</span>
+        <p>새로운곳, 낯선곳에서 반려동물이 아플때, 빨리 병원에 데려가 치료를 받게하고 싶은데 근처의 동물병원이 어디있는지 찾아볼 수 있습니다.</p>
+        <a href="/Map/MapSelectView" class="button">찾아보기<span class="fa fa-chevron-right"></span></a>
+        </div>
     </div>
-    </div>
-    </div>*@
 </div>

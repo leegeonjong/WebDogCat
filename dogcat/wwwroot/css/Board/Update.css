@@ -1,0 +1,38 @@
+﻿.container1 {
+    margin-top: 2.5%;
+    margin-left: 25%;
+    margin-right: 10%;
+}
+
+.container2 {
+    display: flex;
+}
+
+.container3 {
+    display: flex;
+    width: 65%;
+    margin-right: 10%;
+    flex-direction: column;
+}
+
+.btncnt {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+    .btncnt .btn {
+        height: 100px;
+        border: solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s;
+    }
+
+        .btncnt .btn:hover {
+            background-color: gray;
+            원하는 색상으로 변경 가능
+        }
