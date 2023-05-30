@@ -136,6 +136,10 @@
                 {
                     var write = Model[j];
                     <td>
+                        @if (write.RequestPath == null)
+                        {
+                            <img src="/css/P_Mypageimg1.png" alt="">
+                        }
                         @if (write.RequestPath != null)
                         {
                             <img src="@write.RequestPath" alt="이미지가 없습니다">

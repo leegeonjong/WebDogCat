@@ -16,8 +16,6 @@ namespace dogcat.Repositories
         public async Task<IEnumerable<Pet>> GetAllAsync(long id)
         {
             var list = await _dogcatDbContext.Pets.Where(s => s.UserId == id).ToListAsync();
-            if (list.Count == 0) return null;
-
             return list;
         }
 

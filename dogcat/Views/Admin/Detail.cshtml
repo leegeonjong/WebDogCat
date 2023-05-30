@@ -26,7 +26,7 @@
                     <span class="form-control">@Model.Mail</span><br>
                     <label for="name">Ban:</label>
                     <span class="form-control">@Model.Ban</span><br>
-                    <button type="button" class="btn btn-outline-dark" onclick="history.back()">이전으로</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="window.location.href='/Admin/AdminAlluser/@Model.Id">이전으로</button>
                     <button type="button" class="btn btn-outline-dark" id="noban">해제</button>
                     <button type="button" class="btn btn-outline-danger" id="userban">밴</button>
                 </div>

@@ -24,9 +24,8 @@
         <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@userId">메세지 보내기</a>
     </div>
     <div class="petflex">
-        @if (Model != null)
+        @if (Model.Count != 0)
         {
-
             @foreach (var pet in Model)
             {
                 <div class="container2">
@@ -49,10 +48,7 @@
         }
         else
         {
-            <script>
-                alert("등록된 애완동물이 없습니다.");
-                history.back();
-            </script>
+            <b>등록된 애완동물이 없습니다.</b>
         }
         <a class="btn btn-outline-dark"
            asp-controller="MyPet"

@@ -19,6 +19,7 @@ namespace dogcat.Controllers
         public async Task<IActionResult> MypetPage(long id)  // 내 예완동물 보러가기 버튼 클릭시
         {
             var list = await _petRepositories.GetAllAsync(id);
+           
             foreach (var a in list)
             {
                 a.RequestPath = $"/appfiles/{a.Image}";
