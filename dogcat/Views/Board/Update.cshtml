@@ -3,52 +3,77 @@
 @{
     ViewData["Title"] = "수정";
     int page = (int)ViewData["page"];
+    string userNickName = (string)ViewData["NickName"];
+    long UserId = (long)ViewData["user"];
 }
-
-<h2>수정</h2>
-<hr>
+<head>
+    <link rel="stylesheet" href="~/css/Board/Update.css">
+</head>
 
 @if (Model != null)
 {
-    <div class="mb-3 mt-3 clearfix">
-        <span class="float-start me-2">id: @Model.Id</span>
-        <span class="float-end ms-4">작성일: @Model.Time</span>
-        <span class="float-end">조회수: @Model.ViewCnt</span>
+    <div class="container1">
+        <h2>수정</h2>
+        <hr>
+        <div class="mb-3 mt-3 clearfix">
+            <span class="float-end ms-4">작성일: @Model.Time</span>
+            <span class="float-end">조회수: @Model.ViewCnt</span>
+        </div>
     </div>
+    <div class="container2">
+        @if (UserId != null && userNickName != null)
+        {
+            <div class="btncnt">
+                <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">@userNickName<br> 반갑습니다</a>
+                <br>
+                @if (UserId != 0)
+                {
+                    <div class="UserOnly">
+                        <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@UserId" name="buttonName" value="mypage">마이페이지로가기</a>
+                        <br>
+                        <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">게시글 작성하기</a>
+                        <br>
+                        <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@UserId" name="buttonName" value="Message">메세지 보내기</a>
+                    </div>
+                }
+            </div>
+        }
+        <div class="container3">
+            <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+                <div class="mb-3">
+                    <label for="UserId">작성자:</label>
+                    <span class="form-control" readonly>@Model.UserId</span>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="subject">제목:</label>
+                    @* <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" value="@Model.Subject" required> *@
+                    <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title" required>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="subject">카테고리:</label>
+                    <input type="text" class="form-control" placeholder="z=카태고리를 입력하세요" asp-for="Category" required>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="content">내용:</label>
+                    <textarea class="form-control" rows="5" placeholder="내용을 입력하세요" asp-for="Context"></textarea>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="image">이미지:</label>
+                    <input type="file" class="form-control" name="uploadedFile">
+                </div>
 
-    <form method="POST" enctype="multipart/form-data">
-        <input type="hidden" asp-for="Id" />
-        <div class="mb-3 mt-3">
-            <label for="image">이미지:</label>
-            <input type="file" class="form-control" name="uploadedFile">
-        </div>
-        <div class="mb-3">
-            <label for="UserId">작성자:</label>
-            <span class="form-control" readonly>@Model.UserId</span>
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="subject">제목:</label>
-            @* <input type="text" class="form-control" id="subject" placeholder="제목을 입력하세요" name="subject" value="@Model.Subject" required> *@
-            <input type="text" class="form-control" placeholder="제목을 입력하세요" asp-for="Title" required>
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="subject">카테고리:</label>
-            <input type="text" class="form-control" placeholder="z=카태고리를 입력하세요" asp-for="Category" required>
-        </div>
-        <div class="mb-3 mt-3">
-            <label for="content">내용:</label>
-            <textarea class="form-control" rows="5" placeholder="내용을 입력하세요" asp-for="Context"></textarea>
-        </div>
+                <!-- 하단 링크 -->
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-outline-dark">수정완료</button>
+                    <button type="button" class="btn btn-outline-dark ms-1" onclick="history.back()">이전으로</button>
+                    <a class="btn btn-outline-dark ms-1" asp-controller="Board" asp-action="List" asp-route-page="@(page)">목록</a>
+                </div>
+                <!-- 하단 링크 -->
 
-        <!-- 하단 링크 -->
-        <div class="d-flex">
-            <button type="submit" class="btn btn-outline-dark">수정완료</button>
-            <button type="button" class="btn btn-outline-dark ms-1" onclick="history.back()">이전으로</button>
-            <a class="btn btn-outline-dark ms-1" asp-controller="Board" asp-action="List" asp-route-page="@(page)">목록</a>
+            </form>
         </div>
-        <!-- 하단 링크 -->
-
-    </form>
+    </div>
 }
 else
 {

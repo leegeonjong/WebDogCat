@@ -35,3 +35,38 @@ color:lightskyblue
     margin-top: 10px;
     border: 1px solid #ebecef;
 }
+.container2{
+    margin-top: 2.5%;
+    margin-left: 25%;
+    margin-right: 10%;
+}
+.container3 {
+    display: flex;
+}
+.btncnt {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+    .btncnt .btn {
+        height: 100px;
+        border: solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s;
+    }
+
+        .btncnt .btn:hover {
+            background-color: gray;
+            원하는 색상으로 변경 가능
+        }
+.container4 {
+    display: flex;
+    width: 65%;
+    margin-right: 10%;
+    
+    flex-direction: column;
+}
