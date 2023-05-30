@@ -1,20 +1,62 @@
-﻿.container0{
+﻿.container0 {
     text-align: center;
 }
-.container1{
-    text-align:center;
+    .container0 h2 {
+    margin-top:2.5%;
+    }
+.container1 {
+    text-align: start;
 }
+    .container1 label {
+        font-size: 170%;
+        margin-bottom: 2%;
+    }
+    .container1 input {
+    margin-bottom: 2%;
+    }
 b {
     color: gray;
 }
-.container2{
-    width: 500px;
-    margin-left: 750px;
+.buttoncontainer{
+    margin-top:2%;
+text-align:end;
+
 }
-.container2 button{
-    margin-left: 350px;
-}
+
+    .buttoncontainer button {
+        color: white;
+        font-size: 20px;
+        width: 25%;
+        height: 65px;
+        background-color: rgb(0, 103, 163);
+        border-radius:20px;
+    }
+    .container2 {
+        width: 500px;
+        margin-left: 750px;
+    }
+
+    .container2 button {
+        margin-left: 350px;
+    }
+
 .container3 {
     width: 500px;
     margin-left: 750px;
 }
+.FinddogForm, .FindcatForm {
+margin-left:20%;
+margin-right:20%;
+}
+
+
+.cat, .dog {
+    opacity: 70%;
+}
+
+    .cat:hover,
+    .dog:hover{
+        opacity: 100%;
+        border: 5px solid rgb(0, 103, 163);
+        border-radius: 10px;
+    }

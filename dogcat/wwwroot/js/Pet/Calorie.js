@@ -1,5 +1,13 @@
 ﻿function handleButtonClick(animal) {
     if (animal === 'cat') {
+        //이미지에 border등 주기
+        document.querySelector('.cat').style.opacity = "1";
+        document.querySelector('.cat').style.border = "5px solid rgb(0, 103, 163)";
+        document.querySelector('.cat').style.borderRadius = "10px";
+        document.querySelector('.dog').style.opacity = "0.7";
+        document.querySelector('.dog').style.border = "0px";
+ 
+
         document.getElementById("dogForm").style.display = "none";
         document.getElementById("catForm").style.display = "block";
         document.getElementById("activeLevelSelectCat").innerHTML = `
@@ -13,6 +21,13 @@
             <option value="1.6">많은 활동량/임신중</option>
         `;
     } else if (animal === 'dog') {
+        //이미지에 border등 주기
+        document.querySelector('.dog').style.opacity = "1";
+        document.querySelector('.dog').style.border = "5px solid rgb(0, 103, 163)";
+        document.querySelector('.dog').style.borderRadius = "10px";
+        document.querySelector('.cat').style.opacity = "0.7";
+        document.querySelector('.cat').style.border = "0px";
+
         document.getElementById("catForm").style.display = "none";
         document.getElementById("dogForm").style.display = "block";
         document.getElementById("activeLevelSelectDog").innerHTML = `
@@ -101,3 +116,4 @@ function valid() {
 function displayErrorIdMessage(errorElement, message) {
     errorElement.innerHTML = message;
 }
+

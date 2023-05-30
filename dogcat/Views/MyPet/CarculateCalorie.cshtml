@@ -12,12 +12,14 @@
         <form>
             <div class="dogcat">
                 <div class="img">
-                    <img src="https://tools.mypetlife.co.kr/static/media/dog_select.d0cd964d4185a9bebf06.png" onclick="handleButtonClick('dog')" />
-                    <img src="https://tools.mypetlife.co.kr/static/media/cat_select.14d59481a42b358448be.png" onclick="handleButtonClick('cat')" />
+                    <img class="dog" src="https://tools.mypetlife.co.kr/static/media/dog_select.d0cd964d4185a9bebf06.png" onclick="handleButtonClick('dog')" />
+                    <img class="cat" src="https://tools.mypetlife.co.kr/static/media/cat_select.14d59481a42b358448be.png" onclick="handleButtonClick('cat')" />
                 </div>
+                <br>
                 <b>반려동물의 종류를 선택해주세요.</b>
             </div>
         </form>
+        <br>
     </div>
 </div>
 
@@ -25,7 +27,7 @@
     <div class="FinddogForm">
         <form>
             <div class="container1">
-                <label for="WeightDog">몸무게:</label>
+                <label for="WeightDog">몸무게(kg):</label>
                 <input type="text" class="form-control" placeholder="몸무게를 입력하세요" id="WeightDog" name="WeightDog">
                 <div><span class="text-danger" id="errorDog"></span></div>
 
@@ -38,6 +40,11 @@
                 <br />
                 <label for="CalorieDog">권장 칼로리:</label>
                 <input type="text" class="form-control" id="CalorieDog" name="CalorieDog" readonly>
+                <span>
+                    건강 상태, 비만도에 따라 달라질 수 있으니
+                    정확한 섭취량은 수의사와 상담해보세요.
+                </span>
+                <br><br>
             </div>
         </form>
 
@@ -62,6 +69,12 @@
                 <br />
                 <label for="CalorieCat">권장 칼로리:</label>
                 <input type="text" class="form-control" id="CalorieCat" name="CalorieCat" readonly>
+                <span>
+                    건강 상태, 비만도에 따라 달라질 수 있으니
+                    정확한 섭취량은 수의사와 상담해보세요.
+                </span>
+                <br>
+                <br>
             </div>
         </form>
     </div>
