@@ -30,8 +30,11 @@
             @foreach (var pet in Model)
             {
                 <div class="container2">
-
-                    <img src="/css/avatar2.png" alt="">
+                    @if (pet.RequestPath == "/appfiles/")
+                    {
+                        <img src="/css/P_Mypageimg1.png" alt="">
+                    }
+                    <img src="@pet.RequestPath" alt="">
                     <div class="petinfo">
                         <a asp-controller="Mypet" asp-action="Detail" asp-route-id="@pet.Id">@pet.Name</a>
                         <span> 종: @pet.Species</span>
