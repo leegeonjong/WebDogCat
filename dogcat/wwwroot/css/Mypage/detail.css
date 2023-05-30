@@ -1,0 +1,27 @@
+﻿.narrow-input {
+    max-width: 200px;
+}
+
+.form-label {
+    display: block;
+    text-align: right;
+    font-weight: bold;
+    margin-bottom: 5px;
+    line-height: 26px; /* 원하는 높이로 조정해주세요 */
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.input-group-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rounded-input {
+    height: 38px; /* 원하는 높이로 조정해주세요 */
+    border-radius: 10px;
+}
