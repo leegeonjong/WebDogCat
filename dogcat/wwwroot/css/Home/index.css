@@ -70,7 +70,7 @@ height:250px;
     padding-left: 18%;
     padding-top: 1%;
     padding-bottom: 1%;
-    margin-bottom: 5%;
+    margin-bottom: 2.5%;
 }
 
 .textctn {
@@ -118,6 +118,67 @@ height:250px;
 
 
 .text span {
+    font-size: 50px;
+    vertical-align: bottom;
+}
+
+/*-----------*/
+.calory {
+    display: flex;
+    background-color: #d0eae9;
+    padding-right: 15%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-bottom: 5%;
+    flex-direction: row-reverse;
+}
+
+.caloryctn {
+    padding-right: 3%;
+    display: flex;
+    flex-direction: column;
+}
+
+.caloryctn a {
+    font-size: 28px;
+    padding-top: 20%;
+    text-align: end;
+}
+
+.fa-chevron-right::before {
+    margin-left: 10px;
+    font-size: 50px;
+    padding-top: 18%;
+    text-align: end;
+}
+
+.calory img {
+    width: 350px;
+    height: 350px;
+    border-radius: 10px;
+}
+
+.calory .button {
+    color: white;
+    display: flex;
+    width: 200px;
+    padding: 10px 20px;
+    background-color: rgb(125,182,202);
+    color: #333;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    align-items: center;
+    margin-right: 80%;
+}
+
+    .calory .button:hover {
+        background-color: white;
+    }
+
+
+.calory span {
     font-size: 50px;
     vertical-align: bottom;
 }
