@@ -1,7 +1,7 @@
 ﻿.page {
     display: flex;
-margin: 5% 5% 5% 5%;
-height:800px;
+    margin: 2% 5% 5% 5%;
+    height: 800px;
 }
 
 .btncnt {
@@ -20,53 +20,65 @@ height:800px;
         align-items: center;
         transition: background-color 0.3s;
     }
+        .btncnt .btn:hover {
+            background-color: #cfe2ff;
+        }
 
 .mypage {
     width: 45%;
     margin-right: 10%;
     border: solid black;
-    margin-left:5%;
-    
+    margin-left: 5%;
+}
+
+.name {
+    text-align: center;
+    margin-top: 20px;
 }
 
 .pet {
-display:flex
+    display: flex
+}
 
-}
-.pet
-.petinfo {
-    margin-left:50px;
-    margin-top: 50px;
-    display: flex;
-    height: 50px;
-    flex-direction: column;
-}
+    .pet
+    .petinfo {
+        margin-left: 50px;
+        margin-top: 50px;
+        display: flex;
+        height: 50px;
+        flex-direction: column;
+    }
+
     .pet b {
-   margin-bottom:50px;
-        }
+        margin-bottom: 50px;
+    }
 
-.pet a {
-    margin-top:3%;
-}
+    .pet a {
+        margin-top: 3%;
+    }
+
 .account {
     display: flex;
     flex-direction: row-reverse;
-    margin-right:50px;
+    margin-right: 50px;
 }
+
 .accountinfo {
     margin-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
-.account .btn{
-    margin-top:50px;
-    width:50%;
+
+.account .btn {
+    margin-top: 50px;
+    width: 50%;
 }
+
 .petcal {
     display: flex;
-
 }
+
 .petcalbtn {
     margin-left: 50px;
     margin-top: 50px;
@@ -74,15 +86,15 @@ display:flex
     height: 50px;
     flex-direction: column;
 }
-.petcal .btn{
-    margin-top:50px;
+
+.petcal .btn {
+    margin-top: 50px;
 }
 
 .mypage img {
-    margin-left:5%;
-    margin-top:30px;
-    display:flex;
+    margin-left: 5%;
+    margin-top: 30px;
+    display: flex;
     width: 20%;
     height: 20%;
 }
-

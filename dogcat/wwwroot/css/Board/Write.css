@@ -27,6 +27,9 @@
         transition: background-color 0.3s;
     }
 
+        .btncnt .btn:hover {
+            background-color: #cfe2ff;
+        }
 .right {
     display: flex;
     width: 65%;
