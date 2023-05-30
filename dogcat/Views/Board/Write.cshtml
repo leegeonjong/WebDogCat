@@ -34,10 +34,9 @@
             <div class="mb-3 mt-3">
                 <label for="category">카테고리를 선택해주세요</label>
                 <select class="form-select" asp-for="Category">
-                    <option value="전체" selected>전체</option>
-                    <option value="카테고리1">카테고리1</option>
-                    <option value="카테고리2">카테고리2</option>
-                    <option value="카테고리3">카테고리3</option>
+                    <option value="카테고리1">강아지</option>
+                    <option value="카테고리2">고양이</option>
+                    <option value="카테고리3">다른 동물</option>
                     @if (admin == 1)
                     {
                         <option value="공지사항">공지사항</option>

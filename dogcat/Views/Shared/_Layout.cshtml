@@ -36,11 +36,11 @@
                 <div id="login">
                     <a href="/User/Login">로그인</a>
                     <a href="/User/Register">회원가입</a>
-            </div>
-                }
-                else if(isAdmin == 1)
-                {
-                    <div class="login2">
+                </div>
+            }
+            else if (isAdmin == 1)
+            {
+                <div class="login2">
                     <a href="/Admin/AdminAlluser/@userId">회원관리</a>
                     <a href="/Message/Home/@userId">쪽지</a>
                     <a href="/Board/Write/@userId">공지사항 작성</a>
@@ -63,10 +63,12 @@
         </div>
         <div class="clear"></div>
         <div id="main">
-            <img src="/css/avatar2.png" alt="">
+            <a class="" href="http://localhost:5094/">
+                <img src="/css/avatar2.png" alt="">
+            </a>
             <h1>    Oh! Dog, Cat</h1>
         </div>
-            <div class="bluebox"></div>
+        <div class="bluebox"></div>
     </div>
     <div class="clear"></div>
     <div id="content">
@@ -93,7 +95,7 @@
             <span>자료 및 도구</span>
         </div>
     </div>
-        <div id="text">
+    <div id="text">
         <span>푸터푸터푸터푸터푸터푸터</span>
         <span>Tel: +82 010 1111 2222 Fax +82 294 4942 8574</span>
         <span>Mail: gohome99@naver.com</span>
@@ -102,6 +104,6 @@
             <img src="data:image/png;base64,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" width="33" height="34" alt="Twitter">
             <img src="">
         </div>
-        </div>
+    </div>
 </body>
 </html>

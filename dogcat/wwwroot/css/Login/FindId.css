@@ -5,6 +5,7 @@
 }
 
 h2 {
+    margin-top : 50px;
     text-align: center;
 }
 /* form */
@@ -24,7 +25,7 @@ input[type=text] {
 
 /* Set a style for all buttons */
 button {
-    background-color: #04AA6D;
+    background-color: rgb(125,182,202);
     color: white;
     padding: 14px 20px;
     margin: 8px 0;

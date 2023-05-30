@@ -87,20 +87,6 @@ namespace dogcat.Controllers
         [ActionName("Write")]
         public async Task<IActionResult> Add(addWriteRequest addWriteRequest, IList<IFormFile> uploadedFile)
         {
-            //// Validation
-            //addWriteRequest.Validate();
-            //if (addWriteRequest.HasError)
-            //{
-            //    TempData["NameError"] = addWriteRequest.ErrorName;
-            //    TempData["SubjectError"] = addWriteRequest.ErrorSubject;
-
-            //    // 사용자가 입력했던 데이터
-            //    TempData["Name"] = addWriteRequest.Name;
-            //    TempData["Subject"] = addWriteRequest.Subject;
-            //    TempData["Content"] = addWriteRequest.Content;
-
-            //    return RedirectToAction("Write");
-            //}
             if (uploadedFile.Count != 0)
             {
                 int userId = HttpContext.Session.GetInt32("userId") ?? 0;
