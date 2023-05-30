@@ -29,11 +29,11 @@
 
 </haeder>
 <div class="container1">
-    @if (category == "카테고리1")
+    @if (category == "강아지")
     {
         <h2>강아지</h2>
     }
-    else if (category == "카테고리2")
+    else if (category == "고양이")
     {
         <h2>고양이</h2>
     }
@@ -59,9 +59,9 @@
             <span class="float-end me-3">
                 <select class="form-select" name="category">
                     <option value="전체" selected="@(category == "전체")">전체</option>
-                    <option value="카테고리1" selected="@(category == "카테고리1")">강아지</option>
-                    <option value="카테고리2" selected="@(category == "카테고리2")">고양이</option>
-                    <option value="카테고리3" selected="@(category == "카테고리3")">그외 동물</option>
+                    <option value="강아지" selected="@(category == "강아지")">강아지</option>
+                    <option value="고양이" selected="@(category == "고양이")">고양이</option>
+                    <option value="그외 동물" selected="@(category == "그외 동물")">그외 동물</option>
                 </select>
             </span>
             <input type="hidden" name="page" value="@(page)">
