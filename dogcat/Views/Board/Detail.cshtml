@@ -28,10 +28,11 @@
     <script src="~/js/Board/Detail.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<div class="container">
 
-    @if (write != null)
-    {
+
+@if (write != null)
+{
+    <div class="container2">
         <div class="mb-3 mt-3">
             <link href="~/css/board/detail.css" rel="stylesheet" />
             <span class="categorycolor">@Category</span>
@@ -50,11 +51,31 @@
         </h2>
         <hr>
 
-        
-            <form method="POST" name="frmDelete" asp-controller="Board" asp-action="Delete">
-                <input type="hidden" asp-for="@WriteId">
-            </form>
-            @if (Path != null)
+
+        <form method="POST" name="frmDelete" asp-controller="Board" asp-action="Delete">
+            <input type="hidden" asp-for="@WriteId">
+        </form>
+    </div>
+    <div class="container3">
+        @if (UserId != null && Nickname != null)
+        {
+            <div class="btncnt">
+                <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">@Nickname<br> 반갑습니다</a>
+                <br>
+                @if (UserId != 0)
+                {
+                    <div class="UserOnly">
+                        <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@UserId" name="buttonName" value="mypage">마이페이지로가기</a>
+                        <br>
+                        <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">게시글 작성하기</a>
+                        <br>
+                        <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@UserId" name="buttonName" value="Message">메세지 보내기</a>
+                    </div>
+                }
+            </div>
+        }
+        <div class="container4">
+            @if (Path != "/appfiles/")
             {
                 <div class="mb-3">
                     <img class="detailimg" src="@Path" class="img-thumbnail">
@@ -64,11 +85,11 @@
                 <textarea class="form-control auto-height" readonly rows="5">@Context</textarea>
             </div>
             @* 글 작성 수정 삭제 목록*@
-           
-            
+
+
             @*댓글 테이블*@
             <h3>댓글</h3>
-                <div class="panel">
+            <div class="panel">
                 @foreach (var cmt in comment)
                 {
                     <tr id="comment-@cmt.Id">
@@ -84,44 +105,44 @@
                             </form>
                         </td>
                         <br>
-                        <td>@cmt.Content</td><br>
+                        <td>@cmt.Content</td>
+                        <br>
                         <td>@cmt.Time</td>
-                        </div>
-                    </tr>
-                    <hr />
-                }
                 </div>
+                </tr>
+                <hr />
+                }
+        </div>
 
-            
+
             @*댓글 작성*@
             @if (userId != 0)
             {
 
-                <h3>댓글 작성</h3>
-                <form method="post" asp-controller="Board" asp-action="AddComment">
-                    <input type="hidden" name="WriteId" value="@WriteId" />
-                    <input type="hidden" name="UserId" value="@userId" />
-                    <input type="hidden" name="NickName" value="@Nickname" />
-                    <div class="mb-3">
+            <h3>댓글 작성</h3>
+            <form method="post" asp-controller="Board" asp-action="AddComment">
+                <input type="hidden" name="WriteId" value="@WriteId" />
+                <input type="hidden" name="UserId" value="@userId" />
+                <input type="hidden" name="NickName" value="@Nickname" />
+                <div class="mb-3">
                         @*<input type="text" class="form-control" name="NickName" asp-for="@Nickname" readonly />*@
-                    </div>
-                    <div class="mb-3">
-                        <label for="content">댓글 내용:</label>
-                        <textarea class="form-control" name="Content" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">댓글 작성</button>
-                </form>
+                </div>
+                <div class="mb-3">
+                    <label for="content">댓글 내용:</label>
+                    <textarea class="form-control" name="Content" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">댓글 작성</button>
+            </form>
             }
+    </div>
+                    </div>
+    <!-- 하단 링크 -->
+}
+else
+{
+    <script>
+        alert("데이터가 없습니다!");
+        history.back();
+    </script>
+}
 
-
-            <!-- 하단 링크 -->
-        
-    }
-    else
-    {
-        <script>
-            alert("데이터가 없습니다!");
-            history.back();
-        </script>
-    }
-</div>

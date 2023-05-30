@@ -141,8 +141,43 @@ li {
         margin-left: 5px;
     }
 
+/*.text {
+    display: flex;
+    background-color: rgb(220,230,242);
+    padding-left: 20%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-bottom: 5%;
+}
 
+.textctn {
+    padding-left: 3%;
+    display: flex;
+    flex-direction: column;
+}
 
+    .textctn a {
+        font-size: 40px;
+        padding-top: 20%;
+        text-align: end;
+    }
 
+.fa-chevron-right::before {
+    font-size: 80px;
+    padding-top: 18%;
+    text-align: end;
+}
+
+.text img {
+    width: 350px;
+    height: 350px;
+    border-radius: 10px;
+}
+
+.text span {
+    font-size: 50px;
+    vertical-align: bottom;
+}
+*/
 
 

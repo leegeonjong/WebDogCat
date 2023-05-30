@@ -7,32 +7,37 @@
 
 /*게시글 기본 높이 설정*/
 #content {
-    min-height: 300px;
+    min-height: 500px;
 }
 
 .container2 {
     text-align: center;
     display: flex;
+    height:auto;
+ 
 }
 
 .table-container {
-    display: flex;
+    display: table;
     width: 65%;
     margin-right: 10%;
-    height: 10px;
+}
+.table-container td{
+height:10px;
+
 }
 
-.table2 {
-    display: flex;
-    width: 65%;
-    margin-right: 10%
-}
+    .table2 {
+        display: flex;
+        width: 65%;
+        margin-right: 10%
+    }
 
 .col-12 {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 100px;
+    height:20px;
 }
 
 .btncnt {

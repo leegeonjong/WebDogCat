@@ -261,21 +261,23 @@ namespace dogcat.Controllers
             ViewData["category"] = category;
             int? UserId = HttpContext.Session.GetInt32("userId");
             string? NickName = HttpContext.Session.GetString("userNickName");
-            if (UserId == null) {
+            if (UserId == null)
+            {
                 ViewData["UserId"] = 0;
             }
             if (NickName == null)
             {
                 ViewData["NickName"] = "비회원";
             }
-            else { 
-            ViewData["UserId"] = UserId;
-            ViewData["NickName"] = NickName;
+            else
+            {
+                ViewData["UserId"] = UserId;
+                ViewData["NickName"] = NickName;
             }
             var writes = await writeRepository.GetFromRowAsync(fromRow, pageRows.Value, category);
-            foreach(var write in writes)
+            foreach (var write in writes)
             {
-                if(write.Image != null)
+                if (write.Image != null)
                 {
                     write.RequestPath = $"/appfiles/{write.Image}";
                 }
@@ -339,6 +341,8 @@ namespace dogcat.Controllers
             };
 
             ViewData["page"] = HttpContext.Session.GetInt32("page") ?? 1;
+            ViewData["NickName"] = write.NickName;
+            ViewData["user"] = write.Id;
 
             return View(writeRequest);
         }
