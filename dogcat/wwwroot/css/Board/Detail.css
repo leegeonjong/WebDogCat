@@ -1,4 +1,8 @@
-﻿.mb-3 img {
+﻿#content{
+    margin-bottom : 50px;
+}
+
+.mb-3 img {
     height: 300px;
     width: 300px;
 }
