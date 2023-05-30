@@ -1,5 +1,5 @@
 ﻿#content {
-    margin: 5% 10%;
+    margin: 2% 10%;
     display: flex;
     flex-direction: column;
 }
@@ -31,6 +31,7 @@
 /*텍스트박스 설정*/
 .address {
     text-align: center;
+    margin-top:20px;
 }
 
     .address input {
@@ -71,18 +72,15 @@
     }
 
 
- .btn {
-    background-color: lightskyblue;
+.btn {
+    background-color:  #cfe2ff;
     width: 120px; /* 원하는 너비 값으로 수정하세요 */
     padding: 6px, 20px;
 }
 
 
 
-
-
-
     .btn:hover {
         /* hover 시 적용될 스타일 */
-        background-color: gray;
+        background-color: lightskyblue;
     }

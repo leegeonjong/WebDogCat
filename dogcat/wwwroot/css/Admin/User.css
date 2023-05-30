@@ -1,10 +1,13 @@
-﻿.ta{
-   width: 50%;
-   text-align:center;
-   margin-left: 25%;
-
+﻿.ta {
+    width: 50%;
+    text-align: center;
+    margin-left: 25%;
 }
+
+
+
 .search input[type=text] {
+    margin-bottom: 20px; /* 원하는 간격을 지정해주세요 */
     padding: 10px;
     font-size: 17px;
     border: 1px solid grey;
@@ -26,6 +29,11 @@
     cursor: pointer;
 }
 
-.search button:hover {
-    background: #0b7dda;
+    .search button:hover {
+        background: #0b7dda;
+    }
+
+#content {
+    margin-top: 50px;
 }
+

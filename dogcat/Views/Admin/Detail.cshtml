@@ -1,6 +1,11 @@
 ﻿@model dogcat.Models.Domain.User
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "상세보기";
+}
+@{
+    int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("userId") ?? 0;
+
 }
 <script src="~/js/Admin/Ban.js"></script>
 <link rel="stylesheet" href="~/css/Admin/Detail.css">
@@ -26,9 +31,16 @@
                     <span class="form-control">@Model.Mail</span><br>
                     <label for="name">Ban:</label>
                     <span class="form-control">@Model.Ban</span><br>
-                    <button type="button" class="btn btn-outline-dark" onclick="history.back()">이전으로</button>
-                    <button type="button" class="btn btn-outline-dark" id="noban">해제</button>
-                    <button type="button" class="btn btn-outline-danger" id="userban">밴</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="goToPreviousPage()">이전으로</button>
+
+                    @if (Model.Ban == 1)
+                    {
+                        <button type="button" class="btn btn-outline-danger" id="noban">해제</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-outline-danger" id="userban">밴</button>
+                    }
                 </div>
             </div>
         </div>
@@ -37,3 +49,8 @@
 
 
 
+<script>
+    function goToPreviousPage() {
+        window.location.href = "http://localhost:5094/Admin/AdminAlluser/" + @userId;
+    }
+</script>
