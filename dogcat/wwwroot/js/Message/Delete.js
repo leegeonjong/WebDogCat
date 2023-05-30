@@ -20,13 +20,15 @@ $(function () {
 // 삭제 버튼 클릭 시 동작
 $(function () {
     $("#delete_message").click(function () {
-        let answer = confirm("정말로 삭제 하시겠습니까?");
+        let answer = confirm("정말로 삭제하시겠습니까?");
         if (answer) {
             if (del_list.length > 0) {
-                alert("삭제되었습니다");
                 $.post("/Message/Delete", { ids: del_list }, function () {
+                    alert("삭제되었습니다");
+                    location.reload(); // 삭제 후 페이지 새로고침
+                }).done(function () {
+                    location.reload(); // 모든 삭제 요청 완료 후 페이지 새로고침
                 });
-                location.reload();
             }
         }
     });
