@@ -114,7 +114,7 @@ namespace dogcat.Controllers
             };
 
             user = await _userRepository.AddUserAsync(user);
-            return RedirectToAction("Index");
+            return RedirectToAction("Login", "User");
         }
         //--------------------------------------------------------------------------------------------
 
