@@ -109,6 +109,7 @@ $(function () {
 
     //메일
     $("#Mail").on("keyup", function () {
+        $("#mailcheck").val("unable");
         if (mail.test($("#Mail").val()) == false) {
             $("#valid_mail").css("color", "red");
             $("#valid_mail").text("올바른 이메일 형식이 아닙니다. ex)abc@aaaa.com");
@@ -118,16 +119,16 @@ $(function () {
         }
     });
 
-    //연락처
-    //$("#PhoneNum").on("keyup", function () {
-    //    if (tel.test($("#PhoneNum").val()) == false) {
-    //        $("#valid_tel").css("color", "red");
-    //        $("#valid_tel").text("휴대전화 번호를 올바르게 입력해 주세요.");
-    //    } else {
-    //        $("#valid_tel").css("color", "#0C964A");
-    //        $("#valid_tel").text("Ok!");
-    //    }
-    //});
+    연락처
+    $("#PhoneNum").on("keyup", function () {
+        if (tel.test($("#PhoneNum").val()) == false) {
+            $("#valid_tel").css("color", "red");
+            $("#valid_tel").text("휴대전화 번호를 올바르게 입력해 주세요.");
+        } else {
+            $("#valid_tel").css("color", "#0C964A");
+            $("#valid_tel").text("Ok!");
+        }
+    });
 });
 
 
@@ -204,6 +205,7 @@ $(function () {
             })
             .then(function (status) {
                 if (status == "Fail") {
+                    $("#mailcheck").val("unable");
                     alert("인증코드가 일치하지 않습니다.");
                 }
                 else if (status == "Success") {
@@ -211,7 +213,9 @@ $(function () {
                     $("#mailcheck").val("able");
                 }
                 else {
-                    alert("부적절한 접근 입니다.");
+                    $("#mailcheck").val("unable");
+                    alert("부적합한 접근 입니다. 인증번호를 제대로 입력해 주세요");
+                    $("#inputcode").focus();
                 }
             } )
     });

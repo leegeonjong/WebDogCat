@@ -163,6 +163,7 @@ namespace dogcat.Controllers
         public IActionResult Code_check(string inputCode)
         {
             string rpw = HttpContext.Session.GetString("rpw");
+            if (inputCode == null || rpw == null) return Json("Error");
             if(inputCode == rpw)
             {
                 return Json("Success");
