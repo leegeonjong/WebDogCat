@@ -20,15 +20,23 @@
     <hr>
 </div>
 <div class="container2">
-    <div class="btncnt">
-        <a class="btn" >@userNickName<br> 반갑습니다</a>
-        <br>
-        <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@userId" name="buttonName" value="mypage">마이페이지로가기</a>
-        <br>
-        <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">게시글 작성하기</a>
-        <br>
-        <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@userId" name="buttonName" value="Message">메세지 보내기</a>
-    </div>
+    @if (userId != null && userNickName != null)
+    {
+        <div class="btncnt">
+            <a class="btn">@userNickName 님<br> 반갑습니다</a>
+            <br>
+            @if (userId != 0)
+            {
+                <div class="UserOnly">
+                    <a class="btn" asp-controller="MyPage" asp-action="Home" asp-route-id="@userId" name="buttonName" value="mypage">마이페이지로가기</a>
+                    <br>
+                    <a class="btn" asp-controller="Board" asp-action="Write" name="buttonName" value="Write">게시글 작성하기</a>
+                    <br>
+                    <a class="btn" asp-controller="Message" asp-action="Add" asp-route-id="@userId" name="buttonName" value="Message">메세지 보내기</a>
+                </div>
+            }
+        </div>
+    }
     <div class="right">
         <form method="post" enctype="multipart/form-data">
             <div class="mb-3 mt-3">
