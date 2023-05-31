@@ -3,28 +3,41 @@
     ViewData["Title"] = "마이페이지";
 }
 <script src="~/js/User/drop.js"></script>
+<link rel="stylesheet" href="~/css/Mypage/page.css" />
 <form method="post" name="userform">
     <input type="hidden" asp-for="Id"/>
 </form>
 @if(Model != null)
 {
-<div class="mb-3">
-    <label for="name">이름:</label>
-    <span class="form-control">@Model.Name</span>
-</div>
-<div class="mb-3 mt-3">
-    <label for="userid">PhoneNum:</label>
-    <span class="form-control">@Model.PhoneNum</span>
-</div>
-<div class="mb-3 mt-3">
-    <label for="pw">Mail:</label>
-    <span class="form-control">@Model.Mail</span>
-</div>
-    <a class="btn btn-outline-dark"
-    asp-controller="MyPage"
-    asp-action="Detail"
-    asp-route-id ="@Model.Id">수정</a>
-    <buttn type="submit" class="btn btn-outline-dark" id="drop">탈퇴</buttn>
+    <div class="container1" style="margin-left: 35%; margin-right:35%;">
+        <div class="mb-3">
+            <span class="input-group-text form-label">이름</span>
+            <label class="form-control">@Model.Name</label>
+        </div>
+        <div class="mb-3">
+            <span class="input-group-text form-label">아이디</span>
+            <label class="form-control">@Model.Userid</label>
+        </div>
+        <div class="mb-3">
+            <span class="input-group-text form-label">닉네임</span>
+            <label class="form-control">@Model.NickName</label>
+        </div>
+        <div class="mb-3 mt-3">
+            <span class="input-group-text form-label">전화번호</span>
+            <label class="form-control">@Model.PhoneNum</label>
+        </div>
+        <div class="mb-3 mt-3">
+            <span class="input-group-text form-label">메일</span>
+            <label class="form-control">@Model.Mail</label>
+        </div>
+        <div class="btns">
+            <a class="btn btn-outline-dark"
+            asp-controller="MyPage"
+            asp-action="Detail"
+            asp-route-id ="@Model.Id">수정</a>
+            <buttn type="submit" class="btn btn-outline-dark" id="drop">탈퇴</buttn>
+        </div>
+    </div>
 }
 else
 {
