@@ -18,6 +18,26 @@ $(function () {
     })
 })
 
+//회원가입시 인증메일 발송
+$(function () {
+    $("#verify").click(function () {
+        var mail = $("#Mail");
+
+        $.ajax({
+            url: "/User/Verfiy",
+            type: "POST",
+            cache: false,
+            data: { Mail: mail.val() },
+            success: function (data, status) {
+                alert("★인정번호가 발송됐습니다 메일을 확인해 주세요!");
+            },
+            error: function () {
+                alert("발송에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+            }
+        })
+    })
+})
+
 
 
 

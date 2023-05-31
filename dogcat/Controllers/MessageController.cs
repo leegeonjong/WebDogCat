@@ -82,7 +82,7 @@ namespace dogcat.Controllers
                 _messageRepositories.DeleteMessage(id);
             }
 
-            return View("home");
+            return RedirectToAction("home");
         }
     }
 }

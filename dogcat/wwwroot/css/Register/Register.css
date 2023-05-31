@@ -1,0 +1,25 @@
+﻿.container {
+    display: flex;
+    justify-content: center;
+}
+
+    .container .form-group {
+        width: 400px;
+        margin: 0 auto;
+    }
+
+.logobox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 400px;
+    max-height: 400px;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 100%;
+    height: auto;
+    max-width: 200px;
+    max-height: 200px;
+}

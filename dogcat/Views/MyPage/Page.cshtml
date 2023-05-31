@@ -2,29 +2,28 @@
 @{
     ViewData["Title"] = "마이페이지";
 }
+<link rel="stylesheet" href="~/css/Mypage/Page.css" />
 <script src="~/js/User/drop.js"></script>
 <form method="post" name="userform">
     <input type="hidden" asp-for="Id"/>
 </form>
 @if(Model != null)
 {
-<div class="mb-3">
-    <label for="name">이름:</label>
-    <span class="form-control">@Model.Name</span>
-</div>
-<div class="mb-3 mt-3">
-    <label for="userid">PhoneNum:</label>
-    <span class="form-control">@Model.PhoneNum</span>
-</div>
-<div class="mb-3 mt-3">
-    <label for="pw">Mail:</label>
-    <span class="form-control">@Model.Mail</span>
-</div>
-    <a class="btn btn-outline-dark"
-    asp-controller="MyPage"
-    asp-action="Detail"
-    asp-route-id ="@Model.Id">수정</a>
-    <buttn type="submit" class="btn btn-outline-dark" id="drop">탈퇴</buttn>
+    <div class="form-container">
+@*    <div class="logobox">
+        <img src="~/css/ohdogcatblue.png" class="logo">
+    </div>*@
+    <span class="input-group-text form-label">이름</span>
+        <input type="text" form-control rounded-input narrow-input readonly value="@Model.Name">
+    <span class="input-group-text form-label">연락처</span>
+    <input type="text" form-control rounded-input narrow-input readonly value="@Model.PhoneNum">
+    <span class="input-group-text form-label">이메일</span>
+    <input type="text" form-control rounded-input narrow-input readonly value="@Model.Mail">
+    <div class="btn-container">
+            <a class="btn btn-outline-dark" asp-controller="MyPage" asp-action="Detail" asp-route-id="@Model.Id">수정</a>
+            <button type="submit" class="btn btn-outline-dark" id="drop">탈퇴</button>
+        </div>
+    </div>
 }
 else
 {

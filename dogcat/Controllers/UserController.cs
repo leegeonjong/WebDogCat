@@ -117,6 +117,62 @@ namespace dogcat.Controllers
             return RedirectToAction("Index");
         }
         //--------------------------------------------------------------------------------------------
+        //가입 시 메일 발송
+        public IActionResult Verify(string Mail)
+        {
+            
+            string fromEmail = "lateaksoo@gmail.com";
+            string fromPassword = "hikhvuxhscwwacew";
+             
+            // 이메일 받는 사람의 이메일 주소
+            string toEmail = Mail;
+            // 이메일 제목
+            string subject = "이메일 인증번호 안내 입니다.";
+            //인증번호 생성 후 저장 
+            string rpw = ((int)Math.Floor(new Random().NextDouble() * 10000000)).ToString();
+            // 이메일 내용
+            string body = $"인증번호 안내 : {rpw}";
+
+
+            // 이메일 메시지 객체 생성
+            MailMessage mail = new MailMessage();
+            mail.To.Add(toEmail);
+            mail.From = new MailAddress(fromEmail);
+            mail.Subject = subject;
+            mail.Body = body;
+
+            // 이메일 메시지 보내기
+            using (var client = new SmtpClient())
+            {
+                client.EnableSsl = true;
+                client.Host = "smtp.gmail.com";
+                client.Port = 587;
+                client.Credentials = new NetworkCredential(fromEmail, fromPassword);
+                client.Send(mail);
+            }
+            //인증번호 세션에 저장
+            HttpContext.Session.SetString("rpw", rpw);
+            return Json("Success");
+        }//end send method
+
+
+        //--------------------------------------------------------------------------------------------
+
+        //인증번호 검사
+        [HttpPost]
+        public IActionResult Code_check(string inputCode)
+        {
+            string rpw = HttpContext.Session.GetString("rpw");
+            if(inputCode == rpw)
+            {
+                return Json("Success");
+            }
+            else
+            {
+                return Json("Fail");
+            }
+
+        }
 
         //비밀번호 찾기 (수정)
         [HttpPost]
@@ -135,7 +191,8 @@ namespace dogcat.Controllers
 
     }
 
-}
+    }
+
 
 
 

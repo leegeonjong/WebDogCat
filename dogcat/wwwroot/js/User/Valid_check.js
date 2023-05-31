@@ -2,12 +2,12 @@
 // 유효성 검사에 사용할 정규식
 var mail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; //이메일
 var id = /^[a-zA-Z0-9]{3,16}$/; // 아이디 영문 숫자 3글자 이상
-var pw = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8}$/; // 비밀번호
+var pw = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,15}$/; // 비밀번호
 var _name = /^[가-힣]{2,4}$/;  //이름
 var nickname = /^([a-zA-Z]{3,8}|[가-힣]{2,6})$/; //닉네임
 var tel = /^(01[0|1|6|7|8|9])-?[0-9]{3,4}-?[0-9]{4}$/; // 연락처
 
-var isvalid_mail = $("#emailcheck"); //이메일 인증여부
+var isvalid_mail = $("#mailcheck"); //이메일 인증여부
 var isvalid_Id = $("#idcheck"); //아이디 중복검사 여부
 var isvalid_tel = $("#phonecheck"); // sms인증여부
 //------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ $(function () {
     $("#Pw").on("keyup", function () {
         if (pw.test($("#Pw").val()) == false) {
             $("#valid_pw").css("color", "red");
-            $("#valid_pw").text("비밀번호는 영문숫자 포함 8글자 이상");
+            $("#valid_pw").text("비밀번호는 영문숫자 포함 8~15글자");
         } else {
             $("#valid_pw").css("color", "#0C964A");
             $("#valid_pw").text("OK!");
@@ -159,21 +159,69 @@ $("#Go_idcheck").on("click", function () {
             }
         });
 });
-//SMS 본인 인증 체크
-//$("#").on("click", function () {
+//이메일 본인 인증 체크
+$(function () {
+    $("#verify").click(function () {
+        var mail = $("#Mail").val();
+        var url = "/User/Verify" + "?Mail=" + encodeURIComponent(mail);
+        fetch(url)
+            .then(function (response) {
+                if (!response.ok) {
+                    alert("잠시 후 다시 시도하세요");
+                    throw new Error("서버 요청에 실패했습니다. 다시 시도해주세요.");
+                }
+                return response.text();
+            })
+            .then(function (code) {
+                if (code) {
+                   
+                    alert("메일이 발송됐습니다. 확인해주세요");
+                }
+                else {
+                    alert("메일 발송이 실패했습니다. 잠시 후 다시 하세요.");
+                }
+            })
 
-//})
+    });
+    //값 검사
+    $("#verify_check").click(function () {
+        var inputCode = $("#inputcode").val();
+        var url = "/User/Code_check";
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/x-www-form-urlencoded"
+            },
+            body: `inputCode=${inputCode}`,
+        })
+            .then(function (response) {
+                // 응답 실패
+                if (!response.ok) {
+                    alert("잠시 후 다시 시도하세요");
+                    throw new Error("서버 요청에 실패했습니다. 다시 시도해주세요.");
+                }
+                return response.json();
+            })
+            .then(function (status) {
+                if (status == "Fail") {
+                    alert("인증코드가 일치하지 않습니다.");
+                }
+                else if (status == "Success") {
+                    alert("인증 성공!");
+                    $("#mailcheck").val("able");
+                }
+                else {
+                    alert("부적절한 접근 입니다.");
+                }
+            } )
+    });
+});
+
 
 
 
 // 회원가입 폼 검증
 $(function () {
-    //입력사항 공백처리
-    var inputid = $.trim($("#Userid").val()); 
-    var inputNick = $.trim($("#NickName").val());
-    var inputName = $.trim($("#Name").val());
-
-
 
     $("#register").submit(function () {
         
@@ -237,93 +285,38 @@ $(function () {
             return false;
         }
 
-        //if ($.trim($("#PhoneNum").val()) == "" || $("#PhoneNum").val() == null) {
-        //    alert('회원님의 연락처를 입력해 주세요.');
-        //    $("#PhoneNum").focus();
-        //    return false;
-        //} else if (tel.test($("#PhoneNum").val()) == false) {
-        //    alert("잘못된 형식의 연락처 입니다.");
-        //    $("#PhoneNum").focus();
-        //    return false;
-        //}
+        if ($.trim($("#PhoneNum").val()) == "" || $("#PhoneNum").val() == null) {
+            alert('회원님의 연락처를 입력해 주세요.');
+            $("#PhoneNum").focus();
+            return false;
+        } else if (tel.test($("#PhoneNum").val()) == false) {
+            alert("잘못된 형식의 연락처 입니다.");
+            $("#PhoneNum").focus();
+            return false;
+        }
 
 
 
         //이메일인증, 아이디 중복검사 여부 체크
 
-        //if ((isvalid_Id.val() == "able" && isvalid_tel.val() == "able") == false) {}
-        if (isvalid_Id.val() == "unable") {
-            alert("아이디 중복검사를 실시 해 주세요!");
-            return false;
+        if ((isvalid_Id.val() == "able" && isvalid_mail.val() == "able") == false)
+        {
+            if (isvalid_Id.val() == "unable") {
+                alert("아이디 중복검사를 실시 해 주세요!");
+                return false;
+            }
+            else if (isvalid_mail.val() == "unable") {
+                alert("이메일 인증을 실시 해 주세요!");
+                return false;
+            }
         }
+
 
     });
 });
 
-//ID중복 확인 버튼 클릭 시 수행 할 동작 (입력 id값 서버에 넘겨주기)
-
-// POST(실패작)
-//$("#Go_idcheck").on("click", function () {
-//    var inputid = $("#Userid").val(); //사용자 입력 ID
-
-//    //URL 설정
-//    fetch("/User/Idcheck", {
-//        //메소드 설정
-//        method: "POST",
-//        //헤더 설정 (문서타입 : xml / Json)
-//        headers: {
-//            "Content-Type": "application/json"
-//        },
-//        cache: "no-cache",
-//        //body 설정 (전송할 데이터)
-//        body: JSON.stringify({ UserId: inputid })
-//    })
-//        .then(function (response) {
-//            if (!response.ok) { //실패 했을 때
-//                alert("서버 오류입니다. 잠시 후 다시 시도하세요!");
-//                throw new Error("서버 요청에 실패했습니다. 다시 시도해주세요.");
-//            }
-//            return response.json();
-//        })
-//        .then(function (useable) { // 요청 성공 시, 중복검사 결과
-//            if (useable == "unable") { //아이디가 중복일 경우
-//                alert("이미 사용중인 아이디 입니다.");
-//            }
-//            else if (useable == "able") { // 중복 아닐 경우
-//                isvalid_Id.val("1");
-//                alert("사용가능한 ID 입니다!");
-//            }
-//        })
 
 
-//Get
-$("#Go_idcheck").on("click", function () {
-    // 변수 지정
-    var input_id = $("#Userid").val();
-    // URL 설정
-    var url = "/Login/Idcheck" + "?Userid=" + encodeURIComponent(input_id);
-
-    // Fetch
-    fetch(url)
-        .then(function (response) {
-            // 응답 실패
-            if (!response.ok) {
-                alert("잠시 후 다시 시도하세요");
-                throw new Error("서버 요청에 실패했습니다. 다시 시도해주세요.");
-            }
-            return response.json();
-        })
-        .then(function (usable) { 
-            if (usable == "unable") {
-                isvalid_Id.val("unable");
-                alert("이미 사용중인 아이디입니다.");
-            }
-            else if (usable == "able") {
-                isvalid_Id.val("able");
-                alert("사용 가능한 아이디입니다.");
-            }
-        });
-});
 
 
 //--------------------------Id PW 찾기 검증----------------------------------
