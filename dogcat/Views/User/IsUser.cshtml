@@ -3,8 +3,14 @@
 *@
 @{
 }
-@if (Model == null)
+@if (Model.Ban == 1)
 {
+    <script>
+        alert("활동이 정지됐습니다.");
+        location.href = "@Url.Action("Login","User")"; // method,controller
+    </script>
+}
+else if  (Model == null){
     <script>
         alert("ID 또는 패스워드 오류입니다.");
         location.href = "@Url.Action("Login","User")"; // method,controller
