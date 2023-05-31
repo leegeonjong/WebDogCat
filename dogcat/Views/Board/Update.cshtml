@@ -52,7 +52,11 @@
                 </div>
                 <div class="mb-3 mt-3">
                     <label for="subject">카테고리:</label>
-                    <input type="text" class="form-control" placeholder="z=카태고리를 입력하세요" asp-for="Category" required>
+                    <select class="form-control" asp-for="Category" required>
+                        <option value="강아지">강아지</option>
+                        <option value="고양이">고양이</option>
+                        <option value="그외">그외 동물</option>
+                    </select>
                 </div>
                 <div class="mb-3 mt-3">
                     <label for="content">내용:</label>

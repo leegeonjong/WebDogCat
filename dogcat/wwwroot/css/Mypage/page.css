@@ -1,0 +1,15 @@
+﻿.container1 {
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+    .container1 span {
+        background-color: rgb(125,182,202);
+        color: white;
+        width: 100px;
+        display: flex;
+        margin-right: 80%;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2%;
+    }

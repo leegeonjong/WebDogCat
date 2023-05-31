@@ -337,56 +337,107 @@ namespace dogcat.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(EditWriteRequest request, IList<IFormFile> uploadedFile)
         {
-            var write = new Write
+            if (uploadedFile.Count != 0)
             {
-                Id = request.Id,
-                Title = request.Title,
-                Category = request.Category, // 카테고리 값을 업데이트합니다.   
-                Context = request.Context,
-                Image = uploadedFile[0].FileName,
-            };
-            var updateWrite = await writeRepository.UpdateAsync(write);
-
-            if (updateWrite == null)
-            {
-                // 수정 실패하면 List 로
-                return RedirectToAction("List");
-            }
-            foreach (var formFile in uploadedFile)
-            {
-                if (formFile.Length > 0)
+                var write = new Write
                 {
-                    string savedFileName = formFile.FileName;  // 저장할 파일명
-                    var fileFullPath = Path.Combine(UploadDir, savedFileName);
+                    Id = request.Id,
+                    Title = request.Title,
+                    Category = request.Category, // 카테고리 값을 업데이트합니다.   
+                    Context = request.Context,
+                    Image = uploadedFile[0].FileName,
+                };
+                var updateWrite = await writeRepository.UpdateAsync(write);
 
-
-                    // 파일명이 이미 존재하는 경우 파일명 변경
-                    // face01.png => face01(1).png => face01(2).png => ...
-                    int filecnt = 1;
-                    while (new FileInfo(fileFullPath).Exists)
+                if (updateWrite == null)
+                {
+                    // 수정 실패하면 List 로
+                    return RedirectToAction("List");
+                }
+                foreach (var formFile in uploadedFile)
+                {
+                    if (formFile.Length > 0)
                     {
-                        var idx = formFile.FileName.LastIndexOf(".");
-                        if (idx > -1)
-                        {
-                            var left = formFile.FileName.Substring(0, idx);
-                            savedFileName = left + string.Format("({0})", filecnt++) + formFile.FileName.Substring(idx);
-                        }
-                        else
-                        {
-                            savedFileName = formFile.FileName + string.Format("({0})", filecnt++);
-                        }
+                        string savedFileName = formFile.FileName;  // 저장할 파일명
+                        var fileFullPath = Path.Combine(UploadDir, savedFileName);
 
-                        fileFullPath = Path.Combine(UploadDir, savedFileName);
+                        // 파일명이 이미 존재하는 경우 파일명 변경
+                        // face01.png => face01(1).png => face01(2).png => ...
+                        int filecnt = 1;
+                        while (new FileInfo(fileFullPath).Exists)
+                        {
+                            var idx = formFile.FileName.LastIndexOf(".");
+                            if (idx > -1)
+                            {
+                                var left = formFile.FileName.Substring(0, idx);
+                                savedFileName = left + string.Format("({0})", filecnt++) + formFile.FileName.Substring(idx);
+                            }
+                            else
+                            {
+                                savedFileName = formFile.FileName + string.Format("({0})", filecnt++);
+                            }
+
+                            fileFullPath = Path.Combine(UploadDir, savedFileName);
+                        }
+                        using FileStream stream = new(fileFullPath, FileMode.Create);
+                        await formFile.CopyToAsync(stream);
+
+                        await writeRepository.UpdateimageAsync(fileFullPath, savedFileName, request.Id);
+
                     }
-                    using FileStream stream = new(fileFullPath, FileMode.Create);
-                    await formFile.CopyToAsync(stream);
+                }
+            }
+            else
+            {
+                var write = new Write
+                {
+                    Id = request.Id,
+                    Title = request.Title,
+                    Category = request.Category, // 카테고리 값을 업데이트합니다.   
+                    Context = request.Context,
+                };
+                var updateWrite = await writeRepository.UpdateAsync(write);
 
-                    await writeRepository.UpdateimageAsync(fileFullPath, savedFileName, request.Id);
+                if (updateWrite == null)
+                {
+                    // 수정 실패하면 List 로
+                    return RedirectToAction("List");
+                }
+                foreach (var formFile in uploadedFile)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        string savedFileName = formFile.FileName;  // 저장할 파일명
+                        var fileFullPath = Path.Combine(UploadDir, savedFileName);
 
+
+                        // 파일명이 이미 존재하는 경우 파일명 변경
+                        // face01.png => face01(1).png => face01(2).png => ...
+                        int filecnt = 1;
+                        while (new FileInfo(fileFullPath).Exists)
+                        {
+                            var idx = formFile.FileName.LastIndexOf(".");
+                            if (idx > -1)
+                            {
+                                var left = formFile.FileName.Substring(0, idx);
+                                savedFileName = left + string.Format("({0})", filecnt++) + formFile.FileName.Substring(idx);
+                            }
+                            else
+                            {
+                                savedFileName = formFile.FileName + string.Format("({0})", filecnt++);
+                            }
+
+                            fileFullPath = Path.Combine(UploadDir, savedFileName);
+                        }
+                        using FileStream stream = new(fileFullPath, FileMode.Create);
+                        await formFile.CopyToAsync(stream);
+
+                        await writeRepository.UpdateimageAsync(fileFullPath, savedFileName, request.Id);
+
+                    }
                 }
             }
             return RedirectToAction("Detail", new { id = request.Id });
-
         }
 
         // POST: /Board/Delete
