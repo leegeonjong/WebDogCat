@@ -40,7 +40,6 @@ namespace dogcat.Controllers
             var user = _context.Users.FirstOrDefault(u => u.Userid.Equals(userid.Trim()) && u.Pw.Equals(userpw));
             if (user != null)
             {
-                //로그인 성공 시 , 세션에 정보 저장 (굳이 해야할까? 모르겠다)
                 HttpContext.Session.SetInt32("userId", (int)user.Id); //사용자 uid(고유번호)
                 HttpContext.Session.SetString("userNickName", user.NickName); //사용자 닉네임
                 HttpContext.Session.SetInt32("userBan", user.Ban);  // 사용자 벤 여부 
