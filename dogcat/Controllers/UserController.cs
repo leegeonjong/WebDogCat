@@ -49,7 +49,7 @@ namespace dogcat.Controllers
                 if (user.Ban == 1) //벤
                 {
                     HttpContext.Session.Remove("userId"); //세션 정보 삭제
-                    return View();
+                    return View("IsUser", user);
                 }
                 else // 벤 x
                 {
