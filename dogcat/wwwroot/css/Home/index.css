@@ -26,8 +26,12 @@
 .adminwrite {
     background-color: white;
 }
+.adminctn {
+text-decoration:none;
+
+}
 hr {
-margin:0px;
+    margin: 0px;
 }
 .userBoard {
     margin: 5% 10% 10% 5%;

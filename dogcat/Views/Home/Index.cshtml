@@ -16,7 +16,7 @@
                     @foreach (var i in Model.Where(x => x.Category == "공지사항").OrderByDescending(x => x.Time).ToList().Take(3))
                     {
                         <hr>
-                        <li><a href="/Board/Detail/@i.Id">@i.Title</a></li>
+                        <li><a class="adminctn" href="/Board/Detail/@i.Id">@i.Title</a></li>
                     }
                 </div>
             }
