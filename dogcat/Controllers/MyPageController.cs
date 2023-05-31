@@ -31,7 +31,13 @@ namespace dogcat.Controllers
         public async Task<IActionResult> Delete(long id)
         {
             await _userRepositories.DeleteAsync(id);
-            return RedirectToAction("Page", new {id = 2});  // 완료하면 메인페이지로 넘어가야한다. 지긍은 임시
+            HttpContext.Session.Remove("userid");
+            HttpContext.Session.Remove("userNickName");
+            HttpContext.Session.Remove("userBan");
+            HttpContext.Session.Remove("userAdmin");
+            string findsesson = HttpContext.Session.GetString("userNickName");
+            return RedirectToAction("index","home");  // 완료하면 메인페이지로 넘어가야한다. 지긍은 임시
+            //return RedirectToAction("Logout","Login");  // 완료하면 메인페이지로 넘어가야한다. 지긍은 임시
         }
         [HttpGet]
         public async Task<IActionResult> Detail(long id)

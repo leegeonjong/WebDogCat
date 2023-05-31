@@ -8,15 +8,13 @@
 
 }
 <link rel="stylesheet" href="~/css/Message/home.css">
-<form method="post" id="Delete">
-<div class="container1">
-    <h2>쪽지함</h2>
-    <button type="button" id="delete_message">삭제</button>
-    <hr>
-</div>
+<form method="post" id="Delete" class="messageform">
+    <div class="container1">
+        <h2>쪽지함</h2>
+        <button type="button" id="delete_message">삭제</button>
+        <hr>
+    </div>
     <div class="box">
-
-
         <table class="table">
             <thead class="table-success">
                 <tr>
@@ -40,15 +38,13 @@
                                 <input type="checkbox" class="message_select" value="@m.Id">
                             </td>
                         </tr>
-                        
+
                     }
-
                 </tbody>
-
             }
         </table>
     </div>
-<a class="btn btn-outline-dark" asp-controller="Message" asp-action="Add" asp-route-id="@userId">보내기</a>
+    <a class="btn btn-outline-dark" asp-controller="Message" asp-action="Add" asp-route-id="@userId">보내기</a>
 </form>
 
 <script src="~/js/Message/Delete.js">

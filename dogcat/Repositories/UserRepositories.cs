@@ -16,10 +16,12 @@ namespace dogcat.Repositories
         public async Task<User?> DeleteAsync(long id)
         {
             var users = await _dogcatDbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
-            if(users == null) return null;
+            var messages = await _dogcatDbContext.Messages.Where(x => x.From_id == id).ToListAsync();
+            if (users == null) return null;
+            _dogcatDbContext.Messages.RemoveRange(messages);
             _dogcatDbContext.Users.Remove(users);
             await _dogcatDbContext.SaveChangesAsync();
-            return users;
+            return null;
         }
 
         public async Task<User> GetUserAsync(long id)  // 유저 정보 가져오기
