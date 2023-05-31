@@ -55,7 +55,7 @@ namespace dogcat.Controllers
 
             ViewBag.EmailCodeSent = emailCodeSent;
 
-            // Session에 작성자가 작성한 name, email, Id와 RealPassword 저장하기
+            // Session에 작성자가 인증번호를 받을 email 과 인증번호를 저장
             HttpContext.Session.SetString("Email", emailRequest.Email);
             HttpContext.Session.SetString("RealPassword", emailRequest.RealPassword);
 
