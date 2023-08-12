@@ -21,7 +21,7 @@
 - 로그인시 SESSION 저장및 SESSION 사용
 - 게시글 CRUD
 - 댓글 CRUD
-- NAVER 지도 API, 이메일 API 협업
+- 스토리 보드, ERD 설계
 - 메인 페이지 게시글 설정
 - SESSION의 따른 회원 비회원 기능 
 
@@ -30,18 +30,22 @@
 
 [제작 시연 영상]: https://m.youtube.com/watch?v=fFXaWz4HeIs&list=PLedGoSru794-KgmCF7BvggtHcqj9RvLta&index=2&pp=iAQB
 
-아이디 찾기 화면
+로그인 세션 저장
 
-![아이디 찾기](https://github.com/Lateaksoo/Dogcat/blob/master/README_Image/1.png)
+![로그인 세션 저장](./image/1.png.png)
 
-중복검사 화면
+세션의 따른 화면 변화
 
-![중복검사](https://github.com/Lateaksoo/Dogcat/blob/master/README_Image/2.png)
+![세션에 따른 화면 변화](./image/2.png.png)
 
-이메일 본인인증 화면
+게시판
 
-![이메일 본인인증 화면](https://github.com/Lateaksoo/Dogcat/blob/master/README_Image/3.png)
+![게시판](./image/3.png.png)
 
-동물병원 지도 화면 
+게시글 수정, 삭제
 
-![동물병원 지도 화면](https://github.com/Lateaksoo/Dogcat/blob/master/README_Image/4.png)
+![게시글 수정, 삭제](./image/4.png.png)
+
+회원, 비회원 댓글 시스템 
+
+![회원, 비회원 댓글 시스템](./image/5.png.png)
